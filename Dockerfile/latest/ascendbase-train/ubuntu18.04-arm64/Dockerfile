@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ARG STEPPROXY=setproxy.sh
+ARG SETPPROXY=setproxy.sh
 ARG UNSETPROXY=unsetproxy.sh
 WORKDIR /tmp
 COPY . ./
@@ -9,7 +9,7 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     apt update && \
     apt install --no-install-recommends python3.7 python3.7-dev -y && \
     apt install --no-install-recommends curl g++ pkg-config unzip -y && \
-    apt install --no-install-recommends libblas3 liblapack3 gfortran -y &&
+    apt install --no-install-recommends libblas3 liblapack3 gfortran -y && \
     apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
     apt install --no-install-recommends libicu60 libxml2 -y && \
     apt-get download python3-distutils && \
@@ -23,7 +23,7 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
 
 
-RUN bash -c "test -f $SETPROXY && $SETPROXY || true" && \
+RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
     pip3.7 install decorator && \
@@ -36,14 +36,14 @@ RUN bash -c "test -f $SETPROXY && $SETPROXY || true" && \
     pip3.7 install protobuf && \
     pip3.7 install scipy && \
     pip3.7 install requests && \
-    rm -f /root/.cache/pip && \
+    rm -rf /root/.cache/pip && \
     bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
 
 ENV LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
 RUN if [ ! -d "/lib64" ]; \
     then \
-        mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1 \
+        mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1;\
     fi
 
 RUN rm -rf ./*

@@ -14,13 +14,14 @@ ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
 RUN bash $PREINSTALL && rm -f $PREINSTALL && \ 
     chmod +x ./$TFPLUGIN_PKG && \
-    ./$TFPLUGIN_PKG --quiet --install_path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$TFPLUGIN_PKG --quiet --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     bash $POSTINSTALL && rm -f $POSTINSTALL
 
-RUN chmod +x $TF_1_15_OFFLINE_PKG && \
+RUN chmod +x $TF_1_15_OFFLINE_PKG && \ 
     ./$TF_1_15_OFFLINE_PKG && \
-    rm -f ./$TFPLUGIN_PKG && \
+    rm -f ./$TF_1_15_OFFLINE_PKG && \
     rm -rf /root/.cache/pip
 
 ENV TF_PLUGIN_PKG=$TF_PLUGIN_PATH/tfplugin/python/site-packages
