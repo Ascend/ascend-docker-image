@@ -14,7 +14,7 @@ ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
 RUN bash $PREINSTALL && rm -f $PREINSTALL && \ 
     chmod +x ./$TFPLUGIN_PKG && \
-    ./$TFPLUGIN_PKG --quiet --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$TFPLUGIN_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     bash $POSTINSTALL && rm -f $POSTINSTALL

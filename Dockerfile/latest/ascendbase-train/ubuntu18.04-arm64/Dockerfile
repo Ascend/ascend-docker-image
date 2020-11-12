@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ARG SETPPROXY=setproxy.sh
+ARG SETPROXY=setproxy.sh
 ARG UNSETPROXY=unsetproxy.sh
 WORKDIR /tmp
 COPY . ./
@@ -18,7 +18,6 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     dpkg-deb -x python3-distutils_*.deb / && \
     rm -f python3-distutils_*.deb && \
     python3.7 get-pip.py && \
-    rm -f get-pip.py && \
     rm -f get-pip.py && \
     bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
 
@@ -43,7 +42,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
 RUN if [ ! -d "/lib64" ]; \
     then \
-        mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1;\
+        mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
 
 RUN rm -rf ./*
