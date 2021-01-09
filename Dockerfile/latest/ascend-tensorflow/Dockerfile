@@ -8,18 +8,18 @@ WORKDIR /tmp
 COPY . ./
 
 ARG TFPLUGIN_PKG
-ARG TF_PKG
+ARG TF_PKG=tensorflow-cpu==1.15.0
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
-RUN bash $PREINSTALL && rm -f $PREINSTALL && \
+RUN bash -c "test -f $PREINSTALL && bash $PREINSTALL || true" && rm -f $PREINSTALL && \
     chmod +x ./$TFPLUGIN_PKG && \
     ./$TFPLUGIN_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     pip3.7 install $TF_PKG && \
     rm -rf /root/.cache/pip && \
-    bash $POSTINSTALL && rm -f $POSTINSTALL
+    bash -c "test -f $POSTINSTALL && bash $POSTINSTALL || true" && rm -f $POSTINSTALL
 
 ENV TF_PLUGIN_PKG=$TF_PLUGIN_PATH/tfplugin/python/site-packages
 ENV PYTHONPATH=$TF_PLUGIN_PKG:$PYTHONPATH
