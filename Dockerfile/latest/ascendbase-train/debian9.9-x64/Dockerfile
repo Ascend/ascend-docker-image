@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM gcc:7.3.0
 
 ARG SETPROXY=setproxy.sh
 ARG UNSETPROXY=unsetproxy.sh
@@ -7,20 +7,18 @@ COPY . ./
 
 RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     apt update && \
-    apt install --no-install-recommends python3.7 python3.7-dev -y && \
-    apt install --no-install-recommends curl g++ pkg-config unzip -y && \
-    apt install --no-install-recommends libblas3 liblapack3 gfortran -y && \
-    apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
-    apt install --no-install-recommends libicu60 libxml2 pciutils -y && \
-    apt-get download python3-distutils && \
+    apt install --no-install-recommends wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
+    libreadline-dev libffi-dev curl libbz2-dev libhdf5-dev pciutils -y && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
-    curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    dpkg-deb -x python3-distutils_*.deb / && \
-    rm -f python3-distutils_*.deb && \
-    python3.7 get-pip.py && \
-    rm -f get-pip.py && \
+    wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \
+    tar -xf Python-3.7.5.tar.xz && \
+    cd Python-3.7.5 && \
+    mkdir build && cd build && \
+    ../configure --enable-shared && \
+    make -j && make install && \
+    cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
+    ldconfig && \
     bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
-
 
 RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install -U pip && \
@@ -37,6 +35,5 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
 
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
-
 
 RUN rm -rf ./*
