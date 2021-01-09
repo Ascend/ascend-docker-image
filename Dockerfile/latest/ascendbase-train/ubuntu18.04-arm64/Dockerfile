@@ -11,7 +11,7 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     apt install --no-install-recommends curl g++ pkg-config unzip -y && \
     apt install --no-install-recommends libblas3 liblapack3 gfortran -y && \
     apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
-    apt install --no-install-recommends libicu60 libxml2 -y && \
+    apt install --no-install-recommends libicu60 libxml2 pciutils -y && \
     apt-get download python3-distutils && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
     curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
@@ -30,8 +30,6 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install cffi==1.12.3 && \
     pip3.7 install pyyaml && \
     pip3.7 install pathlib2 && \
-    pip3.7 install grpcio && \
-    pip3.7 install grpcio-tools && \
     pip3.7 install protobuf && \
     pip3.7 install scipy && \
     pip3.7 install requests && \
