@@ -5,7 +5,9 @@ ARG UNSETPROXY=unsetproxy.sh
 WORKDIR /tmp
 COPY . ./
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+SHELL ["/bin/bash", "-c"]
+
+RUN { source $SETPROXY || true; } && \
     apt update && \
     apt install --no-install-recommends wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
     libreadline-dev libffi-dev curl libbz2-dev libhdf5-dev pciutils -y && \
@@ -18,9 +20,9 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     make -j && make install && \
     cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
     ldconfig && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
     pip3.7 install decorator && \
@@ -32,7 +34,7 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install scipy && \
     pip3.7 install requests && \
     rm -rf /root/.cache/pip && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
