@@ -6,8 +6,11 @@ ARG UNSETPROXY=unsetproxy.sh
 WORKDIR /tmp
 COPY . ./
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && rm -f $SETPROXY && \
+SHELL ["/bin/bash", "-c"]
+
+RUN { source $SETPROXY || true; } && \
     apt update && \
     apt install --no-install-recommends pciutils -y && \
     apt clean && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true" && rm -f $UNSETPROXY
+    { source $UNSETPROXY || true; } && \
+    rm -rf ./*

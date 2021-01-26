@@ -6,7 +6,9 @@ ARG LIBSTDCXX=libstdc++.so.6.0.24
 WORKDIR /tmp
 COPY . ./
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+SHELL ["/bin/bash", "-c"]
+
+RUN { source $SETPROXY || true; } && \
     yum makecache && \
     yum -y install centos-release-scl && \
     yum -y install devtoolset-7 && \
@@ -18,11 +20,11 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     yum -y install blas-devel lapack-devel atlas openblas-devel && \
     yum clean all && \
     rm -rf /var/cache/yum && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+RUN { source $SETPROXY || true; } && \
     wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \
     tar -xf Python-3.7.5.tar.xz && \
     cd Python-3.7.5 && \
@@ -31,22 +33,23 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     make -j && make install && \
     cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
     ldconfig && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-RUN python3.7 -m pip install cython && \
+RUN { source $SETPROXY || true; } && \
+    python3.7 -m pip install cython && \
     wget https://files.pythonhosted.org/packages/c5/63/a48648ebc57711348420670bb074998f79828291f68aebfff1642be212ec/numpy-1.19.4.zip && \
     unzip numpy-1.19.4.zip && rm -f numpy-1.19.4.zip && \
     cd numpy-1.19.4 && \
     patch numpy/core/src/npymath/npy_math_internal.h.src ../npy_math_internal.h.src.patch && \
     python3.7 setup.py build && \
     python3.7 setup.py install -O1 --skip-build && \
-    cd - && rm -rf numpy-1.19.4 && rm -f npy_math_internal.h.src.patch
+    cd - && rm -rf numpy-1.19.4 && rm -f npy_math_internal.h.src.patch && \
+    { source $UNSETPROXY || true; }
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
-    pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
     pip3.7 install cffi==1.12.3 && \
@@ -56,8 +59,10 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install scipy && \
     pip3.7 install requests && \
     rm -rf /root/.cache/pip && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod +x /lib64/$LIBSTDCXX && \
     ldconfig
+
+RUN rm -rf ./*

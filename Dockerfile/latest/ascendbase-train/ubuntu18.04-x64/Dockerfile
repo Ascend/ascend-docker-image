@@ -5,7 +5,9 @@ ARG UNSETPROXY=unsetproxy.sh
 WORKDIR /tmp
 COPY . ./
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+SHELL ["/bin/bash", "-c"]
+
+RUN { source $SETPROXY || true; } && \
     apt update && \
     apt install --no-install-recommends python3.7 python3.7-dev -y && \
     apt install --no-install-recommends curl g++ pkg-config unzip -y && \
@@ -14,15 +16,15 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     apt install --no-install-recommends libicu60 libxml2 pciutils -y && \
     apt-get download python3-distutils && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
-    curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     dpkg-deb -x python3-distutils_*.deb / && \
     rm -f python3-distutils_*.deb && \
     python3.7 get-pip.py && \
     rm -f get-pip.py && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 
-RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
+RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
     pip3.7 install decorator && \
@@ -34,7 +36,7 @@ RUN bash -c "test -f $SETPROXY && bash $SETPROXY || true" && \
     pip3.7 install scipy && \
     pip3.7 install requests && \
     rm -rf /root/.cache/pip && \
-    bash -c "test -f $UNSETPROXY && bash $UNSETPROXY || true"
+    { source $UNSETPROXY || true; }
 
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
