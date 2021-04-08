@@ -18,3 +18,4 @@ RUN { source $SETPROXY || true; } && \
     fi && \
     { source $UNSETPROXY || true; } && \
     rm -rf ./*
+    
