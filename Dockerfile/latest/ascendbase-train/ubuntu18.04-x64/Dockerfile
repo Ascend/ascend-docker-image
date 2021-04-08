@@ -7,23 +7,34 @@ COPY . ./
 
 SHELL ["/bin/bash", "-c"]
 
+# 系统包 + Pip3.7
 RUN { source $SETPROXY || true; } && \
     apt update && \
-    apt install --no-install-recommends python3.7 python3.7-dev -y && \
+    apt install --no-install-recommends ca-certificates -y && \
+    apt install --no-install-recommends wget -y && \
     apt install --no-install-recommends curl g++ pkg-config unzip -y && \
     apt install --no-install-recommends libblas3 liblapack3 gfortran -y && \
     apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
     apt install --no-install-recommends libicu60 libxml2 pciutils -y && \
-    apt-get download python3-distutils && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    dpkg-deb -x python3-distutils_*.deb / && \
-    rm -f python3-distutils_*.deb && \
-    python3.7 get-pip.py && \
-    rm -f get-pip.py && \
     { source $UNSETPROXY || true; }
 
 
+# 安装Python
+RUN { source $SETPROXY || true; } && \
+    wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \
+    tar -xf Python-3.7.5.tar.xz && \
+    cd Python-3.7.5 && \
+    mkdir build && cd build && \
+    ../configure --enable-shared && \
+    make -j && make install && \
+    cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
+    ldconfig && \
+    { source $UNSETPROXY || true; }
+
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+# python包
 RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
@@ -38,7 +49,8 @@ RUN { source $SETPROXY || true; } && \
     rm -rf /root/.cache/pip && \
     { source $UNSETPROXY || true; }
 
+# 设置环境变量
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
-
+# 清理临时目录
 RUN rm -rf ./*

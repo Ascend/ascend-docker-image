@@ -8,6 +8,7 @@ COPY . ./
 
 SHELL ["/bin/bash", "-c"]
 
+# 安装编译环境
 RUN { source $SETPROXY || true; } && \
     yum makecache && \
     yum -y install centos-release-scl && \
@@ -21,8 +22,10 @@ RUN { source $SETPROXY || true; } && \
     rm -rf /var/cache/yum && \
     { source $UNSETPROXY || true; }
 
+# scl enable devtoolset-7 bash
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
+# 安装Python
 RUN { source $SETPROXY || true; } && \
     wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \
     tar -xf Python-3.7.5.tar.xz && \
@@ -36,6 +39,7 @@ RUN { source $SETPROXY || true; } && \
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
+# python包
 RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
@@ -50,8 +54,10 @@ RUN { source $SETPROXY || true; } && \
     rm -rf /root/.cache/pip && \
     { source $UNSETPROXY || true; }
 
+# 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod +x /lib64/$LIBSTDCXX && \
     ldconfig
 
+# 清理临时目录
 RUN rm -rf ./*

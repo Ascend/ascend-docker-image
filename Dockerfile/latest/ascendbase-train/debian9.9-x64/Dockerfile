@@ -7,6 +7,7 @@ COPY . ./
 
 SHELL ["/bin/bash", "-c"]
 
+# Python 3.7.5
 RUN { source $SETPROXY || true; } && \
     apt update && \
     apt install --no-install-recommends wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
@@ -22,6 +23,7 @@ RUN { source $SETPROXY || true; } && \
     ldconfig && \
     { source $UNSETPROXY || true; }
 
+# python包
 RUN { source $SETPROXY || true; } && \
     pip3.7 install -U pip && \
     pip3.7 install numpy && \
@@ -36,6 +38,8 @@ RUN { source $SETPROXY || true; } && \
     rm -rf /root/.cache/pip && \
     { source $UNSETPROXY || true; }
 
+# 环境变量
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 
+# 清理临时目录
 RUN rm -rf ./*

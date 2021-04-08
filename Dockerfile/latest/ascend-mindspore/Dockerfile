@@ -4,6 +4,7 @@ FROM $BASE
 
 WORKDIR /tmp
 
+# MindSpore安装
 ARG MINDSPORE_PKG
 COPY $MINDSPORE_PKG ./
 RUN pip3.7 install $MINDSPORE_PKG && \

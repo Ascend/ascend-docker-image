@@ -13,11 +13,15 @@ COPY . ./
 
 ENV LD_LIBRARY_PATH=\
 $ASCEND_BASE/driver/lib64:\
+$ASCEND_BASE/driver/lib64/common:\
+$ASCEND_BASE/driver/lib64/driver:\
 $ASCEND_BASE/nnrt/latest/acllib/lib64:\
 $LD_LIBRARY_PATH
 
-RUN bash -c "test -f $PREINSTALL && bash $PREINSTALL || true" && rm -f $PREINSTALL && \
-    umask 0022 && \
+SHELL ["/bin/bash", "-c"]
+
+RUN umask 0022 && \
+    { source $PREINSTALL || true; }  && \
     if [ "$CHIP" != "all" ]; \
     then \
         CHIPOPTION="--chip=$CHIP"; \
@@ -28,7 +32,7 @@ RUN bash -c "test -f $PREINSTALL && bash $PREINSTALL || true" && rm -f $PREINSTA
     ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
     --install-for-all $CHIPOPTION && \
     rm $NNRT_PKG && \
-    bash -c "test -f $POSTINSTALL && bash $POSTINSTALL || true" && rm -f $POSTINSTALL
+    { source $POSTINSTALL || true; }
 
 ENV ASCEND_AICPU_PATH=$ASCEND_BASE/nnrt/latest/$ARCH-linux
 

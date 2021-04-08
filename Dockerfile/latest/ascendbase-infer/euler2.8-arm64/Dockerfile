@@ -17,3 +17,4 @@ RUN { source $SETPROXY || true; } && \
     rm -f /etc/yum.repos.d/$YUM_REPO && \
     { source $UNSETPROXY || true; } && \
     rm -rf ./*
+    

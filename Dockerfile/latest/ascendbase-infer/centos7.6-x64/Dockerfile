@@ -14,3 +14,4 @@ RUN { source $SETPROXY || true; } && \
     yum clean all && \
     { source $UNSETPROXY || true; } && \
     rm -rf ./*
+    
