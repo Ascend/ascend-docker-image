@@ -13,8 +13,19 @@ RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 # 系统包
 RUN apt update && \
-    apt install --no-install-recommends vim sudo python3.7 python3.7-dev curl g++ pkg-config unzip numactl libopenblas-dev \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch -y
+    apt install --no-install-recommends vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl libopenblas-dev \
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch -y && \
+    wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz --no-check-certificate && \
+    tar -zxf gcc-7.3.0.tar.gz && \
+    cd gcc-7.3.0 && \
+    ./contrib/download_prerequisites  && \
+    ./configure --enable-languages=c,c++ --disable-multilib --with-system-zlib --prefix=/usr/local/gcc7.3.0 && \
+     make -j && \
+     make install && \
+     rm -f /usr/bin/gcc && \
+     ln -s /usr/local/gcc7.3.0/bin/gcc /usr/bin/gcc
+
+ENV LD_LIBRARY_PATH=/usr/local/gcc7.3.0/lib64:${LD_LIBRARY_PATH}
 
 # 建立python软链接
 RUN ln -s /usr/bin/python3.7 /usr/bin/python && \
@@ -55,7 +66,18 @@ RUN pip3.7 install numpy && \
     pip3.7 install attrs && \
     pip3.7 install wheel && \
     pip3.7 install Pillow && \
-    pip3.7 install torchvision==0.2.2.post3
+    pip3.7 install torchvision==0.2.2.post3 && \
+    pip3.7 install wheel==0.32.1 && \
+    pip3.7 install setuptools==49.1.0 && \
+    pip3.7 install matplotlib==3.2.2 && \
+    pip3.7 install opencv-python==4.4.0.42 && \
+    pip3.7 install sklearn==0.0 && \
+    pip3.7 install pandas==1.0.5 && \
+    pip3.7 install pycocotools==2.0.1 && \
+    pip3.7 install tables==3.6.1 && \
+    pip3.7 install mmcv==0.2.14 && \
+    pip3.7 install lxml==4.5.2 && \
+    pip3.7 install easydict==1.9
 
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH

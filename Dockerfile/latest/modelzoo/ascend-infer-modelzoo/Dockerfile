@@ -59,10 +59,21 @@ RUN cd /tmp && \
 RUN pip3.7 install numpy && \
     pip3.7 install decorator && \
 	pip3.7 install sympy==1.4 && \
-	pip3.7 install opencv-python && \
 	pip3.7 install protobuf && \
 	pip3.7 install Cython && \
-	pip3.7 install pycocotools
+	pip3.7 install wheel==0.32.1 && \
+	pip3.7 install setuptools==49.1.0 && \
+	pip3.7 install matplotlib==3.2.2 && \
+	pip3.7 install opencv-python==4.4.0.42 && \
+	pip3.7 install sklearn==0.0 && \
+	pip3.7 install pandas==1.0.5 && \
+	pip3.7 install pycocotools==2.0.1 && \
+	pip3.7 install tables==3.6.1 && \
+	pip3.7 install mmcv==0.2.14 && \
+	pip3.7 install lxml==4.5.2 && \
+	pip3.7 install easydict==1.9 && \
+
+
 
 # install nnrt run pkg
 RUN bash -c 'umask 0022' && \
