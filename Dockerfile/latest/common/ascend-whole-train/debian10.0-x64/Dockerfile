@@ -1,16 +1,18 @@
 FROM debian:10.0
 
-ARG PREINSTALL=preinstall.sh
-ARG POSTINSTALL=postinstall.sh
-
 WORKDIR /tmp
 COPY . ./
 
-SHELL ["/bin/bash", "-c"]
+# 1. 驱动路径环境变量设置
+ARG ASCEND_BASE=/usr/local/Ascend
+ENV LD_LIBRARY_PATH=\
+$ASCEND_BASE/driver/lib64:\
+$ASCEND_BASE/driver/lib64/common:\
+$ASCEND_BASE/driver/lib64/driver:\
+$LD_LIBRARY_PATH
 
 # Python 3.7.5
-RUN { source $PREINSTALL || true; } && \
-    apt update && \
+RUN apt update && \
     apt install --no-install-recommends wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
     libreadline-dev libffi-dev curl libbz2-dev libhdf5-dev pciutils -y && \
     apt install --no-install-recommends  xz-utils -y && \
@@ -25,12 +27,10 @@ RUN { source $PREINSTALL || true; } && \
     ../configure --enable-shared && \
     make -j && make install && \
     cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
-    ldconfig && \
-    { source $POSTINSTALL || true; }
+    ldconfig
 
 # python包
-RUN { source $PREINSTALL || true; } && \
-    pip3.7 install -U pip && \
+RUN pip3.7 install -U pip && \
     pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
@@ -42,8 +42,7 @@ RUN { source $PREINSTALL || true; } && \
     pip3.7 install requests && \
     pip3.7 install attrs && \
     pip3.7 install psutil && \
-    rm -rf /root/.cache/pip && \
-    { source $POSTINSTALL || true; }
+    rm -rf /root/.cache/pip
 
 # 环境变量
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
@@ -51,21 +50,15 @@ ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial:$LD_LIBRARY_PATH
 # 训练引擎安装
 ARG CHIP=all
 
-# 1. 驱动路径环境变量设置
-ARG ASCEND_BASE=/usr/local/Ascend
-ENV LD_LIBRARY_PATH=\
-$ASCEND_BASE/driver/lib64:\
-$ASCEND_BASE/driver/lib64/common:\
-$ASCEND_BASE/driver/lib64/driver:\
-$LD_LIBRARY_PATH
-
 # 2. 训练引擎NNAE安装
 ARG NNAE_PKG
 ARG NNAE_PATH=$ASCEND_BASE/nnae/latest
 
 # 安装NNAE
 RUN umask 0022 && \
-    { source $PREINSTALL || true; } && \
+    mkdir -p $ASCEND_BASE/driver && \
+    cp version.info $ASCEND_BASE/driver/ && \
+    cp ascend_install.info /etc/ && \
     if [ "$CHIP" != "all" ]; \
     then \
         CHIPOPTION="--chip=$CHIP"; \
@@ -75,8 +68,7 @@ RUN umask 0022 && \
     chmod +x $NNAE_PKG && \
     ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
     --install-for-all $CHIPOPTION && \
-    rm -f $NNAE_PKG && \
-     { source $POSTINSTALL || true; }
+    rm -f $NNAE_PKG
 
 # NNAE环境变量
 ENV GLOG_v=2 \
@@ -104,14 +96,14 @@ ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
 # 安装TFPLUGIN包和TF
 RUN umask 0022 && \
-    { source $PREINSTALL || true; } && \
     chmod +x ./$TFPLUGIN_PKG && \
     ./$TFPLUGIN_PKG --quiet --install  --install-username=root --install-usergroup=root \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     pip3.7 install $TF_PKG && \
     rm -rf /root/.cache/pip && \
-    { source $POSTINSTALL || true; }
+    rm -rf $ASCEND_BASE/driver && \
+    rm -f /etc/ascend_install.info
 
 # 环境变量
 ENV TF_PLUGIN_PKG=$TF_PLUGIN_PATH/tfplugin/python/site-packages
