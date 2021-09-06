@@ -3,8 +3,6 @@ ARG BASE=ascendbase-train:$BASE_VERSION
 FROM $BASE
 
 ARG CHIP=all
-ARG PREINSTALL=preinstall.sh
-ARG POSTINSTALL=postinstall.sh
 WORKDIR /tmp
 COPY . ./
 
@@ -21,10 +19,11 @@ ARG NNAE_PKG
 ARG NNAE_PATH=$ASCEND_BASE/nnae/latest
 
 # 安装NNAE
-SHELL ["/bin/bash", "-c"]
 
 RUN umask 0022 && \
-    { source $PREINSTALL || true; } && \
+    mkdir -p $ASCEND_BASE/driver && \
+    cp version.info $ASCEND_BASE/driver/ && \
+    cp ascend_install.info /etc/ && \
     if [ "$CHIP" != "all" ]; \
     then \
         CHIPOPTION="--chip=$CHIP"; \
@@ -35,7 +34,8 @@ RUN umask 0022 && \
     ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
     --install-for-all $CHIPOPTION && \
     rm -f $NNAE_PKG && \
-    { source $POSTINSTALL || true; }
+    rm -rf $ASCEND_BASE/driver && \
+    rm -f /etc/ascend_install.info
 
 # NNAE环境变量
 ENV GLOG_v=2 \
