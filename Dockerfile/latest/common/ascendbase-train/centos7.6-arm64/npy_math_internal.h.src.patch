@@ -1,4 +1,0 @@
-480c480
-< NPY_INPLACE @type@ npy_@kind@@c@(@type@ x, @type@ y)
----
-> NPY_INPLACE __attribute__((optimize("-O0"))) @type@ npy_@kind@@c@(@type@ x, @type@ y)
