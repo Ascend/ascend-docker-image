@@ -21,6 +21,10 @@ ARG NNAE_PATH=$ASCEND_BASE/nnae/latest
 # 安装NNAE
 
 RUN umask 0022 && \
+    groupadd HwHiAiUser && \
+    useradd -g HwHiAiUser -m -d /home/HwHiAiUser HwHiAiUser && \
+    cp run.sh /home/ && \
+    chmod +x /home/run.sh && \
     mkdir -p $ASCEND_BASE/driver && \
     cp version.info $ASCEND_BASE/driver/ && \
     cp ascend_install.info /etc/ && \
@@ -31,7 +35,7 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $NNAE_PKG && \
-    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all $CHIPOPTION && \
     rm -f $NNAE_PKG && \
     rm -rf $ASCEND_BASE/driver && \
@@ -55,3 +59,5 @@ $PYTHONPATH
 
 # 清理临时目录
 RUN rm -rf ./*
+USER HwHiAiUser
+CMD ["/bin/bash", "-c", "/home/run.sh"]

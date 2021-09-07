@@ -2,29 +2,31 @@ ARG BASE_VERSION
 ARG BASE=ascend-train:$BASE_VERSION
 FROM $BASE
 
-ARG PREINSTALL=preinstall.sh
-ARG POSTINSTALL=postinstall.sh
 WORKDIR /tmp
 COPY . ./
 
 # TF相关安装
 ARG TFPLUGIN_PKG
-ARG TF_PKG=tensorflow==1.15.0
+ARG TF_PKG=tensorflow-cpu==1.15.0
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
-# 安装TFPLUGIN包和TF
-SHELL ["/bin/bash", "-c"]
+# 注：centos7需激活SHELL，ubuntu18.04需注释
+SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
+# 安装TFPLUGIN包和TF
 RUN umask 0022 && \
-    { source $PREINSTALL || true; } && \
+    mkdir -p $ASCEND_BASE/driver && \
+    cp version.info $ASCEND_BASE/driver/ && \
+    cp ascend_install.info /etc/ && \
     chmod +x ./$TFPLUGIN_PKG && \
     ./$TFPLUGIN_PKG --quiet --install  --install-username=root --install-usergroup=root \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     pip3.7 install $TF_PKG && \
     rm -rf /root/.cache/pip && \
-    { source $POSTINSTALL || true; }
+    rm -rf $ASCEND_BASE/driver && \
+    rm -f /etc/ascend_install.info
 
 # 环境变量
 ENV TF_PLUGIN_PKG=$TF_PLUGIN_PATH/tfplugin/python/site-packages
