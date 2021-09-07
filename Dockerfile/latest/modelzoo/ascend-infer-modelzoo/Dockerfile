@@ -13,7 +13,7 @@ COPY . ./
 RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 RUN apt update && \
-    apt install --no-install-recommends pciutils libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev -y && \
+    apt install --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev -y && \
     if [ ! -d "/lib64" ]; \
     then \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
@@ -52,7 +52,7 @@ RUN cd /tmp && \
     apt-get download python3-distutils && \
     dpkg-deb -x python3-distutils_*.deb / && \
     rm python3-distutils_*.deb && \
-    cd - && \
+    wget  https://bootstrap.pypa.io/get-pip.py --no-check-certificate  && \
     python3.7 get-pip.py && \
     rm get-pip.py
 

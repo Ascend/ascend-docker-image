@@ -13,7 +13,7 @@ RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 # 系统包
 RUN apt update && \
-    apt install --no-install-recommends vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl libopenblas-dev \
+    apt install --no-install-recommends wget vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl libopenblas-dev \
         libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch -y && \
     wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz --no-check-certificate && \
     tar -zxf gcc-7.3.0.tar.gz && \
@@ -42,7 +42,7 @@ RUN cd /tmp && \
     apt-get download python3-distutils && \
     dpkg-deb -x python3-distutils_*.deb / && \
     rm python3-distutils_*.deb && \
-    cd - && \
+    wget  https://bootstrap.pypa.io/get-pip.py --no-check-certificate  && \
     python3.7 get-pip.py && \
     rm get-pip.py
 

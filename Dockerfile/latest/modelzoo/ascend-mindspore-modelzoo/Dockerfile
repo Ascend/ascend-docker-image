@@ -14,7 +14,7 @@ RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 # 系统包
 RUN apt update && \
-    apt install --no-install-recommends vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ pkg-config unzip \
+    apt install --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ pkg-config unzip \
         libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 -y
         
 # 建立python软链接
@@ -31,7 +31,7 @@ RUN cd /tmp && \
     apt-get download python3-distutils && \
     dpkg-deb -x python3-distutils_*.deb / && \
     rm python3-distutils_*.deb && \
-    cd - && \
+    wget  https://bootstrap.pypa.io/get-pip.py --no-check-certificate  && \
     python3.7 get-pip.py && \
     rm get-pip.py
 
