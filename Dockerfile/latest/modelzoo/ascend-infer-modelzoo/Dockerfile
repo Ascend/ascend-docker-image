@@ -51,10 +51,7 @@ trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 RUN cd /tmp && \
     apt-get download python3-distutils && \
     dpkg-deb -x python3-distutils_*.deb / && \
-    rm python3-distutils_*.deb && \
-    wget  https://bootstrap.pypa.io/get-pip.py --no-check-certificate  && \
-    python3.7 get-pip.py && \
-    rm get-pip.py
+    rm python3-distutils_*.deb
 
 RUN pip3.7 install numpy && \
     pip3.7 install decorator && \
