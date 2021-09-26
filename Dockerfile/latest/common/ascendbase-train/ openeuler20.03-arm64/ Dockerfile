@@ -11,13 +11,13 @@ RUN yum install -y wget gcc gcc-c++ make libtool zlib zlib-devel pcre sudo \
 
 
 # 安装Python
-RUN wget https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tgz && \
-    tar -xf Python-3.7.5.tgz && \
+RUN wget https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz && \
+    tar -xf Python-3.7.5.tar.xz && \
     cd Python-3.7.5 && \
     mkdir build && cd build && \
     ../configure --enable-shared --prefix=/usr/local/python37 && \
     make -j && make install && \
-    cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tgz && \
+    cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
     ldconfig
 
 
@@ -26,15 +26,10 @@ ENV PATH=$PATH:/usr/local/python37/bin \
 
 # python包
 RUN pip3.7 install -U pip && \
-    pip3.7 install decorator && \
-    pip3.7 install numpy && \
-    pip3.7 install sympy && \
-    pip3.7 install cffi && \
-    pip3.7 install pyyaml && \
-    pip3.7 install pathlib2 && \
-    pip3.7 install protobuf && \
-    pip3.7 install scipy && \
-    pip3.7 install requests && \
+    pip3.7 install decorator numpy \
+    sympy cffi pyyaml pathlib2 \
+    protobuf scipy requests \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
     rm -rf /root/.cache/pip
 
 # 清理临时目录

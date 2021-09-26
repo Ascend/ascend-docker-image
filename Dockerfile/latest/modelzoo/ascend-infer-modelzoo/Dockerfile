@@ -19,7 +19,7 @@ RUN apt update && \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
 	
-RUN tar -zxvf Python-3.7.5.tgz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
+RUN tar -zxvf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -s /usr/local/python3.7.5/bin/python3 /usr/bin/python3.7 && \
     ln -s /usr/local/python3.7.5/bin/pip3 /usr/bin/pip3.7 && \
@@ -75,19 +75,19 @@ RUN pip3.7 install numpy && \
 # install nnrt run pkg
 RUN bash -c 'umask 0022' && \
     chmod +x $NNRT_PKG && \
-    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all && \
     rm $NNRT_PKG
 	
 # install atc run pkg
 RUN chmod +x $ATC_PKG && \
-    ./$ATC_PKG --quiet --run --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$ATC_PKG --quiet --run --install-path=$ASCEND_BASE \
     --install-for-all && \
     rm $ATC_PKG
 
 # install opp run pkg
 RUN chmod +x $OPP_PKG && \
-    ./$OPP_PKG --quiet --run --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$OPP_PKG --quiet --run --install-path=$ASCEND_BASE \
     --install-for-all && \
     rm $OPP_PKG
 
