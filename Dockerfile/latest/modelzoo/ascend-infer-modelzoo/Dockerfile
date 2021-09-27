@@ -19,7 +19,7 @@ RUN apt update && \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
 	
-RUN tar -zxvf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
+RUN tar -zxvf Python-3.7.5.tgz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -s /usr/local/python3.7.5/bin/python3 /usr/bin/python3.7 && \
     ln -s /usr/local/python3.7.5/bin/pip3 /usr/bin/pip3.7 && \

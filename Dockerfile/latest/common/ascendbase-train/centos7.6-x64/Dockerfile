@@ -37,8 +37,8 @@ ENV PATH=$PATH:/usr/local/python37/bin \
 # python包
 RUN pip3.7 install -U pip && \
     pip3.7 install numpy decorator \
-    sympy==1.4 cffi==1.12.3 \
-    pyyaml pathlib2 protobuf \
+    sympy==1.4 cffi==1.12.3 cython \
+    pyyaml pathlib2 protobuf pycocotools \
     scipy requests \
     -i https://pypi.mirrors.ustc.edu.cn/simple && \
     rm -rf /root/.cache/pip
