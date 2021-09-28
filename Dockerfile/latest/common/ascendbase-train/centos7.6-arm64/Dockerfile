@@ -35,11 +35,13 @@ ENV PATH=$PATH:/usr/local/python37/bin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/python37/lib
 
 # python包
-RUN pip3.7 install -U pip && \
-    pip3.7 install decorator numpy==1.19.4 \
-    sympy==1.4 cffi==1.12.3 pyyaml cython \
-    pathlib2 protobuf scipy requests pycocotools\
+RUN pip3.7 install -U pip -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install decorator numpy kiwisolver matplotlib \
+    sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools \
     -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install protobuf scipy requests mpmath Pillow \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3 install pycocotools -i https://pypi.mirrors.ustc.edu.cn/simple && \
     rm -rf /root/.cache/pip
 
 # 安装新libstdc++.so
