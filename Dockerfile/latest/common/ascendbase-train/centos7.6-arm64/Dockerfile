@@ -1,4 +1,4 @@
-FROM arm64v8/centos:7
+FROM centos:7
 
 ARG LIBSTDCXX=libstdc++.so.6.0.24
 WORKDIR /tmp
@@ -48,6 +48,8 @@ RUN pip3.7 install -U pip -i https://pypi.mirrors.ustc.edu.cn/simple && \
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod +x /lib64/$LIBSTDCXX && \
     ldconfig
+
+RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8; exit 0
 
 # 清理临时目录
 RUN rm -rf ./*
