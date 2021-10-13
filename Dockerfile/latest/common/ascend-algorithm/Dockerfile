@@ -14,11 +14,11 @@ $ASCEND_BASE/driver/lib64/common:\
 $ASCEND_BASE/driver/lib64/driver:\
 $LD_LIBRARY_PATH
 
-# 2. 训练引擎NNAE安装
-ARG NNAE_PKG
-ARG NNAE_PATH=$ASCEND_BASE/nnae/latest
+# 2. 训练引擎NNRT安装
+ARG NNRT_PKG
+ARG NNRT_PATH=$ASCEND_BASE/nnrt/latest
 
-# 安装NNAE
+# 安装NNRT
 
 RUN umask 0022 && \
     groupadd HwHiAiUser && \
@@ -34,14 +34,14 @@ RUN umask 0022 && \
     else \
         CHIPOPTION=""; \
     fi && \
-    chmod +x $NNAE_PKG && \
-    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE \
+    chmod +x $NNRT_PKG && \
+    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all $CHIPOPTION && \
-    rm -f $NNAE_PKG && \
+    rm -f $NNRT_PKG && \
     rm -rf $ASCEND_BASE/driver && \
     rm -f /etc/ascend_install.info
 
-# NNAE环境变量
+# NNRT环境变量
 ENV GLOG_v=2 \
     LD_LIBRARY_PATH=$NNAE_PATH/fwkacllib/lib64:$LD_LIBRARY_PATH \
     TBE_IMPL_PATH=$NNAE_PATH/opp/op_impl/built-in/ai_core/tbe \
@@ -56,6 +56,11 @@ $FWK_PYTHON_PATH/auto_tune.egg:\
 $FWK_PYTHON_PATH/schedule_search.egg:\
 $TBE_IMPL_PATH:\
 $PYTHONPATH
+
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver\
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/Ascend/nnrt/latest/acllib/lib64 \
+    PYTHONPATH=$PYTHONPATH:/usr/local/Ascend/nnrt/latest/pyACL/python/site-packages/acl \
+    ASCEND_AICPU_PATH=/usr/local/Ascend/nnrt/latest
 
 # 清理临时目录
 RUN rm -rf ./*

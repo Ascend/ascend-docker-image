@@ -4,7 +4,7 @@ WORKDIR /tmp
 COPY . ./
 
 # 安装编译环境
-RUN yum install -y wget gcc gcc-c++ make libtool zlib zlib-devel pcre sudo \
+RUN yum install -y wget gcc gcc-c++ make libtool zlib zlib-devel pcre sudo libffi-devel\
     pcre-devel pcre2-devel perl-devel perl-ExtUtils-Embed openssl openssl-devel python-pip && \
     yum clean all && \
     rm -rf /var/cache/yum
@@ -25,16 +25,13 @@ ENV PATH=$PATH:/usr/local/python37/bin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/python37/lib
 
 # python包
-RUN pip3.7 install -U pip && \
-    pip3.7 install decorator && \
-    pip3.7 install numpy && \
-    pip3.7 install sympy && \
-    pip3.7 install cffi && \
-    pip3.7 install pyyaml && \
-    pip3.7 install pathlib2 && \
-    pip3.7 install protobuf && \
-    pip3.7 install scipy && \
-    pip3.7 install requests && \
+RUN pip3.7 install -U pip -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install decorator numpy kiwisolver matplotlib \
+    sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install protobuf scipy requests mpmath Pillow \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3 install pycocotools -i https://pypi.mirrors.ustc.edu.cn/simple && \
     rm -rf /root/.cache/pip
 
 # 清理临时目录

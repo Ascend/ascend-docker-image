@@ -66,7 +66,7 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $NNAE_PKG && \
-    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all $CHIPOPTION && \
     rm -f $NNAE_PKG
 
@@ -97,7 +97,7 @@ ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 # 安装TFPLUGIN包和TF
 RUN umask 0022 && \
     chmod +x ./$TFPLUGIN_PKG && \
-    ./$TFPLUGIN_PKG --quiet --install  --install-username=root --install-usergroup=root \
+    ./$TFPLUGIN_PKG --quiet --install  \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     pip3.7 install $TF_PKG && \

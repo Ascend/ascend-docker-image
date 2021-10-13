@@ -31,7 +31,7 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $NNAE_PKG && \
-    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$NNAE_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all $CHIPOPTION && \
     rm -f $NNAE_PKG && \
     rm -rf $ASCEND_BASE/driver && \

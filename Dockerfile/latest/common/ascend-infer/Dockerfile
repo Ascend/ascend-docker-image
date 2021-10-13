@@ -27,7 +27,7 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $NNRT_PKG && \
-    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE --install-username=root --install-usergroup=root \
+    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all $CHIPOPTION && \
     rm $NNRT_PKG && \
     rm -rf $ASCEND_BASE/driver && \

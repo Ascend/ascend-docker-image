@@ -1,4 +1,4 @@
-FROM arm64v8/centos:7
+FROM centos:7
 
 WORKDIR /tmp
 COPY . ./

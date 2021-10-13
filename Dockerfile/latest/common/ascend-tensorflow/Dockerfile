@@ -20,7 +20,7 @@ RUN umask 0022 && \
     cp version.info $ASCEND_BASE/driver/ && \
     cp ascend_install.info /etc/ && \
     chmod +x ./$TFPLUGIN_PKG && \
-    ./$TFPLUGIN_PKG --quiet --install  --install-username=root --install-usergroup=root \
+    ./$TFPLUGIN_PKG --quiet --install \
     --install-for-all && \
     rm -f ./$TFPLUGIN_PKG && \
     pip3.7 install $TF_PKG && \

@@ -1,4 +1,4 @@
-FROM arm64v8/centos:7
+FROM centos:7
 
 ARG LIBSTDCXX=libstdc++.so.6.0.24
 WORKDIR /tmp
@@ -22,7 +22,7 @@ RUN yum -y update&& \
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
 # 安装Python
-RUN wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \
+RUN wget https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz && \
     tar -xf Python-3.7.5.tar.xz && \
     cd Python-3.7.5 && \
     mkdir build && cd build && \
@@ -35,22 +35,21 @@ ENV PATH=$PATH:/usr/local/python37/bin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/python37/lib
 
 # python包
-RUN pip3.7 install -U pip && \
-    pip3.7 install decorator && \
-    pip3.7 install numpy==1.19.4 && \
-    pip3.7 install sympy==1.4 && \
-    pip3.7 install cffi==1.12.3 && \
-    pip3.7 install pyyaml && \
-    pip3.7 install pathlib2 && \
-    pip3.7 install protobuf && \
-    pip3.7 install scipy && \
-    pip3.7 install requests && \
+RUN pip3.7 install -U pip -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install decorator numpy kiwisolver matplotlib \
+    sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3.7 install protobuf scipy requests mpmath Pillow \
+    -i https://pypi.mirrors.ustc.edu.cn/simple && \
+    pip3 install pycocotools -i https://pypi.mirrors.ustc.edu.cn/simple && \
     rm -rf /root/.cache/pip
 
 # 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod +x /lib64/$LIBSTDCXX && \
     ldconfig
+
+RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8; exit 0
 
 # 清理临时目录
 RUN rm -rf ./*
