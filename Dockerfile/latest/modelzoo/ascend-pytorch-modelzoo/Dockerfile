@@ -3,27 +3,34 @@ FROM ubuntu:18.04
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
-ARG PREBUILD_SH=prebuild.sh
 ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
-COPY . ./
 
-# 触发prebuild.sh
-RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
+# 配置华为源
+RUN sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list && \
+    sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list
 
 # 系统包
 RUN apt update && \
-    apt install --no-install-recommends wget vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl libopenblas-dev \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch -y && \
-    wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz --no-check-certificate && \
+    apt install -y --no-install-recommends wget vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl \
+    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch
+
+# 下载gcc及依赖    
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz --no-check-certificate && \
     tar -zxf gcc-7.3.0.tar.gz && \
     cd gcc-7.3.0 && \
-    ./contrib/download_prerequisites  && \
+    wget https://mirrors.huaweicloud.com/gnu/gmp/gmp-6.1.0.tar.bz2 --no-check-certificate && \
+    wget https://mirrors.huaweicloud.com/gnu/mpfr/mpfr-3.1.4.tar.bz2 --no-check-certificate && \
+    wget https://mirrors.huaweicloud.com/gnu/mpc/mpc-1.0.3.tar.gz --no-check-certificate && \
+    wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.16.1.tar.bz2 --no-check-certificate
+    
+RUN cd gcc-7.3.0 && ./contrib/download_prerequisites  && \
     ./configure --enable-languages=c,c++ --disable-multilib --with-system-zlib --prefix=/usr/local/gcc7.3.0 && \
-     make -j && \
+     make -j20 && \
      make install && \
      rm -f /usr/bin/gcc && \
-     ln -s /usr/local/gcc7.3.0/bin/gcc /usr/bin/gcc
+     ln -s /usr/local/gcc7.3.0/bin/gcc /usr/bin/gcc && \
+     rm -rf /tmp/*
 
 ENV LD_LIBRARY_PATH=/usr/local/gcc7.3.0/lib64:${LD_LIBRARY_PATH}
 
@@ -50,6 +57,8 @@ RUN cd /tmp && \
 RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
     usermod -a -G HwHiAiUser hwMindX
+
+RUN apt install -y libfreetype6-dev pkg-config libpng-dev
 
 # python包
 RUN pip3.7 install numpy && \
@@ -79,11 +88,13 @@ RUN pip3.7 install numpy && \
     pip3.7 install lxml==4.5.2 && \
     pip3.7 install easydict==1.9
 
+COPY . ./
+
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH
 
 # Pytorch安装
-RUN pip3.7 install --upgrade /tmp/pytorch/dist/torch-1.5.0+ascend*.whl
+RUN pip3.7 install --upgrade torch-1.5.0+ascend*.whl
 
 ENV LD_LIBRARY_PATH=$NNAE_PATH/fwkacllib/lib64/:/usr/local/lib/python3.7/dist-packages/torch/lib:/usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/lib/aarch64_64-linux-gnu:$LD_LIBRARY_PATH
 ENV PATH=$PATH:$NNAE_PATH/fwkacllib/ccec_compiler/bin/:$NNAE_PATH/toolkit/tools/ide_daemon/bin/
@@ -93,18 +104,11 @@ ENV PYTHONPATH=$NNAE_PATH/fwkacllib/python/site-packages/:$NNAE_PATH/fwkacllib/p
 ENV ASCEND_AICPU_PATH=$NNAE_PATH
 
 # 安装apex
-RUN cp -rf /tmp/FrameworkPTAdapter-apex*.patch /tmp/apex && \
-    cd /tmp/apex && \
-    patch -p1 < FrameworkPTAdapter-apex*.patch 
     
-RUN python3.7 setup.py --npu_float_status bdist_wheel && \
-    cd dist && \
-    pip3.7 install --upgrade apex-0.1+ascend*.whl && \
-	pip3.7 install /tmp/tensor_fused_plugin-0.1+ascend*.whl && \
-	cd ../..
+RUN pip3.7 install --upgrade apex-0.1+ascend*.whl
 
 # 日志包安装
-RUN cd /tmp/dllogger-master/dllogger/ && \
+RUN cd /tmp/dllogger-master/ && \
     python3.7 setup.py build && \
     python3.7 setup.py install
 

@@ -33,6 +33,10 @@ RUN umask 0022 && \
     rm -rf $ASCEND_BASE/driver && \
     rm -f /etc/ascend_install.info
 
+# centos7.6-arm64镜像的制作需要执行以下注释语句，否则进入容器会警告无法设置en_US.UTF-8
+#RUN echo "export LC_ALL=en_US.UTF-8"  >> ~/.bashrc && \
+#    localedef -i en_US -f UTF-8 en_US.UTF-8
+
 ENV ASCEND_AICPU_PATH=$ASCEND_BASE/nnrt/latest \
     PYTHONPATH=$PYTHONPATH:$ASCEND_BASE/nnrt/latest/pyACL/python/site-packages/acl
 

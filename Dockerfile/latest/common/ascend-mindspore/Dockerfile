@@ -8,10 +8,11 @@ COPY . ./
 ARG ASCEND_BASE=/usr/local/Ascend
 
 # MindSpore安装
-ARG VERSION=1.3.0
+ARG VERSION=1.5.0
 # 注：centos7需激活SHELL，ubuntu18.04需注释
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
+# 注：Ubuntu18.04需修改默认SHELL为bash，或者下面的RUN语句后改为bash -c '执行语句'
 RUN umask 0022 && \
     mkdir -p $ASCEND_BASE/driver && \
     cp version.info $ASCEND_BASE/driver && \
@@ -42,3 +43,4 @@ RUN umask 0022 && \
     rm -f /etc/ascend_install.info && \
     rm -rf /root/.cache/pip && \
     rm -rf /tmp/*
+    

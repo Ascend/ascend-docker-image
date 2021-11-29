@@ -7,6 +7,7 @@ COPY . ./
 
 # TF相关安装
 ARG TFPLUGIN_PKG
+# arm的镜像TF_PKG需自行准备，tensorflow-1.15.0-cp37m-linux_arrch64.whl
 ARG TF_PKG=tensorflow-cpu==1.15.0
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
