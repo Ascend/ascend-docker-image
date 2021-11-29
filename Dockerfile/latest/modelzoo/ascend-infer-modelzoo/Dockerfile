@@ -1,24 +1,25 @@
 FROM ubuntu:18.04
 
 ARG ASCEND_BASE=/usr/local/Ascend
-ARG ATC_PKG=Ascend-atc*.run
-ARG NNRT_PKG=Ascend-cann-nnrt*.run
-ARG OPP_PKG=Ascend-opp*.run
 ARG PREBUILD_SH=prebuild.sh
-
+ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
 WORKDIR /tmp
-COPY . ./
-
 # 触发prebuild.sh
 RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
+COPY cmake-3.16.5.tar.gz /tmp
+
+#安装系统依赖和pip3.7
 RUN apt update && \
-    apt install --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev -y && \
+    apt install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool \
+    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 \
+    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl && \
+    apt clean && rm -rf /var/lib/apt/lists/* && \
     if [ ! -d "/lib64" ]; \
     then \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
-	
+
 RUN tar -zxvf Python-3.7.5.tgz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -s /usr/local/python3.7.5/bin/python3 /usr/bin/python3.7 && \
@@ -41,21 +42,10 @@ RUN apt autoremove cmake && \
     make install && \
     cd ..
 
-# 配置python pip源
-RUN mkdir -p ~/.pip \
-&& echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
-trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
-
-# pip3.7
-RUN cd /tmp && \
-    apt-get download python3-distutils && \
-    dpkg-deb -x python3-distutils_*.deb / && \
-    rm python3-distutils_*.deb
-
-RUN pip3.7 install numpy && \
+RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3.7 install numpy && \
     pip3.7 install decorator && \
-	pip3.7 install sympy==1.4 && \
+    pip3.7 install sympy==1.4 && \
 	pip3.7 install protobuf && \
 	pip3.7 install Cython && \
 	pip3.7 install wheel==0.32.1 && \
@@ -70,44 +60,38 @@ RUN pip3.7 install numpy && \
 	pip3.7 install lxml==4.5.2 && \
 	pip3.7 install easydict==1.9
 
-
-
-# install nnrt run pkg
+COPY . ./
+# install toolkit pkg
 RUN bash -c 'umask 0022' && \
-    chmod +x $NNRT_PKG && \
-    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE \
+    chmod +x $TOOLKIT_PKG && \
+    ./$TOOLKIT_PKG --quiet --install --install-path=$ASCEND_BASE \
     --install-for-all && \
-    rm $NNRT_PKG
-	
-# install atc run pkg
-RUN chmod +x $ATC_PKG && \
-    ./$ATC_PKG --quiet --run --install-path=$ASCEND_BASE \
-    --install-for-all && \
-    rm $ATC_PKG
-
-# install opp run pkg
-RUN chmod +x $OPP_PKG && \
-    ./$OPP_PKG --quiet --run --install-path=$ASCEND_BASE \
-    --install-for-all && \
-    rm $OPP_PKG
+    rm $TOOLKIT_PKG
 
 ENV ASCEND_HOME=$ASCEND_BASE
-ENV LD_LIBRARY_PATH=\
-$ASCEND_BASE/driver/lib64:\
-$ASCEND_BASE/nnrt/latest/acllib/lib64:\
-$ASCEND_BASE/atc/lib64:\
-$LD_LIBRARY_PATH
-ENV PYTHONPATH=\
-$ASCEND_BASE/nnrt/latest/pyACL/python/site-packages/acl:\
-$ASCEND_BASE/atc/python/site-packages:\
-$ASCEND_BASE/atc/python/site-packages/auto_tune.egg/auto_tune:\
-$ASCEND_BASE/atc/python/site-packages/schedule_search.egg:\
-$PYTHONPATH
-ENV ASCEND_AICPU_PATH=$ASCEND_BASE/nnrt/latest
-ENV PATH=\
-$ASCEND_BASE/atc/ccec_compiler/bin:\
-$ASCEND_BASE/atc/bin:\
-$PATH
-ENV ASCEND_OPP_PATH=$ASCEND_BASE/opp
 
-RUN rm -rf ./*
+RUN unset PYTHONPATH && \
+    unset ASCEND_AICPU_PATH && \
+    unset LD_LIBRARY_PATH
+
+ENV PYTHONPATH=/usr/local/sdk_home/mxManufacture/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
+$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
+$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
+ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
+LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
+/usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.7.5/lib
+
+ENV PATH=\
+$ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:\
+$ASCEND_BASE/ascend-toolkit/latest/atc/bin:\
+$PATH
+
+ENV ASCEND_OPP_PATH=$ASCEND_BASE/ascend-toolkit/latest/opp
+
+# 安装sdk包
+ARG SDK_PKG=Ascend-mindxsdk*.run
+
+RUN chmod +x $SDK_PKG && \
+    ./$SDK_PKG --quiet --install --install-path=/usr/local/sdk_home  && \
+    rm -rf $SDK_PKG && \
+    rm -rf /tmp/*

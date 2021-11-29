@@ -14,7 +14,7 @@ $ASCEND_BASE/driver/lib64/common:\
 $ASCEND_BASE/driver/lib64/driver:\
 $LD_LIBRARY_PATH
 
-# 2. 训练引擎NNRT安装
+# 2. 推理引擎NNRT安装
 ARG NNRT_PKG
 ARG NNRT_PATH=$ASCEND_BASE/nnrt/latest
 

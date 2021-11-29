@@ -8,23 +8,18 @@ ARG PREBUILD_SH=prebuild.sh
 ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
 COPY . ./
+SHELL ["/bin/bash","-c"]
 
 # 触发prebuild.sh
 RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
-# 系统包
+# 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \
-    apt install --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ pkg-config unzip \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 -y
+    apt install -y --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ libfreetype6-dev pkg-config libpng-dev unzip \
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2
         
 # 建立python软链接
 RUN ln -s /usr/bin/python3.7 /usr/bin/python
-
-# 配置python pip源
-RUN mkdir -p ~/.pip \
-&& echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
-trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 # pip3.7
 RUN cd /tmp && \
@@ -41,7 +36,8 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     usermod -a -G HwHiAiUser hwMindX
 
 # python包
-RUN pip3.7 install numpy && \
+RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
     pip3.7 install cffi==1.12.3 && \
