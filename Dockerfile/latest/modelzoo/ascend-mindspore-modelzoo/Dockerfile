@@ -16,7 +16,7 @@ RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ libfreetype6-dev pkg-config libpng-dev unzip \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz
         
 # 建立python软链接
 RUN ln -s /usr/bin/python3.7 /usr/bin/python
@@ -59,7 +59,8 @@ RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 
     pip3.7 install mmcv==0.2.14 && \
     pip3.7 install lxml==4.5.2 && \
     pip3.7 install easydict==1.9 && \
-    pip3.7 install mindinsight
+    pip3.7 install mindinsight && \
+    pip3.7 install scikit-learn==0.24.1
 
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH
