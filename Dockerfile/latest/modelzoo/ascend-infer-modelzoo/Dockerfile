@@ -3,6 +3,7 @@ FROM ubuntu:18.04
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG PREBUILD_SH=prebuild.sh
 ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
+ARG MX_SDK_HOME=/usr/local/sdk_home/mxManufacture
 WORKDIR /tmp
 # 触发prebuild.sh
 RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
@@ -73,13 +74,19 @@ ENV ASCEND_HOME=$ASCEND_BASE
 RUN unset PYTHONPATH && \
     unset ASCEND_AICPU_PATH && \
     unset LD_LIBRARY_PATH
-
+# LD_LIBRARY_PATH最后两个目录需要根据架构设置对应的目录，这里用的x86的，arm的需要修改
 ENV PYTHONPATH=/usr/local/sdk_home/mxManufacture/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
 ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
-LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
-/usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.7.5/lib
+MX_SDK_HOME=/usr/local/sdk_home/mxManufacture/ \
+GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-scanner \
+GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
+LD_LIBRARY_PATH=${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
+/usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
+/usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.7.5/lib:\
+/usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/x86_64-linux/devlib/:\
+/usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/runtime/lib64/stub/
 
 ENV PATH=\
 $ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:\
