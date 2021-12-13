@@ -74,7 +74,7 @@ ENV ASCEND_HOME=$ASCEND_BASE
 RUN unset PYTHONPATH && \
     unset ASCEND_AICPU_PATH && \
     unset LD_LIBRARY_PATH
-
+# LD_LIBRARY_PATH最后两个目录需要根据架构设置对应的目录，这里用的x86的，arm的需要修改
 ENV PYTHONPATH=/usr/local/sdk_home/mxManufacture/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
