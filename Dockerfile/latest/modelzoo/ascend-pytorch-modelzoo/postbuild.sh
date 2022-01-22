@@ -6,7 +6,6 @@
 # 注：本脚本运行结束后会被自动清除，不会残留在镜像中；脚本所在位置和Working Dir位置为/root
 #--------------------------------------------------------------------------------
 rm -f ascend_install.info
-rm -f prebuild.sh
 rm -f install_ascend_pkgs.sh
 rm -f Dockerfile
 rm -f Ascend-cann-nnae*.run

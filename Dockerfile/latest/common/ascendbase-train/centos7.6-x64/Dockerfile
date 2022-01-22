@@ -18,7 +18,6 @@ RUN yum -y update && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-# scl enable devtoolset-7 bash
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
 # 安装Python

@@ -6,11 +6,8 @@ ARG TF_PKG=tensorflow-1.15.0-cp37-cp37m-*.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
-ARG PREBUILD_SH=prebuild.sh
 ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
-
-# 触发prebuild.sh
 
 # 系统包
 RUN apt update && \
