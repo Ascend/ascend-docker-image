@@ -4,14 +4,10 @@ ARG TRAIN_FRAMEWORK_PKG=mindspore_ascend*.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
-ARG PREBUILD_SH=prebuild.sh
 ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
 COPY . ./
 SHELL ["/bin/bash","-c"]
-
-# 触发prebuild.sh
-RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \

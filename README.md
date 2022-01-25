@@ -90,6 +90,8 @@ docker build -t ascend-infer:infer_TAG --build-arg NNRT_PKG=nnrt-name --build-ar
 
 当出现“Successfully built xxx”表示镜像构建成功。
 
+d.common目录下的centos7.6-arm64镜像制作时需要修改Dockerfile，加入`RUN echo "export LC_ALL=en_US.UTF-8"  >> ~/.bashrc && localedef -i en_US -f UTF-8 en_US.UTF-8`，否则进入容器会警告无法设置en_US.UTF-8
+
 5.构建完成后，执行以下命令查看镜像信息。
 ```
 docker images
@@ -227,7 +229,8 @@ docker build -t ascend-tensorflow:tensorflow_TAG --build-arg TFPLUGIN_PKG=tfplug
 ```
 docker images
 ```
-
+## 注意事项
+- 如果ubuntu官方源太慢的话，可以自行设置其他源。
 ## License
 
 [Apache License 2.0](LICENSE)

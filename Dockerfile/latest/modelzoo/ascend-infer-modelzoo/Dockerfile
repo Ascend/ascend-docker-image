@@ -1,12 +1,9 @@
 FROM ubuntu:18.04
 
 ARG ASCEND_BASE=/usr/local/Ascend
-ARG PREBUILD_SH=prebuild.sh
 ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
 ARG MX_SDK_HOME=/usr/local/sdk_home/mxManufacture
 WORKDIR /tmp
-# 触发prebuild.sh
-RUN bash -c "test -f $PREBUILD_SH && bash $PREBUILD_SH"
 
 COPY cmake-3.16.5.tar.gz /tmp
 
