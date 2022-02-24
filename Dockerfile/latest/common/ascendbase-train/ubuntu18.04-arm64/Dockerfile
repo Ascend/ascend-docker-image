@@ -31,6 +31,12 @@ ENV PATH=$PATH:/usr/local/python37/bin \
 RUN rm -f /usr/bin/python3 && \
     ln -s /usr/local/python37/bin/python3 /usr/bin/python3
 
+# 配置python pip源
+RUN mkdir -p ~/.pip \
+&& echo '[global] \n\
+index-url=https://pypi.doubanio.com/simple/\n\
+trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
+
 # python包
 RUN pip3.7 install -U pip && \
     pip3.7 install numpy && \

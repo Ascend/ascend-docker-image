@@ -15,7 +15,7 @@ RUN apt update && \
         libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz
         
 # 建立python软链接
-RUN ln -s /usr/bin/python3.7 /usr/bin/python
+RUN ln -s /usr/bin/python3.7 /usr/bin/python3
 
 # pip3.7
 RUN cd /tmp && \
@@ -31,9 +31,14 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
     usermod -a -G HwHiAiUser hwMindX
 
+# 配置python pip源
+RUN mkdir -p ~/.pip \
+&& echo -e '[global] \n\
+index-url=https://pypi.doubanio.com/simple/\n\
+trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
+
 # python包
-RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    pip3.7 install numpy && \
+RUN pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
     pip3.7 install cffi==1.12.3 && \
@@ -56,7 +61,8 @@ RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 
     pip3.7 install lxml==4.5.2 && \
     pip3.7 install easydict==1.9 && \
     pip3.7 install mindinsight && \
-    pip3.7 install scikit-learn==0.24.1
+    pip3.7 install scikit-learn==0.24.1 && \
+    rm -rf /root/.cache/pip
 
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH
@@ -88,3 +94,5 @@ RUN pip3.7 install $TRAIN_FRAMEWORK_PKG && \
 # 触发postbuild.sh
 RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
     rm $POSTBUILD_SH
+
+USER hwMindX
