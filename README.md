@@ -229,8 +229,29 @@ docker build -t ascend-tensorflow:tensorflow_TAG --build-arg TFPLUGIN_PKG=tfplug
 ```
 docker images
 ```
+## 公网URL，用于下载系统依赖或python第三方库
+```
+https://gcc.gnu.org
+myhuaweicloud.com
+https://pypi.doubanio.com
+https://bootstrap.pypa.io
+https://repo.huaweicloud.com
+https://mirrors.huaweicloud.com
+https://pypi.mirrors.ustc.edu.cn
+https://mirrors.tuna.tsinghua.edu.cn
+
+```
 ## 注意事项
-- 如果ubuntu官方源太慢的话，可以自行设置其他源。
+- 如果ubuntu官方源太慢的话，可以自行设置其他源。更换官方apt源，Dockerfile参考如下，用户可根据实际情况修改：
+`cp -a /etc/apt/sources.list /etc/apt/sources.list.bak`
+`sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g" /etc/apt/sources.list`
+`sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /etc/apt/sources.list`
+
+- 如果pip官方源太慢的话，可以自行设置其他源。更换官方pip源，Dockerfile参考如下，用户可根据实际情况修改：
+`mkdir -p ~/.pip/`
+`echo '[global] \nindex-url=http://mirrors.huaweicloud.com/repository/pypi/simple\ntrusted-host=mirrors.huaweicloud.com' >> ~/.pip/pip.conf`
+
+- 如果想撤销配置的ubuntu源，参考：`mv -f /etc/apt/sources.list.bak /etc/apt/sources.list`，撤销配置的pip源参考：`rm -rf ~/.pip/pip.conf`
 ## License
 
 [Apache License 2.0](LICENSE)

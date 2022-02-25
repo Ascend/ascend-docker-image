@@ -27,6 +27,12 @@ RUN wget https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz && \
 ENV PATH=$PATH:/usr/local/python37/bin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/python37/lib
 
+# 配置python pip源
+RUN mkdir -p ~/.pip \
+&& echo '[global] \n\
+index-url=https://pypi.doubanio.com/simple/\n\
+trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
+
 # python包
 RUN pip3.7 install -U pip && \
     pip3.7 install numpy && \

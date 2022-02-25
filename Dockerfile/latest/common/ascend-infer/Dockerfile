@@ -17,6 +17,9 @@ $ASCEND_BASE/nnrt/latest/acllib/lib64:\
 $LD_LIBRARY_PATH
 
 RUN umask 0022 && \
+    useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
+    useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
+    usermod -a -G HwHiAiUser hwMindX && \
     mkdir -p $ASCEND_BASE/driver && \
     cp version.info $ASCEND_BASE/driver/ && \
     cp ascend_install.info /etc/ && \
@@ -31,9 +34,10 @@ RUN umask 0022 && \
     --install-for-all $CHIPOPTION && \
     rm $NNRT_PKG && \
     rm -rf $ASCEND_BASE/driver && \
-    rm -f /etc/ascend_install.info
+    rm -f /etc/ascend_install.info && \
+    rm -rf ./*
 
 ENV ASCEND_AICPU_PATH=$ASCEND_BASE/nnrt/latest \
     PYTHONPATH=$PYTHONPATH:$ASCEND_BASE/nnrt/latest/pyACL/python/site-packages/acl
 
-RUN rm -rf ./*
+USER hwMindX

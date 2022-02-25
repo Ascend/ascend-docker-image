@@ -40,8 +40,18 @@ RUN apt autoremove cmake && \
     make install && \
     cd ..
 
-RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    pip3.7 install numpy && \
+# HwHiAiUser, hwMindX
+RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
+    useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
+    usermod -a -G HwHiAiUser hwMindX
+
+# 配置python pip源
+RUN mkdir -p ~/.pip \
+&& echo '[global] \n\
+index-url=https://pypi.doubanio.com/simple/\n\
+trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
+
+RUN pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
 	pip3.7 install protobuf && \
@@ -56,7 +66,8 @@ RUN pip3.7 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 
 	pip3.7 install tables==3.6.1 && \
 	pip3.7 install mmcv==0.2.14 && \
 	pip3.7 install lxml==4.5.2 && \
-	pip3.7 install easydict==1.9
+	pip3.7 install easydict==1.9 && \
+    rm -rf /root/.cache/pip
 
 COPY . ./
 # install toolkit pkg
@@ -99,3 +110,5 @@ RUN chmod +x $SDK_PKG && \
     ./$SDK_PKG --quiet --install --install-path=/usr/local/sdk_home  && \
     rm -rf $SDK_PKG && \
     rm -rf /tmp/*
+
+USER hwMindX

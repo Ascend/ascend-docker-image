@@ -12,8 +12,11 @@ ARG VERSION=1.5.0
 # 注：centos7需激活SHELL，ubuntu18.04需注释
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
-# 注：Ubuntu18.04需修改默认SHELL为bash，或者下面的RUN语句后改为bash -c '执行语句'
+# 注：Ubuntu18.04需修改默认SHELL为bash
 RUN umask 0022 && \
+    useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
+    useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
+    usermod -a -G HwHiAiUser hwMindX && \
     mkdir -p $ASCEND_BASE/driver && \
     cp version.info $ASCEND_BASE/driver && \
     cp ascend_install.info /etc/ && \
@@ -43,4 +46,5 @@ RUN umask 0022 && \
     rm -f /etc/ascend_install.info && \
     rm -rf /root/.cache/pip && \
     rm -rf /tmp/*
-    
+
+USER hwMindX

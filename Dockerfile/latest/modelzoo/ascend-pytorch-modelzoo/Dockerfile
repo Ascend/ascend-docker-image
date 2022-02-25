@@ -86,7 +86,8 @@ RUN pip3.7 install numpy && \
     pip3.7 install tables==3.6.1 && \
     pip3.7 install mmcv==0.2.14 && \
     pip3.7 install lxml==4.5.2 && \
-    pip3.7 install easydict==1.9
+    pip3.7 install easydict==1.9 && \
+    rm -rf /root/.cache/pip
 
 COPY . ./
 
@@ -115,3 +116,5 @@ RUN cd /tmp/dllogger-master/ && \
 # 触发postbuild.sh
 RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
     rm $POSTBUILD_SH
+
+USER hwMindX
