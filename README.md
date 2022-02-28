@@ -231,14 +231,15 @@ docker images
 ```
 ## 公网URL，用于下载系统依赖或python第三方库
 ```
-https://gcc.gnu.org
+ubuntu.com
+gcc.gnu.org
 myhuaweicloud.com
-https://pypi.doubanio.com
-https://bootstrap.pypa.io
-https://repo.huaweicloud.com
-https://mirrors.huaweicloud.com
-https://pypi.mirrors.ustc.edu.cn
-https://mirrors.tuna.tsinghua.edu.cn
+pypi.doubanio.com
+bootstrap.pypa.io
+repo.huaweicloud.com
+mirrors.huaweicloud.com
+pypi.mirrors.ustc.edu.cn
+mirrors.tuna.tsinghua.edu.cn
 
 ```
 ## 注意事项
