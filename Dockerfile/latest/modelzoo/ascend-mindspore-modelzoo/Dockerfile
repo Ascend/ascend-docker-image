@@ -1,6 +1,8 @@
 FROM ubuntu:18.04
 
+ARG VERSION
 ARG TRAIN_FRAMEWORK_PKG=mindspore_ascend*.whl
+ARG MINDX_ELASTIC_PKG=mindx_elastic-${VERSION}-py3-none-any.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
@@ -12,10 +14,11 @@ SHELL ["/bin/bash","-c"]
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ libfreetype6-dev pkg-config libpng-dev unzip \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz && \
+        apt clean && rm -rf /var/lib/apt/lists/*
         
 # 建立python软链接
-RUN ln -s /usr/bin/python3.7 /usr/bin/python3
+RUN ln -sf /usr/bin/python3.7 /usr/bin/python3
 
 # pip3.7
 RUN cd /tmp && \
@@ -38,7 +41,8 @@ index-url=https://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 # python包
-RUN pip3.7 install numpy && \
+RUN pip3.7 install pip -U && \
+    pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
     pip3.7 install cffi==1.12.3 && \
@@ -62,6 +66,7 @@ RUN pip3.7 install numpy && \
     pip3.7 install easydict==1.9 && \
     pip3.7 install mindinsight && \
     pip3.7 install scikit-learn==0.24.1 && \
+    pip3.7 install ${MINDX_ELASTIC_PKG} && \
     rm -rf /root/.cache/pip
 
 # Ascend包
@@ -91,8 +96,8 @@ RUN pip3.7 install $TRAIN_FRAMEWORK_PKG && \
     pip3.7 install $NNAE_PATH/fwkacllib/lib64/topi-*.whl && \
     pip3.7 install $NNAE_PATH/fwkacllib/lib64/hccl-*.whl 
 
-# 触发postbuild.sh
-RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
-    rm $POSTBUILD_SH
+# 清理工作
+RUN rm -f /etc/ascend_install.info && \
+    rm -rf /tmp/*
 
 USER hwMindX

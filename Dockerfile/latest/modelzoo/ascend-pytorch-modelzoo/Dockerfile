@@ -13,7 +13,8 @@ RUN sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/ap
 # 系统包
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo bzip2 wget make tar python3.7 python3.7-dev curl g++ pkg-config unzip numactl \
-    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch
+    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch libfreetype6-dev pkg-config libpng-dev && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
 # 下载gcc及依赖    
 RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz --no-check-certificate && \
@@ -58,10 +59,9 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
     usermod -a -G HwHiAiUser hwMindX
 
-RUN apt install -y libfreetype6-dev pkg-config libpng-dev
-
 # python包
-RUN pip3.7 install numpy && \
+RUN pip3.7 install pip -U && \
+    pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
     pip3.7 install cffi==1.12.3 && \
@@ -113,8 +113,8 @@ RUN cd /tmp/dllogger-master/ && \
     python3.7 setup.py build && \
     python3.7 setup.py install
 
-# 触发postbuild.sh
-RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
-    rm $POSTBUILD_SH
+# 清理工作
+RUN rm -f /etc/ascend_install.info && \
+    rm -rf /tmp/*
 
 USER hwMindX

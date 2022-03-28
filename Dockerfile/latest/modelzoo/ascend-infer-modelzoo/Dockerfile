@@ -18,6 +18,8 @@ RUN apt update && \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
 
+COPY Python-3.7.5.tgz /tmp/
+
 RUN tar -zxvf Python-3.7.5.tgz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -s /usr/local/python3.7.5/bin/python3 /usr/bin/python3.7 && \
@@ -51,7 +53,8 @@ RUN mkdir -p ~/.pip \
 index-url=https://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
-RUN pip3.7 install numpy && \
+RUN pip3.7 install pip -U && \
+    pip3.7 install numpy && \
     pip3.7 install decorator && \
     pip3.7 install sympy==1.4 && \
 	pip3.7 install protobuf && \

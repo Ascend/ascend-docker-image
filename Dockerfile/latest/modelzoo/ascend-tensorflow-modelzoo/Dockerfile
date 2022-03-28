@@ -79,8 +79,8 @@ $LD_LIBRARY_PATH
 # TF安装
 RUN pip3.7 install $TF_PKG
 
-# 触发postbuild.sh
-RUN bash -c "test -f $POSTBUILD_SH && bash $POSTBUILD_SH" && \
-    rm $POSTBUILD_SH
+# 清理工作
+RUN rm -f /etc/ascend_install.info && \
+    rm -rf /tmp/*
 
 USER hwMindX
