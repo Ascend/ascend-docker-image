@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
-ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
 
 # 配置华为源
@@ -74,7 +73,7 @@ RUN pip3.7 install pip -U && \
     pip3.7 install requests && \
     pip3.7 install attrs && \
     pip3.7 install wheel && \
-    pip3.7 install Pillow && \
+    pip3.7 install Pillow==6.2.2 && \
     pip3.7 install torchvision==0.2.2.post3 && \
     pip3.7 install wheel==0.32.1 && \
     pip3.7 install setuptools==49.1.0 && \

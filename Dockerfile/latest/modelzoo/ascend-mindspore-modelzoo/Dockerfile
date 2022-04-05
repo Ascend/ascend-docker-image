@@ -6,7 +6,6 @@ ARG MINDX_ELASTIC_PKG=mindx_elastic-${VERSION}-py3-none-any.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
-ARG POSTBUILD_SH=postbuild.sh
 WORKDIR /tmp
 COPY . ./
 SHELL ["/bin/bash","-c"]
@@ -14,7 +13,7 @@ SHELL ["/bin/bash","-c"]
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo openssl libnuma1 python3.7 python3.7-dev curl g++ libfreetype6-dev pkg-config libpng-dev unzip \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz && \
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz libgl1-mesa-glx && \
         apt clean && rm -rf /var/lib/apt/lists/*
         
 # 建立python软链接

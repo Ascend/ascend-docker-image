@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
-ARG MX_SDK_HOME=/usr/local/sdk_home/mxManufacture
+ARG MX_SDK_HOME=/usr/local/sdk_home/mxVision
 WORKDIR /tmp
 
 COPY cmake-3.16.5.tar.gz /tmp
@@ -19,7 +19,7 @@ RUN apt update && \
     fi
 COPY Python-3.9.2.tar.xz /tmp
 RUN tar -xvf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr/local/python3.9.2 --enable-shared && \
-    make && make install && \
+    make -j36 && make install && \
     ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python3 && \
     ln -sf /usr/local/python3.9.2/bin/pip3 /usr/bin/pip3 && \
     cd ..
@@ -32,7 +32,7 @@ RUN apt autoremove cmake && \
     tar -zxvf cmake-3.16.5.tar.gz && \
     cd cmake-3.16.5 && \
     ./bootstrap && \
-    make && \
+    make -j36 && \
     make install && \
     cd ..
 
@@ -80,18 +80,18 @@ RUN unset PYTHONPATH && \
     unset ASCEND_AICPU_PATH && \
     unset LD_LIBRARY_PATH
 # LD_LIBRARY_PATH最后两个目录需要根据架构设置对应的目录，这里用的x86的，arm的需要修改
-ENV PYTHONPATH=/usr/local/sdk_home/mxManufacture/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
+ENV PYTHONPATH=${MX_SDK_HOME}/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
 ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
-MX_SDK_HOME=/usr/local/sdk_home/mxManufacture/ \
+MX_SDK_HOME=/usr/local/sdk_home/mxVision/ \
 GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-scanner \
 GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
-LD_LIBRARY_PATH=${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:\
+LD_LIBRARY_PATH=${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
 /usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
 /usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.9.2/lib:\
-/usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/x86_64-linux/devlib:\
-/usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/runtime/lib64/stub
+/usr/local/Ascend/ascend-toolkit/latest/arm64-linux/aarch64-linux/devlib:\
+/usr/local/Ascend/ascend-toolkit/latest/arm64-linux/runtime/lib64/stub
 ENV PATH=\
 $ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/bin:\
