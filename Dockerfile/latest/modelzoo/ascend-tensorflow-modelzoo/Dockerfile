@@ -12,24 +12,27 @@ WORKDIR /tmp
 RUN apt update && \
     apt install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool \
     libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 \
-    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo && \
+    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo  less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
-# 安装python，建立软连接，用户配置
-RUN wget https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz && \
-    tar -xf Python-3.7.5.tar.xz && \
-    cd Python-3.7.5 && \
-    mkdir build && cd build && \
-    ../configure --enable-shared --prefix=/usr/local/python37 && \
-    make -j 16 && make install && \
-    cd .. && rm -rf build && cd .. && rm -rf Python-3.7.5 && rm -f Python-3.7.5.tar.xz && \
-    ldconfig && \
-    rm -f /usr/bin/python3 && \
-    ln -s /usr/local/python37/bin/python3 /usr/bin/python3 && \
-    useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
+
+COPY Python-3.7.5.tar.xz /tmp
+
+# 安装python和pip
+RUN tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
+    make && make install && \
+    ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python3 && \
+    ln -sf /usr/local/python3.7.5/bin/pip3 /usr/bin/pip3 && \
+    cd .. && \
+    rm -rf Python*
+
+ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib:$LD_LIBRARY_PATH
+ENV PATH=/usr/local/python3.7.5/bin:$PATH
+
+# HwHiAiUser, hwMindX
+RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
     usermod -a -G HwHiAiUser hwMindX
-ENV PATH=$PATH:/usr/local/python37/bin \
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/python37/lib        
+    
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
@@ -37,21 +40,22 @@ index-url=https://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 COPY . /tmp
-# 安装python包，建议分成两个dockerfile，第一个做到matplotlib，不然有可能出现Session stopped的问题,pip需升级，不然pip_pkg安装报错
-RUN pip3.7 install -U pip && \
-    pip3.7 install pip_pkg/*.whl && \
-    pip3.7 install pip_pkg/*.tar.gz && \
-    pip3.7 install wheel==0.32.1 && \
-    pip3.7 install setuptools==49.1.0 && \
-    pip3.7 install matplotlib==3.2.2 && \
-    pip3.7 install opencv-python==4.4.0.42 && \
-    pip3.7 install sklearn==0.0 && \
-    pip3.7 install pandas==1.0.5 && \
-    pip3.7 install pycocotools==2.0.1 && \
-    pip3.7 install tables==3.6.1 && \
-    pip3.7 install mmcv==0.2.14 && \
-    pip3.7 install lxml==4.5.2 && \
-    pip3.7 install easydict==1.9 && \
+
+# 安装python包，pip需升级，不然pip_pkg安装报错
+RUN pip3 install -U pip && \
+    pip3 install pip_pkg/*.whl && \
+    pip3 install pip_pkg/*.tar.gz && \
+    pip3 install wheel==0.32.1 && \
+    pip3 install setuptools==49.1.0 && \
+    pip3 install matplotlib==3.2.2 && \
+    pip3 install opencv-python==4.4.0.42 && \
+    pip3 install sklearn==0.0 && \
+    pip3 install pandas==1.0.5 && \
+    pip3 install pycocotools==2.0.1 && \
+    pip3 install tables==3.6.1 && \
+    pip3 install mmcv==0.2.14 && \
+    pip3 install lxml==4.5.2 && \
+    pip3 install easydict==1.9 && \
     rm -rf /root/.cache/pip
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH
@@ -76,7 +80,7 @@ ENV LD_LIBRARY_PATH=$NNAE_PATH/fwkacllib/lib64:\
 $LD_LIBRARY_PATH
 
 # TF安装
-RUN pip3.7 install $TF_PKG
+RUN pip3 install $TF_PKG
 
 # 清理工作
 RUN rm -f /etc/ascend_install.info && \

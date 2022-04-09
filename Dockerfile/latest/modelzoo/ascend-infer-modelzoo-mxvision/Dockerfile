@@ -5,36 +5,41 @@ ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
 ARG MX_SDK_HOME=/usr/local/sdk_home/mxVision
 WORKDIR /tmp
 
-COPY cmake-3.16.5.tar.gz /tmp
-
-#安装系统依赖和pip3.7
+#安装系统依赖
 RUN apt update && \
     apt install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libssl-dev vim zip unzip dos2unix autoconf libtool \
     libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 \
-    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl && \
+    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl less htop && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
     if [ ! -d "/lib64" ]; \
     then \
         mkdir /lib64 && ln -sf /lib/ld-linux-aarch64.so.1 /lib64/ld-linux-aarch64.so.1; \
     fi
+
 COPY Python-3.9.2.tar.xz /tmp
+
+# 安装python和pip
 RUN tar -xvf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr/local/python3.9.2 --enable-shared && \
     make -j36 && make install && \
     ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python3 && \
     ln -sf /usr/local/python3.9.2/bin/pip3 /usr/bin/pip3 && \
-    cd ..
+    cd .. && \
+    rm -rf Python*
 	
 ENV LD_LIBRARY_PATH=/usr/local/python3.9.2/lib:$LD_LIBRARY_PATH
 ENV PATH=/usr/local/python3.9.2/bin:$PATH
-	
-# 源码安装cmake 3.16.5
+
+COPY cmake-3.16.5.tar.gz /tmp
+
+# 源码安装cmake
 RUN apt autoremove cmake && \
     tar -zxvf cmake-3.16.5.tar.gz && \
     cd cmake-3.16.5 && \
     ./bootstrap && \
     make -j36 && \
     make install && \
-    cd ..
+    cd .. && \
+    rm -rf cmake*
 
 # HwHiAiUser, hwMindX
 RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
@@ -79,7 +84,8 @@ ENV ASCEND_HOME=$ASCEND_BASE
 RUN unset PYTHONPATH && \
     unset ASCEND_AICPU_PATH && \
     unset LD_LIBRARY_PATH
-# LD_LIBRARY_PATH最后两个目录需要根据架构设置对应的目录，这里用的x86的，arm的需要修改
+
+# 设置环境变量
 ENV PYTHONPATH=${MX_SDK_HOME}/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
@@ -89,13 +95,9 @@ GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-sc
 GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
 LD_LIBRARY_PATH=${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
 /usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
-/usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.9.2/lib:\
-/usr/local/Ascend/ascend-toolkit/latest/arm64-linux/aarch64-linux/devlib:\
-/usr/local/Ascend/ascend-toolkit/latest/arm64-linux/runtime/lib64/stub
-ENV PATH=\
-$ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:\
-$ASCEND_BASE/ascend-toolkit/latest/atc/bin:\
-$PATH
+/usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.9.2/lib
+
+ENV PATH=$ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:$ASCEND_BASE/ascend-toolkit/latest/atc/bin:$PATH
 
 ENV ASCEND_OPP_PATH=$ASCEND_BASE/ascend-toolkit/latest/opp
 
