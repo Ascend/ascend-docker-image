@@ -49,7 +49,7 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 RUN pip3 install pip -U && \

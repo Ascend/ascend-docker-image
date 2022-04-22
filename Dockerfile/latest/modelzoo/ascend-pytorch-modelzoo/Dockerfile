@@ -46,7 +46,7 @@ ENV PATH=/usr/local/python3.7.5/bin:$PATH
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 # HwHiAiUser, hwMindX

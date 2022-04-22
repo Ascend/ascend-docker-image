@@ -30,7 +30,7 @@ ENV PATH=$PATH:/usr/local/python37/bin \
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 # python包
