@@ -93,7 +93,7 @@ ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
 MX_SDK_HOME=/usr/local/sdk_home/mxVision/ \
 GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-scanner \
 GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
-LD_LIBRARY_PATH=${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
+LD_LIBRARY_PATH=/home/data/miniD/driver/lib64:${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
 /usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
 /usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.9.2/lib
 
