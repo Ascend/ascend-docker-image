@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-ARG VERSION
 ARG TRAIN_FRAMEWORK_PKG=mindspore_ascend*.whl
 ARG MINDX_ELASTIC_PKG=mindx_elastic*.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
