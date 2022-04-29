@@ -1,13 +1,11 @@
 FROM ubuntu:18.04
 
-ARG VERSION
 ARG TRAIN_FRAMEWORK_PKG=mindspore_ascend*.whl
-ARG MINDX_ELASTIC_PKG=mindx_elastic-${VERSION}-py3-none-any.whl
+ARG MINDX_ELASTIC_PKG=mindx_elastic*.whl
 ARG HOST_ASCEND_BASE=/usr/local/Ascend
 ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
 ARG INSTALL_ASCEND_PKGS_SH=install_ascend_pkgs.sh
 WORKDIR /tmp
-COPY . ./
 SHELL ["/bin/bash","-c"]
 
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
@@ -16,7 +14,7 @@ RUN apt update && \
         libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz libgl1-mesa-glx less htop && \
         apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY Python-3.7.5.tar.xz /tmp
+COPY . ./
 
 # 安装python和pip
 RUN tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
@@ -37,7 +35,7 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo -e '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 # python包

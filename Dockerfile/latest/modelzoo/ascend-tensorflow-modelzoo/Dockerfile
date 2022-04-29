@@ -15,7 +15,7 @@ RUN apt update && \
     libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo  less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY Python-3.7.5.tar.xz /tmp
+COPY . ./
 
 # 安装python和pip
 RUN tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
@@ -36,10 +36,8 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
-
-COPY . /tmp
 
 # 安装python包，pip需升级，不然pip_pkg安装报错
 RUN pip3 install -U pip && \
@@ -57,6 +55,7 @@ RUN pip3 install -U pip && \
     pip3 install lxml==4.5.2 && \
     pip3 install easydict==1.9 && \
     rm -rf /root/.cache/pip
+
 # Ascend包
 RUN bash $INSTALL_ASCEND_PKGS_SH
 

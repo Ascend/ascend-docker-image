@@ -8,7 +8,7 @@ COPY . ./
 ARG ASCEND_BASE=/usr/local/Ascend
 
 # MindSpore安装
-ARG VERSION=1.5.0
+ARG VERSION=1.6.1
 # 注：centos7需激活SHELL，ubuntu18.04需注释
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 

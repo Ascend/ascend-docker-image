@@ -49,7 +49,7 @@ RUN useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
 # 配置python pip源
 RUN mkdir -p ~/.pip \
 && echo '[global] \n\
-index-url=https://pypi.doubanio.com/simple/\n\
+index-url=http://pypi.doubanio.com/simple/\n\
 trusted-host=pypi.doubanio.com' >> ~/.pip/pip.conf
 
 RUN pip3 install pip -U && \
@@ -61,7 +61,7 @@ RUN pip3 install pip -U && \
 	pip3 install wheel==0.32.1 && \
 	pip3 install setuptools==49.1.0 && \
 	pip3 install matplotlib==3.2.2 && \
-	pip3 install opencv-python==4.4.0.42 && \
+	pip3 install opencv-python==4.5.5.64 && \
 	pip3 install sklearn==0.0 && \
 	pip3 install pandas==1.0.5 && \
 	pip3 install pycocotools==2.0.1 && \
@@ -93,7 +93,7 @@ ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
 MX_SDK_HOME=/usr/local/sdk_home/mxVision/ \
 GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-scanner \
 GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
-LD_LIBRARY_PATH=${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
+LD_LIBRARY_PATH=/home/data/miniD/driver/lib64:${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
 /usr/local/Ascend/driver/lib64:/usr/local/Ascend/ascend-toolkit/latest/acllib/lib64:\
 /usr/local/Ascend/ascend-toolkit/latest/atc/lib64:/usr/local/python3.9.2/lib
 
