@@ -13,11 +13,11 @@ cp version.info /usr/local/Ascend/driver/
  
 # Install the nnae run package
 chmod +x Ascend-cann-nnae*.run
-./Ascend-cann-nnae*.run --install-path=/usr/local/Ascend/ --install --quiet
+./Ascend-cann-nnae*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all
  
 # Install the tfplugin run package
 chmod +x Ascend-cann-tfplugin*.run
-./Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet
+./Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all
 
 # 只为了安装toolkit包，所以需要清理，容器启动时通过ascend docker挂载进来
 rm -f version.info

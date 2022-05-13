@@ -2,7 +2,8 @@ FROM ubuntu:18.04
 
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TOOLKIT_PKG=Ascend-cann-toolkit*.run
-ARG MX_SDK_HOME=/usr/local/sdk_home/mxVision
+ARG MX_SDK_HOME=/home/hwMindX/sdk_home/mxVision
+ARG SDK_PKG=Ascend-mindxsdk*.run
 WORKDIR /tmp
 
 #安装系统依赖
@@ -22,6 +23,7 @@ COPY Python-3.9.2.tar.xz /tmp
 RUN tar -xvf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr/local/python3.9.2 --enable-shared && \
     make -j36 && make install && \
     ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python3 && \
+    ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python3.9 && \
     ln -sf /usr/local/python3.9.2/bin/pip3 /usr/bin/pip3 && \
     cd .. && \
     rm -rf Python*
@@ -75,22 +77,18 @@ COPY . ./
 # install toolkit pkg
 RUN bash -c 'umask 0022' && \
     chmod +x $TOOLKIT_PKG && \
-    ./$TOOLKIT_PKG --quiet --install --install-path=$ASCEND_BASE \
-    --install-for-all && \
-    rm $TOOLKIT_PKG
-
-ENV ASCEND_HOME=$ASCEND_BASE
-
-RUN unset PYTHONPATH && \
-    unset ASCEND_AICPU_PATH && \
-    unset LD_LIBRARY_PATH
+    ./$TOOLKIT_PKG --quiet --install --install-path=$ASCEND_BASE --install-for-all && \
+    mv $SDK_PKG /home/hwMindX && \
+    rm -rf /tmp/*
 
 # 设置环境变量
+ENV ASCEND_HOME=$ASCEND_BASE
+
 ENV PYTHONPATH=${MX_SDK_HOME}/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
 ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
-MX_SDK_HOME=/usr/local/sdk_home/mxVision/ \
+MX_SDK_HOME=/home/hwMindX/sdk_home/mxVision/ \
 GST_PLUGIN_SCANNER=${MX_SDK_HOME}/opensource/libexec/gstreamer-1.0/gst-plugin-scanner \
 GST_PLUGIN_PATH=${MX_SDK_HOME}/opensource/lib/gstreamer-1.0:${MX_SDK_HOME}/lib/plugins \
 LD_LIBRARY_PATH=/home/data/miniD/driver/lib64:${MX_SDK_HOME}/lib/modelpostprocessors:${MX_SDK_HOME}/lib:${MX_SDK_HOME}/opensource/lib:${MX_SDK_HOME}/opensource/lib64:\
@@ -102,11 +100,7 @@ ENV PATH=$ASCEND_BASE/ascend-toolkit/latest/atc/ccec_compiler/bin:$ASCEND_BASE/a
 ENV ASCEND_OPP_PATH=$ASCEND_BASE/ascend-toolkit/latest/opp
 
 # 安装sdk包
-ARG SDK_PKG=Ascend-mindxsdk*.run
-
-RUN chmod +x $SDK_PKG && \
-    ./$SDK_PKG --quiet --install --install-path=/usr/local/sdk_home  && \
-    rm -rf $SDK_PKG && \
-    rm -rf /tmp/*
-
+WORKDIR /home/hwMindX
 USER hwMindX
+RUN bash $SDK_PKG --quiet --install --install-path=/home/hwMindX/sdk_home  && \
+    rm -rf $SDK_PKG
