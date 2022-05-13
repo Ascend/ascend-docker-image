@@ -54,7 +54,7 @@ RUN pip3 install pip -U && \
     pip3 install wheel==0.32.1 && \
     pip3 install setuptools==49.1.0 && \
     pip3 install matplotlib==3.2.2 && \
-    pip3 install opencv-python==4.4.0.42 && \
+    pip3 install opencv-python==4.5.5.64 && \
     pip3 install sklearn==0.0 && \
     pip3 install pandas==1.0.5 && \
     pip3 install pycocotools==2.0.1 && \
