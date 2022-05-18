@@ -8,7 +8,7 @@ WORKDIR /tmp
 # 系统包
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo bzip2 wget make tar curl g++ pkg-config unzip numactl \
-    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch libfreetype6-dev pkg-config libpng-dev less htop && \
+    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch libfreetype6-dev pkg-config libpng-dev libgl1-mesa-glx less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # 下载gcc及依赖    
@@ -74,7 +74,7 @@ RUN pip3 install pip -U && \
     pip3 install wheel==0.32.1 && \
     pip3 install setuptools==49.1.0 && \
     pip3 install matplotlib==3.2.2 && \
-    pip3 install opencv-python==4.4.0.42 && \
+    pip3 install opencv-python==4.5.5.64 && \
     pip3 install sklearn==0.0 && \
     pip3 install pandas==1.0.5 && \
     pip3 install pycocotools==2.0.1 && \

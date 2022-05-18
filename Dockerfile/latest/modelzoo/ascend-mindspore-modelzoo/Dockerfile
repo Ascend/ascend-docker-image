@@ -11,7 +11,7 @@ SHELL ["/bin/bash","-c"]
 # 系统包,增加libfreetype6-dev pkg-config libpng-dev，否则安装matplotlib报错
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo openssl libnuma1 curl g++ libfreetype6-dev pkg-config libpng-dev unzip \
-        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz libgl1-mesa-glx less htop && \
+        libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz libgl1-mesa-glx libssl-dev less htop && \
         apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY . ./
@@ -54,7 +54,7 @@ RUN pip3 install pip -U && \
     pip3 install wheel==0.32.1 && \
     pip3 install setuptools==49.1.0 && \
     pip3 install matplotlib==3.2.2 && \
-    pip3 install opencv-python==4.4.0.42 && \
+    pip3 install opencv-python==4.5.5.64 && \
     pip3 install sklearn==0.0 && \
     pip3 install pandas==1.0.5 && \
     pip3 install pycocotools==2.0.1 && \
