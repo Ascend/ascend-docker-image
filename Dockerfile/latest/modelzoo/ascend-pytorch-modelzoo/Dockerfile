@@ -8,7 +8,7 @@ WORKDIR /tmp
 # 系统包
 RUN apt update && \
     apt install -y --no-install-recommends wget vim sudo bzip2 wget make tar curl g++ pkg-config unzip numactl \
-    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch libfreetype6-dev pkg-config libpng-dev less htop && \
+    libopenblas-dev libblas3 liblapack3 liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 libxml2 libssl-dev git patch libfreetype6-dev pkg-config libpng-dev libgl1-mesa-glx less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # 下载gcc及依赖    
