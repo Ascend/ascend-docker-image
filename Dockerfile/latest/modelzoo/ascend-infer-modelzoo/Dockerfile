@@ -84,7 +84,7 @@ RUN bash -c 'umask 0022' && \
 # 环境变量设置
 ENV ASCEND_HOME=$ASCEND_BASE
 
-ENV PYTHONPATH=/usr/local/sdk_home/mxManufacture/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
+ENV PYTHONPATH=${MX_SDK_HOME}/python:$ASCEND_BASE/ascend-toolkit/latest/pyACL/python/site-packages/acl:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages:$ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/auto_tune.egg/auto_tune:\
 $ASCEND_BASE/ascend-toolkit/latest/atc/python/site-packages/schedule_search.egg \
 ASCEND_AICPU_PATH=$ASCEND_BASE/ascend-toolkit/latest \
