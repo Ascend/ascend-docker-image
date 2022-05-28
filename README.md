@@ -42,6 +42,7 @@ b.请在当前目录准备以下文件
 |setproxy.sh |可进行配置源、配置系统网络代理等操作。|（可选）用户可根据实际情况自行准备。 |
 |unsetproxy.sh |可取消系统网络代理配置等。 | （可选）用户可根据实际情况自行准备。|
 |EulerOS.repo | yum源配置文件。 | 仅容器镜像OS为EulerOS2.8时需准备。| 
+|libstdc++.so.6.0.24|动态库文件。|仅当容器镜像OS为CentOS时需要准备libstdc++.so.6.0.24文件。可以通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
 
 c.在当前目录执行以下命令构建镜像ascendbase-infer。
 ```
@@ -70,8 +71,6 @@ b.请在当前目录准备以下软件包和相关文件。
 |Dockerfile |制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |ascend_install.info |软件包安装日志文件 | （从host拷贝“/etc/ascend_install.info”文件。以实际路径为准。请注意拷贝到当前目后，将拷贝文件内的“UserName”和“UserGroup”这两行内容删除。|
 |version.info | driver包版本信息文件 | 从host拷贝“/usr/local/Ascend/driver/version.info”文件。以实际路径为准。| 
-| preinstall.sh|拷贝文件到指定目录等。 |已存在于当前目录，请取消相关代码注释。|
-| postinstall.sh| 清除不需要保留在容器中的目录、文件等。|	已存在于当前目录，请取消相关代码注释。|
 
 c.在当前目录执行以下命令构建镜像ascend-infer。
 ```
@@ -144,7 +143,6 @@ b.请在当前目录准备以下文件。
 |setproxy.sh|可进行配置源、配置系统网络代理等操作。|（可选）用户可根据实际情况自行准备。|
 |unsetproxy.sh|可取消系统网络代理配置等。| （可选）用户可根据实际情况自行准备。|
 |libstdc++.so.6.0.24|动态库文件。|仅当容器镜像OS为CentOS时需要准备libstdc++.so.6.0.24文件。可以通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
-|npy_math_internal.h.src.patch|解决CentOS镜像中安装numpy报错的问题。|已存在于当前目录。仅当容器镜像OS为CentOS arm64时需要。|
 
 c.在当前目录执行以下命令构建镜像ascendbase-train。
 ```
@@ -205,8 +203,6 @@ b.请在当前目录准备以下软件包和相关文件。
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
 |ascend_install.info|软件包安装日志文件|从host拷贝“/etc/ascend_install.info”文件。以实际路径为准。请注意拷贝到当前目录后，将拷贝文件内的“UserName”和“UserGroup”这两行内容删除。|
 |version.info|driver包版本信息文件|从host拷贝“/usr/local/Ascend/driver/version.info”文件。以实际路径为准。|
-|preinstall.sh|拷贝文件到指定目录等。|已存在于当前目录，请取消相关代码注释。|
-|postinstall.sh|清除不需要保留在容器中的目录、文件等。|已存在于当前目录，请取消相关代码注释。|
 
 c.在当前目录执行以下命令构建镜像ascend-tensorflow（若为x86_64架构，无需输入参数TF_PKG，请删除以下命令中的“ --build-arg TF_PKG=tensorflow-name”）。
 ```
