@@ -17,6 +17,7 @@ RUN umask 0022 && \
     useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
     usermod -a -G HwHiAiUser hwMindX && \
+    pip3 install easydict && \
     mkdir -p $ASCEND_BASE/driver && \
     cp version.info $ASCEND_BASE/driver && \
     cp ascend_install.info /etc/ && \
