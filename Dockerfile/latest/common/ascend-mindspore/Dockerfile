@@ -8,11 +8,10 @@ COPY . ./
 ARG ASCEND_BASE=/usr/local/Ascend
 
 # MindSpore安装
-ARG VERSION=1.7.0
-# 注：centos7需激活SHELL，ubuntu18.04需注释
+ARG VERSION=1.8.0
+# 注：centos7需激活SHELL，ubuntu18.04需修改SHELL
 SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
 
-# 注：Ubuntu18.04需修改默认SHELL为bash
 RUN umask 0022 && \
     useradd -d /home/hwMindX -u 9000 -m -s /bin/bash hwMindX && \
     useradd -d /home/HwHiAiUser -u 1000 -m -s /bin/bash HwHiAiUser && \
