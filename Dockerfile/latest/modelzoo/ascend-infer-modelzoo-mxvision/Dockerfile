@@ -31,12 +31,12 @@ RUN tar -xvf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr
 ENV LD_LIBRARY_PATH=/usr/local/python3.9.2/lib:$LD_LIBRARY_PATH
 ENV PATH=/usr/local/python3.9.2/bin:$PATH
 
-COPY cmake-3.16.5.tar.gz /tmp
+COPY cmake-3.20.5.tar.gz /tmp
 
 # 源码安装cmake
 RUN apt autoremove cmake && \
-    tar -zxvf cmake-3.16.5.tar.gz && \
-    cd cmake-3.16.5 && \
+    tar -zxvf cmake-3.20.5.tar.gz && \
+    cd cmake-3.20.5 && \
     ./bootstrap && \
     make -j36 && \
     make install && \
