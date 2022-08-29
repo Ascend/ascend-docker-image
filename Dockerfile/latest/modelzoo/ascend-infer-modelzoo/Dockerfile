@@ -58,7 +58,8 @@ RUN pip3 install pip -U && \
     pip3 install numpy && \
     pip3 install decorator && \
     pip3 install sympy==1.4 && \
-	pip3 install protobuf && \
+	pip3 install protobuf==3.13.0 && \
+    pip3 install Pillow && \
 	pip3 install Cython && \
 	pip3 install wheel==0.32.1 && \
 	pip3 install setuptools==49.1.0 && \

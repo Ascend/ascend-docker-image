@@ -34,8 +34,8 @@ RUN umask 0022 && \
     fi && \
     if [ "$ARCH" == "aarch64" ]; then \
         pip3 install \
-        --index-url https://pypi.obs-website.cn-east-2.myhuaweicloud.com/simple/ \
-        --trusted-host pypi.obs-website.cn-east-2.myhuaweicloud.com \
+        --index-url https://pypi.douban.com/simple/ \
+        --trusted-host pypi.douban.com \
         psutil; \
     fi && \
     pip3 install \
