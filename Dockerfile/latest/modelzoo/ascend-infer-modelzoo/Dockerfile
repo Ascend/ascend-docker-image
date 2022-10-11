@@ -31,12 +31,12 @@ RUN tar -xvf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr
 ENV LD_LIBRARY_PATH=/usr/local/python3.9.2/lib:$LD_LIBRARY_PATH
 ENV PATH=/usr/local/python3.9.2/bin:$PATH
 
-COPY cmake-3.16.5.tar.gz /tmp
+COPY cmake-3.20.5.tar.gz /tmp
 
 # 源码安装cmake
 RUN apt autoremove cmake && \
-    tar -zxvf cmake-3.16.5.tar.gz && \
-    cd cmake-3.16.5 && \
+    tar -zxvf cmake-3.20.5.tar.gz && \
+    cd cmake-3.20.5 && \
     ./bootstrap && \
     make && \
     make install && \
@@ -58,7 +58,8 @@ RUN pip3 install pip -U && \
     pip3 install numpy && \
     pip3 install decorator && \
     pip3 install sympy==1.4 && \
-	pip3 install protobuf && \
+	pip3 install protobuf==3.13.0 && \
+    pip3 install Pillow && \
 	pip3 install Cython && \
 	pip3 install wheel==0.32.1 && \
 	pip3 install setuptools==49.1.0 && \
