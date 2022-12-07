@@ -11,7 +11,7 @@ WORKDIR /tmp
 # 系统包
 RUN apt update && \
     apt install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libbz2-dev libssl-dev vim zip unzip dos2unix autoconf libtool \
-    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 \
+    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 liblzma-dev\
     libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev ca-certificates curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo  less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
