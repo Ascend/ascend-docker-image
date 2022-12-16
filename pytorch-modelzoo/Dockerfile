@@ -5,7 +5,7 @@ WORKDIR /tmp
 COPY . ./
 
 FROM ubuntu:18.04
-ARG NNAE_PATH=/usr/local/Ascend/nnae/latest
+ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
 
 RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
     deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
@@ -33,70 +33,51 @@ RUN curl -k https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz -o Pyt
     tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python3 && \
+    ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python && \
     ln -sf /usr/local/python3.7.5/bin/pip3 /usr/bin/pip3 && \
+    ln -sf /usr/local/python3.7.5/bin/pip3 /usr/bin/pip && \
     cd .. && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo '[global] \n\
-    index-url=https://pypi.tuna.tsinghua.edu.cn/simple\n\
-    trusted-host=pypi.tuna.tsinghua.edu.cn' >> ~/.pip/pip.conf && \
+    index-url=http://pypi.douban.com/simple\n\
+    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
-#安装pytorch
+#安装pip包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     pip3 install pip -U && \
-    pip3 install decorator && \
-    pip3 install sympy==1.4 && \
-    pip3 install cffi==1.12.3 && \
-    pip3 install pyyaml && \
-    pip3 install pathlib2 && \
-    pip3 install grpcio && \
-    pip3 install grpcio-tools && \
-    pip3 install protobuf && \
-    pip3 install scipy && \
-    pip3 install requests && \
-    pip3 install attrs && \
-    pip3 install wheel && \
-    pip3 install Pillow==7.2.0 && \
-    pip3 install wheel && \
-    pip3 install setuptools && \
-    pip3 install matplotlib && \
-    pip3 install opencv-python==4.5.5.64 && \
-    pip3 install sklearn==0.0 && \
-    pip3 install pandas && \
-    pip3 install pycocotools==2.0.6 && \
-    pip3 install tables==3.6.1 && \
-    pip3 install mmcv==1.7.0 && \
-    pip3 install lxml==4.5.2 && \
-    pip3 install easydict==1.9 && \
-    pip3 install pytest && \
-    pip3 install xdoctest==1.1.0 && \
-    pip3 install --upgrade /tmp/torch-1.8.1*.whl && \
-    pip3 install torchvision==0.9.1 && \
+    pip3 install -r /tmp/requirements.txt && \
     pip3 install /tmp/dllogger && \
     rm -rf /root/.cache/pip
 
 #set env
-ENV LD_LIBRARY_PATH=$NNAE_PATH/fwkacllib/lib64/:/usr/local/python3.7.5/lib/python3.7/site-packages/torch/lib:/usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/lib/aarch64_64-linux-gnu:$LD_LIBRARY_PATH \
-PATH=$PATH:$NNAE_PATH/fwkacllib/ccec_compiler/bin/:$NNAE_PATH/toolkit/tools/ide_daemon/bin/ \
-ASCEND_OPP_PATH=$NNAE_PATH/opp/ \
-OPTION_EXEC_EXTERN_PLUGIN_PATH=$NNAE_PATH/fwkacllib/lib64/plugin/opskernel/libfe.so:$NNAE_PATH/fwkacllib/lib64/plugin/opskernel/libaicpu_engine.so:$NNAE_PATH/fwkacllib/lib64/plugin/opskernel/libge_local_engine.so \
-PYTHONPATH=$NNAE_PATH/fwkacllib/python/site-packages/:$NNAE_PATH/fwkacllib/python/site-packages/auto_tune.egg/auto_tune:$NNAE_PATH/fwkacllib/python/site-packages/schedule_search.egg:$PYTHONPATH \
-ASCEND_AICPU_PATH=$NNAE_PATH
+ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64/:/usr/local/python3.7.5/lib/python3.7/site-packages/torch/lib:/usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/lib/aarch64_64-linux-gnu:$LD_LIBRARY_PATH \
+PATH=$PATH:$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$TOOLKIT_PATH/toolkit/tools/ide_daemon/bin/ \
+ASCEND_OPP_PATH=$TOOLKIT_PATH/opp/ \
+OPTION_EXEC_EXTERN_PLUGIN_PATH=$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libfe.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libaicpu_engine.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libge_local_engine.so \
+PYTHONPATH=$TOOLKIT_PATH/fwkacllib/python/site-packages/:$TOOLKIT_PATH/fwkacllib/python/site-packages/auto_tune.egg/auto_tune:$TOOLKIT_PATH/fwkacllib/python/site-packages/schedule_search.egg:$PYTHONPATH \
+ASCEND_AICPU_PATH=$TOOLKIT_PATH
 
 # create user HwHiAiUser
 RUN groupadd  HwHiAiUser -g 1000 && \
-useradd -d /home/HwHiAiUser -u 1000 -g 1000 -m -s /bin/bash HwHiAiUser
+    useradd -d /home/HwHiAiUser -u 1000 -g 1000 -m -s /bin/bash HwHiAiUser
 
-#安装pytorch
+#安装toolkit
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
-bash /tmp/Ascend-cann-nnae*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-pip3 install --upgrade /tmp/torch_npu*.whl && \
-pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
-rm -rf /root/.cache/pip
+    chmod +x /tmp/Ascend-cann-toolkit*.run && \
+    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    pip3 install --upgrade /tmp/torch_npu*.whl && \
+    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
+    pip3 install --upgrade /tmp/torch-*.whl && \
+
+# 清理工作
+    cp /tmp/test_model.sh /home/HwHiAiUser/ && \
+    rm -rf /tmp/*  && \
+    rm -rf /root/.cache/pip
 
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch
+COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/Resnet50_Cifar_for_PyTorch
 WORKDIR /home/HwHiAiUser/

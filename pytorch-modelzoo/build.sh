@@ -24,9 +24,10 @@ if [ $have_torch_npu == 0 ]; then
     exit 1
 fi
 
-have_nnae=$(find . |grep cann|grep nnae|grep $arch|wc -l)
-if [ $have_nnae == 0 ]; then
-    echo "please put nnae package here"
+have_toolkit=$(find . |grep cann|grep toolkit|grep $arch|wc -l)
+if [ $have_toolkit == 0 ]; then
+    echo "please put toolkit package here"
+    exit 1
 fi
 
 if [ ! -d  Resnet50_Cifar_for_PyTorch ];then
