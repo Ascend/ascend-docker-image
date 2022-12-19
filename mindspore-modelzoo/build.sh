@@ -2,22 +2,27 @@
 
 arch=$(uname -m)
 
-have_torch=$(find . |grep "mindspore"|grep $arch|wc -l)
-if [ $have_torch == 0 ]; then
+have_mindspore=$(find . |grep "mindspore"|grep $arch|wc -l)
+if [ $have_mindspore == 0 ]; then
     echo "please put mindspore wheel package here"
     exit 1
 fi
 
-have_torch=$(find . |grep "mindx_elastic"|grep $arch|wc -l)
-if [ $have_torch == 0 ]; then
+have_elastic=$(find . |grep "mindx_elastic"|grep $arch|wc -l)
+if [ $have_elastic == 0 ]; then
     echo "please put mindx_elastic wheel package here"
     exit 1
 fi
 
-have_nnae=$(find . |grep cann|grep nnae|grep $arch|wc -l)
-if [ $have_nnae == 0 ]; then
-    echo "please put nnae package here"
+have_toolkit=$(find . |grep cann|grep toolkit|grep $arch|wc -l)
+if [ $have_toolkit == 0 ]; then
+    echo "please put toolkit package here"
     exit 1
 fi
 
-docker build . -t mindspore-modelzoo
+echo "start build"
+if [ $arch == "x86_64" ];then
+    DOCKER_BUILDKIT=1  docker build . -t mindspore-modelzoo
+else
+    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t mindspore-modelzoo
+fi
