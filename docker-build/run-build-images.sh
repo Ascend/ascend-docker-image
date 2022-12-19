@@ -29,7 +29,7 @@ if [ $1 = "pytorch-modelzoo" ]; then
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    curl https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+    curl -kO https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
     cp -r Resnet50_Cifar_for_PyTorch ../pyTorch-modelzoo/
