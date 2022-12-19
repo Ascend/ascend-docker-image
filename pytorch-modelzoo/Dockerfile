@@ -72,7 +72,6 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     pip3 install --upgrade /tmp/torch-*.whl && \
 
 # 清理工作
-    cp /tmp/test_model.sh /home/HwHiAiUser/ && \
     rm -rf /tmp/*  && \
     rm -rf /root/.cache/pip
 
@@ -80,4 +79,5 @@ USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
 COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/Resnet50_Cifar_for_PyTorch
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/
