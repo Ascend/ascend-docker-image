@@ -24,6 +24,10 @@ if [ $1 = "mindspore-modelzoo" ]; then
 fi
 
 if [ $1 = "pytorch-modelzoo" ]; then
+    if [ -d Resnet50_Cifar_for_PyTorch ] || [ -d ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
+        rm -rf Resnet50_Cifar_for_PyTorch/
+        rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
+    fi
     git clone https://gitee.com/ascend/ModelZoo-PyTorch.git
     mv ModelZoo-PyTorch/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch .
     rm -rf ModelZoo-PyTorch
