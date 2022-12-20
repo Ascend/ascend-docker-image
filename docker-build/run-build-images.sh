@@ -12,7 +12,7 @@ if [ $1 = "mindspore-modelzoo" ]; then
     mv official/cv/resnet/ ../Resnet50_Cifar_for_MindSpore
     cd .. && rm -rf models
     mkdir -p Resnet50_Cifar_for_MindSpore/data/cifar10
-    curl -kO https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
+    wget https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz && rm -f cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
     cp -r Resnet50_Cifar_for_MindSpore ../mindspore-modelzoo/
@@ -33,7 +33,7 @@ if [ $1 = "pytorch-modelzoo" ]; then
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    curl -kO https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+    wget https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
     cp -r Resnet50_Cifar_for_PyTorch ../pytorch-modelzoo/
