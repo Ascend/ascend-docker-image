@@ -1,12 +1,11 @@
 # syntax = docker/dockerfile:experimental
-FROM ubuntu:18.04 as buildtemp
+FROM ubuntu:18.04 as buildtemp 
 
 WORKDIR /tmp
 COPY . ./
 
 FROM ubuntu:18.04
-ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
-
+# 系统包
 RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
     deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
     deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-updates main restricted universe multiverse\n\
@@ -17,13 +16,11 @@ RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main res
     deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-security main restricted universe multiverse\n" > /etc/apt/sources.list && \
     apt-get -o "Acquire::https::Verify-Peer=false" update && \
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends ca-certificates && \
-    apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends \
-    wget vim sudo bzip2 wget make tar curl g++ pkg-config unzip numactl \
-    libsqlite3-dev libzip-dev liblzma-dev zlib1g-dev libbz2-dev libopenblas-dev libblas3 liblapack3 \
-    liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 \
-    libxml2 libssl-dev git patch libfreetype6-dev libpng-dev libgl1-mesa-glx less htop bc && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libbz2-dev libssl-dev vim zip unzip dos2unix autoconf libtool \
+    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 liblzma-dev\
+    libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo  less htop && \
+    apt clean && rm -rf /var/lib/apt/lists/*
+
 
 ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib: \
     PATH=/usr/local/python3.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -45,42 +42,63 @@ RUN umask 0022  && \
     trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
-#安装pip包
-RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
-    umask 0022  && \
-    pip3 install pip -U && \
-    pip3 install -r /tmp/requirements.txt && \
-    pip3 install /tmp/dllogger && \
-    rm -rf /root/.cache/pip
-
-#set env
-ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64/:/usr/local/python3.7.5/lib/python3.7/site-packages/torch/lib:/usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/lib/aarch64_64-linux-gnu:$LD_LIBRARY_PATH \
-PATH=$PATH:$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$TOOLKIT_PATH/toolkit/tools/ide_daemon/bin/ \
-ASCEND_OPP_PATH=$TOOLKIT_PATH/opp/ \
-OPTION_EXEC_EXTERN_PLUGIN_PATH=$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libfe.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libaicpu_engine.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libge_local_engine.so \
-PYTHONPATH=$TOOLKIT_PATH/fwkacllib/python/site-packages/:$TOOLKIT_PATH/fwkacllib/python/site-packages/auto_tune.egg/auto_tune:$TOOLKIT_PATH/fwkacllib/python/site-packages/schedule_search.egg:$PYTHONPATH \
-ASCEND_AICPU_PATH=$TOOLKIT_PATH
-
-# create user HwHiAiUser
+# HwHiAiUser
 RUN groupadd  HwHiAiUser -g 1000 && \
     useradd -d /home/HwHiAiUser -u 1000 -g 1000 -m -s /bin/bash HwHiAiUser
 
-#安装toolkit
+# 安装python包，pip需升级，不然pip_pkg安装报错
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
+    ARCH=$(uname -m) && \
+    pip3 install -U pip && \
+    curl -O https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/numpy-1.17.5-cp37-cp37m-manylinux2014_${ARCH}.whl -k && \
+    pip3 install numpy-1.17.5-cp37-cp37m-manylinux2014_${ARCH}.whl && \
+    pip3 install -r /tmp/requirements.txt && \   
+    rm -rf /root/.cache/pip
+
+# 环境变量
+ENV GLOG_v=2
+ARG HOST_ASCEND_BASE=/usr/local/Ascend
+ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
+ENV TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe
+ENV FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages
+ENV PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH
+ENV ASCEND_OPP_PATH=$TOOLKIT_PATH/opp
+ENV PYTHONPATH=$HOST_ASCEND_BASE/tfplugin/latest/tfplugin/python/site-packages:\
+$FWK_PYTHON_PATH:\
+$FWK_PYTHON_PATH/auto_tune.egg:\
+$FWK_PYTHON_PATH/schedule_search.egg:\
+$TBE_IMPL_PATH:\
+$PYTHONPATH
+ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:\
+/usr/local/Ascend/driver/lib64/common/:\
+/usr/local/Ascend/driver/lib64/driver/:\
+/usr/local/Ascend/add-ons/:\
+/usr/local/Ascend/driver/tools/hccn_tool/:\
+$LD_LIBRARY_PATH
+
+# Ascend包
+RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
+    umask 0022  && \
+    cp /tmp/ascend_install.info /etc/ && \
+    mkdir -p /usr/local/Ascend/driver/ && \
+    cp /tmp/version.info /usr/local/Ascend/driver/ && \
+    chmod 755 /usr/local/Ascend && \
     chmod +x /tmp/Ascend-cann-toolkit*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    pip3 install --upgrade /tmp/torch_npu*.whl && \
-    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
-    pip3 install --upgrade /tmp/torch-*.whl && \
+    chmod +x /tmp/Ascend-cann-tfplugin*.run && \
+    bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+# 安装tensorflow
+    ARCH=$(uname -m) && \
+    pip3 install /tmp/tensorflow-*_${ARCH}.whl && \
 
 # 清理工作
-    rm -rf /tmp/*  && \
+    rm -rf /tmp/* && \
     rm -rf /root/.cache/pip
 
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/Resnet50_Cifar_for_PyTorch
+COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_ID0058_for_TensorFlow /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/

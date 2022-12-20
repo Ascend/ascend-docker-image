@@ -25,7 +25,8 @@ ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib: \
     PATH=/usr/local/python3.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # 安装python和pip
-RUN curl -k https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz -o Python-3.7.5.tar.xz && \
+RUN umask 0022  && \
+    curl -k https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz -o Python-3.7.5.tar.xz && \
     tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
     make && make install && \
     ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python3 && \
@@ -46,6 +47,7 @@ RUN groupadd  HwHiAiUser -g 1000 && \
 
 # python包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
+    umask 0022  && \
     pip3 install pip -U && \
     pip3 install -r /tmp/requirements.txt && \
     pip3 install /tmp/mindx_elastic*.whl && \
@@ -72,6 +74,7 @@ $LD_LIBRARY_PATH
 
 # CANN包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
+    umask 0022  && \
     chmod +x /tmp/Ascend-cann-toolkit*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # TRAIN_FRAMEWORK安装
