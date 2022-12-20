@@ -3,7 +3,7 @@
 ## 启动训练
 
 function start_test_model() {
-    cd ~/Resnet50_Cifar_for_Pytorch
+    cd ~/Resnet50_Cifar_for_PyTorch
     bash test/train_performance_1p.sh
     sleep 5s
     tail -f test/output/0/train_0.log
