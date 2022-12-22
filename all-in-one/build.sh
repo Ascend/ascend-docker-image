@@ -63,22 +63,29 @@ if [ ! -d samples/Resnet50_Cifar_for_PyTorch ]; then
     exit 1
 fi
 
-if [ ! -f samples/Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python.tar.gz ]; then
-    mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
+if [ ! -d samples/Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python ]; then
+    mkdir -p samples/Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    curl https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz -o Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python.tar.gz
+    curl -O https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+    tar -xf cifar-100-python.tar.gz -C samples/Resnet50_Cifar_for_PyTorch/data/cifar100
 fi
 
 # 检查tensorflow依赖文件
-have_tfplugin=$(find . |grep cann|grep tfplugin|grep -c "$arch")
+have_tfplugin=$(find . | grep cann | grep tfplugin | grep -c "$arch")
 if [ "$have_tfplugin" == 0 ]; then
     echo "please put tfplugin package here"
     exit 1
 fi
 
-have_tensorflow=$(find . |grep "tensorflow"|grep -c "$arch")
+have_tensorflow=$(find . | grep "tensorflow" | grep -c "$arch")
 if [ "$have_tensorflow" == 0 ]; then
     echo "please put tensorflow wheel package here"
+    exit 1
+fi
+
+have_tfplugin=$(find . | grep cann | grep tfplugin | grep -c "$arch")
+if [ "$have_tfplugin" == 0 ]; then
+    echo "please put tfplugin package here"
     exit 1
 fi
 
@@ -88,7 +95,7 @@ if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X ]; then
     exit 1
 fi
 
-if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-bin ]; then
+if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-py ]; then
     mkdir -p samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
     echo "download dataset cifar10"
     curl -O https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
@@ -96,8 +103,4 @@ if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-b
 fi
 
 echo "start build"
-if [ "$arch" == "x86_64" ]; then
-    DOCKER_BUILDKIT=1 docker build . -t all-in-one
-else
-    DOCKER_BUILDKIT=1 docker build . -f Dockerfile_aarch64 -t all-in-one
-fi
+DOCKER_BUILDKIT=1 docker build . -t all-in-one
