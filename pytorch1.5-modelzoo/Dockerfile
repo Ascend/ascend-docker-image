@@ -1,0 +1,85 @@
+# syntax = docker/dockerfile:experimental
+FROM ubuntu:18.04 as buildtemp
+
+WORKDIR /tmp
+COPY . ./
+
+FROM ubuntu:18.04
+ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
+
+RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-updates main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-updates main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-backports main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-backports main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-security main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-security main restricted universe multiverse\n" > /etc/apt/sources.list && \
+    apt-get -o "Acquire::https::Verify-Peer=false" update && \
+    apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends ca-certificates && \
+    apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends \
+    wget vim sudo bzip2 wget make tar curl g++ pkg-config unzip numactl \
+    libsqlite3-dev libzip-dev liblzma-dev zlib1g-dev libbz2-dev libopenblas-dev libblas3 liblapack3 \
+    liblapack-dev libblas-dev gfortran libhdf5-dev libffi-dev libicu60 \
+    libxml2 libssl-dev git patch libfreetype6-dev libpng-dev libgl1-mesa-glx less htop bc && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib: \
+    PATH=/usr/local/python3.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# 安装python和pip
+RUN umask 0022  && \
+    curl -k https://repo.huaweicloud.com/python/3.7.5/Python-3.7.5.tar.xz -o Python-3.7.5.tar.xz && \
+    tar -xf Python-3.7.5.tar.xz && cd Python-3.7.5 && ./configure --prefix=/usr/local/python3.7.5 --enable-shared && \
+    make && make install && \
+    ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python3 && \
+    ln -sf /usr/local/python3.7.5/bin/python3 /usr/bin/python && \
+    ln -sf /usr/local/python3.7.5/bin/pip3 /usr/bin/pip3 && \
+    ln -sf /usr/local/python3.7.5/bin/pip3 /usr/bin/pip && \
+    cd .. && \
+    rm -rf Python* && \
+    mkdir -p ~/.pip  && \
+    echo '[global] \n\
+    index-url=http://pypi.douban.com/simple\n\
+    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    pip3 install pip -U
+
+#安装pip包
+RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
+    umask 0022  && \
+    pip3 install pip -U && \
+    pip3 install -r /tmp/requirements.txt && \
+    pip3 install /tmp/dllogger && \
+    rm -rf /root/.cache/pip
+
+#set env
+ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64/:/usr/local/python3.7.5/lib/python3.7/site-packages/torch/lib:/usr/local/Ascend/driver/lib64/:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/lib/aarch64_64-linux-gnu:$LD_LIBRARY_PATH \
+PATH=$PATH:$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$TOOLKIT_PATH/toolkit/tools/ide_daemon/bin/ \
+ASCEND_OPP_PATH=$TOOLKIT_PATH/opp/ \
+OPTION_EXEC_EXTERN_PLUGIN_PATH=$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libfe.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libaicpu_engine.so:$TOOLKIT_PATH/fwkacllib/lib64/plugin/opskernel/libge_local_engine.so \
+PYTHONPATH=$TOOLKIT_PATH/fwkacllib/python/site-packages/:$TOOLKIT_PATH/fwkacllib/python/site-packages/auto_tune.egg/auto_tune:$TOOLKIT_PATH/fwkacllib/python/site-packages/schedule_search.egg:$PYTHONPATH \
+ASCEND_AICPU_PATH=$TOOLKIT_PATH
+
+# create user HwHiAiUser
+RUN groupadd  HwHiAiUser -g 1000 && \
+    useradd -d /home/HwHiAiUser -u 1000 -g 1000 -m -s /bin/bash HwHiAiUser
+
+#安装toolkit
+RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
+    umask 0022  && \
+    chmod +x /tmp/Ascend-cann-toolkit*.run && \
+    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
+    pip3 install --upgrade /tmp/torch-*.whl && \
+
+# 清理工作
+    rm -rf /tmp/*  && \
+    rm -rf /root/.cache/pip
+
+USER HwHiAiUser
+
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser InceptionV4_for_PyTorch_1.1_code /home/HwHiAiUser/InceptionV4_for_PyTorch_1.1_code
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
+WORKDIR /home/HwHiAiUser/
