@@ -1,8 +1,8 @@
 #!/bin/bash
 
-func build_mindspore_modelzoo()
+## 获取mindspore-modelzoo数据集和模型
+func get_mindspore_modelzoo_dataset_model()
 {
-    ## 获取数据集和模型
     if [ -d Resnet50_Cifar_for_MindSpore ] || [ -d ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore ]; then
         rm -rf Resnet50_Cifar_for_MindSpore
         rm -rf ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore
@@ -17,14 +17,10 @@ func build_mindspore_modelzoo()
     tar -xf cifar-10-binary.tar.gz && rm -f cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
     cp -r Resnet50_Cifar_for_MindSpore ../mindspore-modelzoo/
-
-    ## 构建、推送镜像
-    cd ../mindspore-modelzoo
-    bash build.sh
-    cd -
 }
 
-func build_pytorch_modelzoo()
+## 获取pytorch1.8.1-modelzoo数据集和模型
+func get_pytorch_modelzoo_dataset_model()
 {
     if [ -d Resnet50_Cifar_for_PyTorch ] || [ -d ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
         rm -rf Resnet50_Cifar_for_PyTorch/
@@ -39,23 +35,55 @@ func build_pytorch_modelzoo()
     tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
     cp -r Resnet50_Cifar_for_PyTorch ../pytorch-modelzoo/
+}
 
-    ## 构建、推送镜像
+## 获取tensorflow2.6.5-modelzoo数据集和模型
+func get_tensorflow265_modelzoo_dataset_model()
+{
+    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
+    mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
+    rm -rf ModelZoo-TensorFlow
+    wget http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+}
+
+## 生成mindspore-modelzoo镜像
+func build_mindspore_modelzoo()
+{
+    ## 获取数据集和模型
+    get_mindspore_modelzoo_dataset_model
+
+    ## 构建镜像
+    cd ../mindspore-modelzoo
+    bash build.sh
+    cd -
+}
+
+## 生成pytorch-modelzoo镜像
+func build_pytorch_modelzoo()
+{
+    ## 获取数据集和模型
+    get_pytorch_modelzoo_dataset_model
+
+    ## 构建镜像
     cd ../pytorch-modelzoo
     bash build.sh
     cd -
 }
 
-# 数据集需手动放置到pytorch1.5-modelzoo目录下
+## 生成pytorch1.5-modelzoo镜像
+## 数据集需手动放置到pytorch1.5-modelzoo目录下
 func build_pytorch15_modelzoo()
 {
-    ## 构建、推送镜像
+    ## 构建镜像
     cd ../pytorch1.5-modelzoo
     bash build.sh
     cd -
 }
 
-# 数据集需手动放置到docker-build下
+## 生成tensorflow1.15-modelzoo镜像
+## 数据集需手动放置到docker-build下
 func build_tensorflow_modelzoo()
 {
     if [ -d ResNet50_ID0058_for_TensorFlow ] || [ -d ../tensorflow-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
@@ -71,28 +99,26 @@ func build_tensorflow_modelzoo()
     mv data ResNet50_ID0058_for_TensorFlow/
     cp -r ResNet50_ID0058_for_TensorFlow ../tensorflow-modelzoo
     
-    ## 构建、推送镜像
+    ## 构建镜像
     cd ../tensorflow-modelzoo
     bash build.sh
     cd -
 }
 
+## 生成tensorflow2.6.5-modelzoo镜像
 func build_tensorflow265_modelzoo()
 {
-    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
-    mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
-    rm -rf ModelZoo-TensorFlow
-    wget http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
-    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    ## 获取数据集和模型
+    get_tensorflow265_modelzoo_dataset_model
 
-    ## 构建、推送镜像
+    ## 构建镜像
     cd ../tensorflow2.6.5-modelzoo
     bash build.sh
     cd -
 }
 
-# 数据集需手动放置到infer-modelzoo目录下
+## 生成infer-modelzoo镜像
+## 数据集需手动放置到infer-modelzoo目录下
 func build_infer_modelzoo()
 {
     cd ../infer-modelzoo
@@ -100,10 +126,29 @@ func build_infer_modelzoo()
     cd -
 }
 
-#数据集需手动放置到infer-modelzoo-mxvision目录下
+## 生成infer-modelzoo-mxvision镜像
+## 数据集需手动放置到infer-modelzoo-mxvision目录下
 func build_infer_modelzoo_mxvision()
 {
     cd ../infer-modelzoo-mxvision
+    bash build.sh
+    cd -
+}
+
+## 生成三合一镜像
+func all_in_one()
+{
+    ## 获取mindspore-modelzoo数据集和模型
+    get_mindspore_modelzoo_dataset_model
+    
+    ## 获取pytorch-modelzoo数据集和模型
+    get_pytorch_modelzoo_dataset_model
+
+    ## 获取tensorflow-modelzoo数据集和模型
+    get_tensorflow265_modelzoo_dataset_model
+
+    ## 构建镜像
+    cd ../all-in-one
     bash build.sh
     cd -
 }
@@ -136,6 +181,10 @@ main()
 
     if [ $1 = "infer-modelzoo-mxvision" ]; then
         build_infer_modelzoo_mxvision
+    fi
+
+    if [ $1 = "all-in-one" ]; then
+        all_in_one
     fi
 
     if [ $1 = "all" ]; then
