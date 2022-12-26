@@ -30,18 +30,6 @@ if [ $have_toolkit == 0 ]; then
     exit 1
 fi
 
-if [ ! -d  Resnet50_Cifar_for_PyTorch ];then
-    echo "please put Resnet50_Cifar_for_PyTorch here"
-    echo "it can be download from https://gitee.com/ascend/ModelZoo-PyTorch/tree/master/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch"
-fi
-
-if [ ! -f Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python.tar.gz ];then
-    mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
-    echo "download dataset cifar100"
-    curl https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz -o Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python.tar.gz
-fi
-
-
 echo "start build"
 if [ $arch == "x86_64" ];then
     DOCKER_BUILDKIT=1  docker build . -t pytorch-modelzoo

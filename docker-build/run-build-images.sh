@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ $1 = "mindspore-modelzoo" ]; then
+func build_mindspore_modelzoo()
+{
     ## 获取数据集和模型
     if [ -d Resnet50_Cifar_for_MindSpore ] || [ -d ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore ]; then
         rm -rf Resnet50_Cifar_for_MindSpore
@@ -21,9 +22,10 @@ if [ $1 = "mindspore-modelzoo" ]; then
     cd ../mindspore-modelzoo
     bash build.sh
     cd -
-fi
+}
 
-if [ $1 = "pytorch-modelzoo" ]; then
+func build_pytorch_modelzoo()
+{
     if [ -d Resnet50_Cifar_for_PyTorch ] || [ -d ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
         rm -rf Resnet50_Cifar_for_PyTorch/
         rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
@@ -42,7 +44,112 @@ if [ $1 = "pytorch-modelzoo" ]; then
     cd ../pytorch-modelzoo
     bash build.sh
     cd -
-fi
+}
+
+# 数据集需手动放置到pytorch1.5-modelzoo目录下
+func build_pytorch15_modelzoo()
+{
+    ## 构建、推送镜像
+    cd ../pytorch1.5-modelzoo
+    bash build.sh
+    cd -
+}
+
+# 数据集需手动放置到docker-build下
+func build_tensorflow_modelzoo()
+{
+    if [ -d ResNet50_ID0058_for_TensorFlow ] || [ -d ../tensorflow-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
+        rm -rf ResNet50_ID0058_for_TensorFlow/
+        rm -rf ../tensorflow-modelzoo/ResNet50_ID0058_for_TensorFlow/
+    fi
+    mkdir data
+    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
+    mv ModelZoo-TensorFlow/TensorFlow/built-in/cv/image_classification/ResNet50_ID0058_for_TensorFlow/ .
+    rm -rf ModelZoo-TensorFlow
+    mv imagenet2012 data
+    # 将数据集放入模型代码目录，数据集存放到data目录
+    mv data ResNet50_ID0058_for_TensorFlow/
+    cp -r ResNet50_ID0058_for_TensorFlow ../tensorflow-modelzoo
+    
+    ## 构建、推送镜像
+    cd ../tensorflow-modelzoo
+    bash build.sh
+    cd -
+}
+
+func build_tensorflow265_modelzoo()
+{
+    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
+    mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
+    rm -rf ModelZoo-TensorFlow
+    wget http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+
+    ## 构建、推送镜像
+    cd ../tensorflow2.6.5-modelzoo
+    bash build.sh
+    cd -
+}
+
+# 数据集需手动放置到infer-modelzoo目录下
+func build_infer_modelzoo()
+{
+    cd ../infer-modelzoo
+    bash build.sh
+    cd -
+}
+
+#数据集需手动放置到infer-modelzoo-mxvision目录下
+func build_infer_modelzoo_mxvision()
+{
+    cd ../infer-modelzoo-mxvision
+    bash build.sh
+    cd -
+}
+
+main()
+{
+    if [ $1 = "mindspore-modelzoo" ]; then
+        build_mindspore_modelzoo
+    fi
+
+    if [ $1 = "pytorch-modelzoo" ]; then
+        build_pytorch_modelzoo
+    fi
+
+    if [ $1 = "pytorch1.5-modelzoo" ]; then
+        build_pytorch15_modelzoo
+    fi
+
+    # if [ $1 = "tensorflow-modelzoo" ]; then
+    #     build_tensorflow_modelzoo
+    # fi
+
+    if [ $1 = "tensorflow-modelzoo2.6.5" ]; then
+        build_tensorflow265_modelzoo
+    fi
+
+    if [ $1 = "infer-modelzoo" ]; then
+        build_infer_modelzoo
+    fi
+
+    if [ $1 = "infer-modelzoo-mxvision" ]; then
+        build_infer_modelzoo_mxvision
+    fi
+
+    if [ $1 = "all" ]; then
+        build_mindspore_modelzoo
+        build_pytorch_modelzoo
+        build_pytorch15_modelzoo
+        build_tensorflow_modelzoo
+        build_tensorflow265_modelzoo
+        build_infer_modelzoo
+        build_infer_modelzoo_mxvision
+    fi
+}
+
+main "$1"
 
 ## 启动镜像后，进行训练
 # docker run -it --rm mindspore-modelzoo:4-ubuntu18.04-arm64 bash test_model.sh
