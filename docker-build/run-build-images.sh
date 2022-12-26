@@ -40,12 +40,18 @@ func get_pytorch_modelzoo_dataset_model()
 ## 获取tensorflow2.6.5-modelzoo数据集和模型
 func get_tensorflow265_modelzoo_dataset_model()
 {
+    if [ -d Keras-MnasNet_ID3518_for_TensorFlow2.X ] || [ -d ../tensorflow2.6.5-modelzoo/Keras-MnasNet_ID3518_for_TensorFlow2.X/ ]; then
+        rm -rf Resnet50_Cifar_for_PyTorch/
+        rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
+    fi
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
     rm -rf ModelZoo-TensorFlow
     wget http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
     mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    rm -f cifar-10-python.tar.gz
+    cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
 }
 
 ## 生成mindspore-modelzoo镜像
@@ -171,7 +177,7 @@ main()
     #     build_tensorflow_modelzoo
     # fi
 
-    if [ $1 = "tensorflow-modelzoo2.6.5" ]; then
+    if [ $1 = "tensorflow2.6.5-modelzoo" ]; then
         build_tensorflow265_modelzoo
     fi
 
