@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## 获取mindspore-modelzoo数据集和模型
-func get_mindspore_modelzoo_dataset_model()
+function get_mindspore_modelzoo_dataset_model()
 {
     if [ -d Resnet50_Cifar_for_MindSpore ] || [ -d ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore ]; then
         rm -rf Resnet50_Cifar_for_MindSpore
@@ -20,7 +20,7 @@ func get_mindspore_modelzoo_dataset_model()
 }
 
 ## 获取pytorch1.8.1-modelzoo数据集和模型
-func get_pytorch_modelzoo_dataset_model()
+function get_pytorch_modelzoo_dataset_model()
 {
     if [ -d Resnet50_Cifar_for_PyTorch ] || [ -d ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
         rm -rf Resnet50_Cifar_for_PyTorch/
@@ -38,7 +38,7 @@ func get_pytorch_modelzoo_dataset_model()
 }
 
 ## 获取tensorflow2.6.5-modelzoo数据集和模型
-func get_tensorflow265_modelzoo_dataset_model()
+function get_tensorflow265_modelzoo_dataset_model()
 {
     if [ -d Keras-MnasNet_ID3518_for_TensorFlow2.X ] || [ -d ../tensorflow2.6.5-modelzoo/Keras-MnasNet_ID3518_for_TensorFlow2.X/ ]; then
         rm -rf Resnet50_Cifar_for_PyTorch/
@@ -55,7 +55,7 @@ func get_tensorflow265_modelzoo_dataset_model()
 }
 
 ## 生成mindspore-modelzoo镜像
-func build_mindspore_modelzoo()
+function build_mindspore_modelzoo()
 {
     ## 获取数据集和模型
     get_mindspore_modelzoo_dataset_model
@@ -67,7 +67,7 @@ func build_mindspore_modelzoo()
 }
 
 ## 生成pytorch-modelzoo镜像
-func build_pytorch_modelzoo()
+function build_pytorch_modelzoo()
 {
     ## 获取数据集和模型
     get_pytorch_modelzoo_dataset_model
@@ -80,7 +80,7 @@ func build_pytorch_modelzoo()
 
 ## 生成pytorch1.5-modelzoo镜像
 ## 数据集需手动放置到pytorch1.5-modelzoo目录下
-func build_pytorch15_modelzoo()
+function build_pytorch15_modelzoo()
 {
     ## 构建镜像
     cd ../pytorch1.5-modelzoo
@@ -90,7 +90,7 @@ func build_pytorch15_modelzoo()
 
 ## 生成tensorflow1.15-modelzoo镜像
 ## 数据集需手动放置到docker-build下
-func build_tensorflow_modelzoo()
+function build_tensorflow_modelzoo()
 {
     if [ -d ResNet50_ID0058_for_TensorFlow ] || [ -d ../tensorflow-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
         rm -rf ResNet50_ID0058_for_TensorFlow/
@@ -112,7 +112,7 @@ func build_tensorflow_modelzoo()
 }
 
 ## 生成tensorflow2.6.5-modelzoo镜像
-func build_tensorflow265_modelzoo()
+function build_tensorflow265_modelzoo()
 {
     ## 获取数据集和模型
     get_tensorflow265_modelzoo_dataset_model
@@ -125,7 +125,7 @@ func build_tensorflow265_modelzoo()
 
 ## 生成infer-modelzoo镜像
 ## 数据集需手动放置到infer-modelzoo目录下
-func build_infer_modelzoo()
+function build_infer_modelzoo()
 {
     cd ../infer-modelzoo
     bash build.sh
@@ -134,7 +134,7 @@ func build_infer_modelzoo()
 
 ## 生成infer-modelzoo-mxvision镜像
 ## 数据集需手动放置到infer-modelzoo-mxvision目录下
-func build_infer_modelzoo_mxvision()
+function build_infer_modelzoo_mxvision()
 {
     cd ../infer-modelzoo-mxvision
     bash build.sh
@@ -142,7 +142,7 @@ func build_infer_modelzoo_mxvision()
 }
 
 ## 生成三合一镜像
-func all_in_one()
+function all_in_one()
 {
     ## 获取mindspore-modelzoo数据集和模型
     get_mindspore_modelzoo_dataset_model
