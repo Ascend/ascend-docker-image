@@ -49,8 +49,8 @@ function get_pytorch_modelzoo_dataset_model()
 function get_tensorflow265_modelzoo_dataset_model()
 {
     if [ -d Keras-MnasNet_ID3518_for_TensorFlow2.X ] || [ -d ../tensorflow2.6.5-modelzoo/Keras-MnasNet_ID3518_for_TensorFlow2.X/ ]; then
-        rm -rf Resnet50_Cifar_for_PyTorch/
-        rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
+        rm -rf Keras-MnasNet_ID3518_for_TensorFlow2.X/
+        rm -rf ../tensorflow2.6.5-modelzoo/Keras-MnasNet_ID3518_for_TensorFlow2.X/
     fi
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
