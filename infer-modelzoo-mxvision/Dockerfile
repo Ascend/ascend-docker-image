@@ -32,7 +32,7 @@ ENV PATH=/usr/local/python3.9.2/bin:$PATH
 RUN umask 0022 && \
     curl -k https://repo.huaweicloud.com/python/3.9.2/Python-3.9.2.tar.xz -o Python-3.9.2.tar.xz && \
     tar -xf Python-3.9.2.tar.xz && cd Python-3.9.2 && ./configure --prefix=/usr/local/python3.9.2 --enable-shared && \
-    make -j36 && make install && \
+    make -j9 && make install && \
     ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python3 && \
     ln -sf /usr/local/python3.9.2/bin/python3 /usr/bin/python && \
     ln -sf /usr/local/python3.9.2/bin/pip3 /usr/bin/pip3 && \

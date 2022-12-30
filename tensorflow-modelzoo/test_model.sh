@@ -10,17 +10,17 @@ sleep 5
 tail -f log/train_${device_id}.log&
 wait_time=0
 while true;do
-file_size=$(wc -c < log/train_${device_id}.log)
-sleep 5
-wait_time=$((wait_time+10))
-file_size2=$(wc -c < log/train_${device_id}.log)
-ckpt_file_exists=$(find d_solution/ckpt${device_id}/ -name 'model.ckpt-1000.data*' | wc -l)
-if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 1 ];then
-echo test model success
-exit 0
-fi
-if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 0 ] && [ ${wait_time} -eq 600 ];then
-echo test model failed
-exit 1
-fi 
+    file_size=$(wc -c < log/train_${device_id}.log)
+    sleep 5
+    wait_time=$((wait_time+10))
+    file_size2=$(wc -c < log/train_${device_id}.log)
+    ckpt_file_exists=$(find d_solution/ckpt${device_id}/ -name 'model.ckpt-1000.data*' | wc -l)
+    if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 1 ];then
+        echo test model success
+        exit 0
+    fi
+    if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 0 ] && [ ${wait_time} -eq 600 ];then
+        echo test model failed
+        exit 1
+    fi 
 done

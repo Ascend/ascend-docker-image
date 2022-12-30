@@ -83,12 +83,6 @@ if [ "$have_tensorflow" == 0 ]; then
     exit 1
 fi
 
-have_tfplugin=$(find . | grep cann | grep tfplugin | grep -c "$arch")
-if [ "$have_tfplugin" == 0 ]; then
-    echo "please put tfplugin package here"
-    exit 1
-fi
-
 if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X ]; then
     echo "please put Keras-MnasNet_ID3518_for_TensorFlow2.X here"
     echo "it can be download from https://gitee.com/ascend/ModelZoo-TensorFlow/tree/master/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X"
