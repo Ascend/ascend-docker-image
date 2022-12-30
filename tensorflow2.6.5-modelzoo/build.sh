@@ -22,7 +22,7 @@ fi
 
 echo "start build"
 if [ $arch == "x86_64" ];then
-    DOCKER_BUILDKIT=1  docker build . -t tensorflow-modelzoo
+    DOCKER_BUILDKIT=1  docker build . -t tensorflow-modelzoo:2.6.5
 else
-    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t tensorflow-modelzoo
+    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t tensorflow-modelzoo:2.6.5
 fi
