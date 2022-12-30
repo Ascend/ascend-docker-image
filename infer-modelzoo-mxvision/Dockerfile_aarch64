@@ -51,7 +51,7 @@ RUN umask 0022 && \
     tar -zxvf cmake-3.20.5.tar.gz && \
     cd cmake-3.20.5 && \
     ./bootstrap && \
-    make -j36 && \
+    make -j9 && \
     make install && \
     cd .. && \
     rm -rf cmake*

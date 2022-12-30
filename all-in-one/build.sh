@@ -24,7 +24,7 @@ fi
 if [ ! -d samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin ]; then
     mkdir -p samples/Resnet50_Cifar_for_MindSpore/data/cifar10
     echo "download dataset cifar10"
-    curl -O https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
+    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz -C samples/Resnet50_Cifar_for_MindSpore/data/cifar10
 fi
 
@@ -66,7 +66,7 @@ fi
 if [ ! -d samples/Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python ]; then
     mkdir -p samples/Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    curl -O https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz -C samples/Resnet50_Cifar_for_PyTorch/data/cifar100
 fi
 
@@ -92,7 +92,7 @@ fi
 if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-py ]; then
     mkdir -p samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
     echo "download dataset cifar10"
-    curl -O https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
     tar -xf cifar-10-python.tar.gz -C samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
 fi
 

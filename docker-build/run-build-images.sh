@@ -16,6 +16,10 @@ function get_mindspore_modelzoo_dataset_model()
     wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz && rm -f cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
+    if [ $1 = "all-in-one" ]; then
+        cp -r Resnet50_Cifar_for_MindSpore ../all-in-one/samples
+        return
+    fi
     cp -r Resnet50_Cifar_for_MindSpore ../mindspore-modelzoo/
 }
 
@@ -34,6 +38,10 @@ function get_pytorch_modelzoo_dataset_model()
     wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
+    if [ $1 = "all-in-one" ]; then
+        cp -r Resnet50_Cifar_for_PyTorch ../all-in-one/samples
+        return
+    fi
     cp -r Resnet50_Cifar_for_PyTorch ../pytorch-modelzoo/
 }
 
@@ -51,6 +59,10 @@ function get_tensorflow265_modelzoo_dataset_model()
     mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     rm -f cifar-10-python.tar.gz
+    if [ $1 = "all-in-one" ]; then
+        cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../all-in-one/samples
+        return
+    fi
     cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
 }
 
@@ -144,14 +156,19 @@ function build_infer_modelzoo_mxvision()
 ## 生成三合一镜像
 function all_in_one()
 {
+    if [ -d ../all-in-one/samples ]; then
+        rm -rf ../all-in-one/samples
+    fi
+    mkdir -p ../all-in-one/samples
+
     ## 获取mindspore-modelzoo数据集和模型
-    get_mindspore_modelzoo_dataset_model
+    get_mindspore_modelzoo_dataset_model all-in-one
     
     ## 获取pytorch-modelzoo数据集和模型
-    get_pytorch_modelzoo_dataset_model
+    get_pytorch_modelzoo_dataset_model all-in-one
 
     ## 获取tensorflow-modelzoo数据集和模型
-    get_tensorflow265_modelzoo_dataset_model
+    get_tensorflow265_modelzoo_dataset_model all-in-one
 
     ## 构建镜像
     cd ../all-in-one
