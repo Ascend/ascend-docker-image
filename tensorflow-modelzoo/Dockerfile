@@ -51,7 +51,7 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     ARCH=$(uname -m) && \
     pip3 install -U pip && \
-    curl -kO https://repo.huaweicloud.com/repository/pypi/packages/b1/51/20098150b6108061cb7542af3de7bfcfe0182bca21613697153e49dc4adc/numpy-1.17.5-cp37-cp37m-manylinux1_x86_64.whl -k && \
+    curl -O https://repo.huaweicloud.com/repository/pypi/packages/b1/51/20098150b6108061cb7542af3de7bfcfe0182bca21613697153e49dc4adc/numpy-1.17.5-cp37-cp37m-manylinux1_x86_64.whl -k && \
     pip3 install numpy-1.17.5-cp37-cp37m-manylinux1_x86_64.whl && \
     pip3 install -r /tmp/requirements.txt && \   
     rm -rf /root/.cache/pip

@@ -90,7 +90,7 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # 安装tensorflow
     ARCH=$(uname -m) && \
-    pip3 install /tmp/tensorflow-*_${ARCH}.whl && \
+    pip3 install /tmp/tensorflow*_${ARCH}.whl && \
 
 # 清理工作
     rm -rf /tmp/* && \
