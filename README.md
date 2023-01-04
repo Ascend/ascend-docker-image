@@ -97,7 +97,7 @@ docker images
 
 图2 训练镜像树示意图
 
-![输入图片说明](assets/hdhfZ.png)
+![输入图片说明](assets/asdfsfd.png)
 
 表6 昇腾基础镜像树说明
 | 镜像名| 说明|
