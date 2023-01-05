@@ -1,26 +1,15 @@
 #!/bin/bash
 
-# 0卡跑训练，需将数据集的位置修改到真实路径
-cd ~/ResNet50_ID0058_for_TensorFlow/scripts/ || exit 1
-sed -i 's@--data_path=/data/imagenet/@--data_path=/home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/data/imagenet2012@' train_1p.sh
-bash train_1p.sh&
-device_id=$(grep device_id train_1p.sh|head -1|cut -d'=' -f2)
-echo test start
+cd ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test
+. /usr/local/Ascend/tfplugin/set_env.sh && . /usr/local/Ascend/ascend-toolkit/set_env.sh
+bash train_full_1p_static.sh --data_path=/home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar-10-batches-py/ --train_epochs=20&
 sleep 5
-tail -f log/train_${device_id}.log&
-wait_time=0
-while true;do
-    file_size=$(wc -c < log/train_${device_id}.log)
-    sleep 5
-    wait_time=$((wait_time+10))
-    file_size2=$(wc -c < log/train_${device_id}.log)
-    ckpt_file_exists=$(find d_solution/ckpt${device_id}/ -name 'model.ckpt-1000.data*' | wc -l)
-    if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 1 ];then
-        echo test model success
-        exit 0
-    fi
-    if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 0 ] && [ ${wait_time} -eq 600 ];then
-        echo test model failed
-        exit 1
-    fi 
-done
+tail -f output/train_.log &
+sleep 300
+if [ "$(grep -c Epoch ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
+    echo test tensorflow2 model success
+    return 0
+else
+    echo test tensorflow2 model failed
+    return 1
+fi

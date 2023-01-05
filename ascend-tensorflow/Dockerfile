@@ -7,7 +7,7 @@ COPY . ./
 
 # TF相关安装
 ARG TFPLUGIN_PKG=Ascend-cann-tfplugin*.run
-ARG TF_PKG=tensorflow-cpu==1.15.0
+ARG TF_PKG=tensorflow*.whl
 ARG ASCEND_BASE=/usr/local/Ascend
 ARG TF_PLUGIN_PATH=$ASCEND_BASE/tfplugin/latest
 
