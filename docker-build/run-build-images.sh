@@ -16,7 +16,7 @@ function get_mindspore_modelzoo_dataset_model()
     wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz && rm -f cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
-    if [ $1 = "all-in-one" ]; then
+    if [[ $1 = "all-in-one" ]]; then
         cp -r Resnet50_Cifar_for_MindSpore ../all-in-one/samples
         return
     fi
@@ -30,7 +30,6 @@ function get_pytorch_modelzoo_dataset_model()
         rm -rf Resnet50_Cifar_for_PyTorch/
         rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
     fi
-    git clone https://gitee.com/ascend/ModelZoo-PyTorch.git
     mv ModelZoo-PyTorch/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch .
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
@@ -38,7 +37,7 @@ function get_pytorch_modelzoo_dataset_model()
     wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
-    if [ $1 = "all-in-one" ]; then
+    if [[ $1 = "all-in-one" ]]; then
         cp -r Resnet50_Cifar_for_PyTorch ../all-in-one/samples
         return
     fi
@@ -59,7 +58,7 @@ function get_tensorflow265_modelzoo_dataset_model()
     mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     rm -f cifar-10-python.tar.gz
-    if [ $1 = "all-in-one" ]; then
+    if [[ $1 = "all-in-one" ]]; then
         cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../all-in-one/samples
         return
     fi
@@ -176,55 +175,180 @@ function all_in_one()
     cd -
 }
 
-main()
+## 生成ascend-algorithm镜像
+function build_ascend_algorithm()
 {
-    if [ $1 = "mindspore-modelzoo" ]; then
-        build_mindspore_modelzoo
-    fi
-
-    if [ $1 = "pytorch-modelzoo" ]; then
-        build_pytorch_modelzoo
-    fi
-
-    if [ $1 = "pytorch1.5-modelzoo" ]; then
-        build_pytorch15_modelzoo
-    fi
-
-    if [ $1 = "tensorflow-modelzoo" ]; then
-        build_tensorflow_modelzoo
-    fi
-
-    if [ $1 = "tensorflow2.6.5-modelzoo" ]; then
-        build_tensorflow265_modelzoo
-    fi
-
-    if [ $1 = "infer-modelzoo" ]; then
-        build_infer_modelzoo
-    fi
-
-    if [ $1 = "infer-modelzoo-mxvision" ]; then
-        build_infer_modelzoo_mxvision
-    fi
-
-    if [ $1 = "all-in-one" ]; then
-        all_in_one
-    fi
-
-    if [ $1 = "modelzoo" ]; then
-        build_mindspore_modelzoo
-        build_pytorch_modelzoo
-        build_pytorch15_modelzoo
-        build_tensorflow_modelzoo
-        build_tensorflow265_modelzoo
-        build_infer_modelzoo
-        build_infer_modelzoo_mxvision
-        all_in_one
-    fi
-
-    
+    cd ../ascend-algorithm
+    bash build.sh
+    cd -
 }
 
-main "$1"
+## 生成ascend-infer镜像
+function build_ascend_infer()
+{
+    cd ../ascend-infer
+    bash build.sh
+    cd -
+}
 
-## 启动镜像后，进行训练
-# docker run -it --rm mindspore-modelzoo:4-ubuntu18.04-arm64 bash test_model.sh
+## 生成ascend-mindspore镜像
+function build_ascend_mindspore()
+{
+    ## 获取数据集和模型
+    if [ -d Resnet50_Cifar_for_MindSpore ] || [ -d ../ascend-mindspore/Resnet50_Cifar_for_MindSpore ]; then
+        rm -rf Resnet50_Cifar_for_MindSpore
+        rm -rf ../ascend-mindspore/Resnet50_Cifar_for_MindSpore
+    fi
+    export GIT_SSL_NO_VERIFY=1
+    git clone https://gitee.com/mindspore/models.git
+    cd models && git checkout r1.9
+    mv official/cv/resnet/ ../Resnet50_Cifar_for_MindSpore
+    cd .. && rm -rf models
+    mkdir -p Resnet50_Cifar_for_MindSpore/data/cifar10
+    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
+    tar -xf cifar-10-binary.tar.gz && rm -f cifar-10-binary.tar.gz
+    mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
+    cp -r Resnet50_Cifar_for_MindSpore ../ascend-mindspore/
+
+    ## 构建镜像
+    cd ../ascend-mindspore
+    bash build.sh
+    cd -
+}
+
+## 生成ascend-tensorflow镜像
+function build_ascend_tensorflow()
+{
+    ## 获取数据集和模型
+    if [ -d Keras-MnasNet_ID3518_for_TensorFlow2.X ] || [ -d ../ascend-tensorflow/Keras-MnasNet_ID3518_for_TensorFlow2.X/ ]; then
+        rm -rf Keras-MnasNet_ID3518_for_TensorFlow2.X/
+        rm -rf ../ascend-tensorflow/Keras-MnasNet_ID3518_for_TensorFlow2.X/
+    fi
+    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
+    mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
+    rm -rf ModelZoo-TensorFlow
+    wget --no-check-certificate http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    rm -f cifar-10-python.tar.gz
+    cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../ascend-tensorflow/
+
+    ## 构建镜像
+    cd ../ascend-tensorflow
+    bash build.sh
+    cd -
+}
+
+## 生成ascend-toolkit镜像
+function build_ascend_toolkit()
+{
+    cd ../ascend-toolkit
+    bash build.sh
+    cd -
+}
+
+## 生成ascendbase-infer镜像
+function build_ascendbase_infer()
+{
+    cd ../ascendbase-infer
+    bash build.sh
+    cd -
+}
+
+## 生成ascendbase-toolkit镜像
+function build_ascendbase_toolkit()
+{
+    cd ../ascendbase-toolkit
+    bash build.sh
+    cd -
+}
+
+function parse_script_args()
+{
+    echo "start to run"
+    while true; do
+        case "$1" in
+        --modelzoo=*)
+            image=$(echo "$1" | cut -d"=" -f2)
+            if [[ "${image}" = "mindspore" ]]; then
+                build_mindspore_modelzoo
+            elif [[ "${image}" = "pytorch" ]]; then
+                build_pytorch_modelzoo
+            elif [[ "${image}" = "pytorch15" ]]; then
+                build_pytorch15_modelzoo
+            elif [[ "${image}" = "tensorflow" ]]; then
+                build_tensorflow_modelzoo
+            elif [[ "${image}" = "tensorflow265" ]]; then
+                build_tensorflow265_modelzoo
+            elif [[ "${image}" = "infer" ]]; then
+                build_infer_modelzoo
+            elif [[ "${image}" = "infer-mxvision" ]]; then
+                build_infer_modelzoo_mxvision
+            elif [[ "${image}" = "all-in-one" ]]; then
+                all_in_one
+            elif [[ "${image}" = "all" ]]; then
+                build_mindspore_modelzoo
+                build_pytorch_modelzoo
+                build_pytorch15_modelzoo
+                build_tensorflow_modelzoo
+                build_tensorflow265_modelzoo
+                build_infer_modelzoo
+                build_infer_modelzoo_mxvision
+                all_in_one
+            else
+                echo "Please check the parameter of --modelzoo"
+                exit 1
+            fi
+            shift
+            ;;
+        --common=*)
+            image=$(echo "$1" | cut -d"=" -f2)
+            if [[ "${image}" = "algorithm" ]]; then
+                build_ascend_algorithm
+            elif [[ "${image}" = "infer" ]]; then
+                build_ascend_infer
+            elif [[ "${image}" = "mindspore" ]]; then
+                build_ascend_mindspore
+            elif [[ "${image}" = "tensorflow" ]]; then
+                build_ascend_tensorflow
+            elif [[ "${image}" = "toolkit" ]]; then
+                build_ascend_toolkit
+            elif [[] "${image}" = "base-infer" ]]; then
+                build_ascendbase_infer
+            elif [[ "${image}" = "base-toolkit" ]]; then
+                build_ascendbase_toolkit
+            elif [[ "${image}" = "all" ]]; then
+                build_ascendbase_toolkit
+                build_ascendbase_infer
+                build_ascend_algorithm
+                build_ascend_infer
+                build_ascend_toolkit
+                build_ascend_mindspore
+                build_ascend_tensorflow
+            else
+                echo "Please check the parameter of --common"
+                exit 1
+            fi
+            shift
+            ;;
+        -*)
+            echo "Unsupported parameters: $1"
+            exit 1
+            ;;
+        *)
+            if [ "x$1" != "x" ]; then
+                echo "Unsupported parameters: $1"
+                exit 1
+            fi
+            break
+            ;;
+        esac
+    done
+}
+
+main()
+{
+    parse_script_args $@  
+}
+
+main "$@"
