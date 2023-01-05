@@ -14,10 +14,10 @@ RUN umask 0022 && \
     pip3 install --upgrade /tmp/torch_npu*.whl && \
     pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
+    pip3 install mmcv==1.7.0 && \
+    pip3 install torchvision==0.9.1 && \
     rm -rf /root/.cache/pip && \
-
-# 清理临时目录
-RUN rm -rf ./*
+    rm -rf ./*
 
 USER HwHiAiUser
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt

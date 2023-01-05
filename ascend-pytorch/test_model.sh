@@ -1,15 +1,20 @@
 #!/bin/bash
 
-cd ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test
-. /usr/local/Ascend/tfplugin/set_env.sh && . /usr/local/Ascend/ascend-toolkit/set_env.sh
-bash train_full_1p_static.sh --data_path=/home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar-10-batches-py/ --train_epochs=20&
-sleep 5
-tail -f output/train_.log &
-sleep 300
-if [ "$(grep -c Epoch ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
-    echo test tensorflow2 model success
-    return 0
-else
-    echo test tensorflow2 model failed
-    return 1
-fi
+## 启动训练
+
+function start_test_model() {
+    cd ~/Resnet50_Cifar_for_PyTorch
+    bash test/train_performance_1p.sh &
+    sleep 5s
+    tail -f test/output/0/train_0.log &
+    sleep 600
+    if [ "$(grep -c Epoch ~/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ]; then
+        echo test pytorch model success
+        return 0
+    else
+        echo test pytorch model failed
+        return 1
+    fi
+}
+
+start_test_model
