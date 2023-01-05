@@ -5,7 +5,7 @@ WORKDIR /tmp
 COPY . ./
 
 # 安装编译环境
-RUN yum -y update&& \
+RUN yum -y update && \
     yum makecache && \
     yum -y install centos-release-scl && \
     yum -y install devtoolset-7 && \
@@ -13,8 +13,8 @@ RUN yum -y update&& \
     yum -y install epel-release && \
     yum -y install wget zlib-devel bzip2-devel openssl-devel ncurses-devel \
     sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel \
-    xz-devel libffi-devel hdf5-devel libicu patch pciutils \
-    blas-devel lapack-devel atlas openblas-devel && \
+    xz-devel libffi-devel hdf5-devel libicu patch pciutils libgl1-mesa-glx \
+    blas-devel lapack-devel python-backports-lzma atlas openblas-devel && \
     yum clean all && \
     rm -rf /var/cache/yum
 

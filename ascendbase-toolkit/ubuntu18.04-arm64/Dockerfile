@@ -11,8 +11,8 @@ RUN apt update && \
     apt install --no-install-recommends libblas3 liblapack3 gfortran vim -y && \
     apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
     apt install --no-install-recommends libssl-dev zlib1g-dev xz-utils cython3 python3-h5py -y && \
-    apt install --no-install-recommends libopenblas-dev libgmpxx4ldbl -y && \
-    apt install --no-install-recommends libicu60 libxml2 pciutils -y && \
+    apt install --no-install-recommends libopenblas-dev libgmpxx4ldbl liblzma-dev -y && \
+    apt install --no-install-recommends libicu60 libxml2 pciutils libgl1-mesa-glx -y && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib: \

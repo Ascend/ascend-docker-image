@@ -2,10 +2,6 @@
 
 arch=$(uname -m)
 
-if [ ! -d dllogger ];then
-    git clone https://github.com/NVIDIA/dllogger.git	
-fi
-
 have_apex=$(find . |grep apex|grep $arch|wc -l)
 if [ $have_apex == 0 ]; then
     echo "please put apex package here"
@@ -24,15 +20,10 @@ if [ $have_torch_npu == 0 ]; then
     exit 1
 fi
 
-have_toolkit=$(find . |grep cann|grep toolkit|grep $arch|wc -l)
-if [ $have_toolkit == 0 ]; then
-    echo "please put toolkit package here"
-    exit 1
-fi
-
-echo "start build"
 if [ $arch == "x86_64" ];then
-    DOCKER_BUILDKIT=1  docker build . -t pytorch-modelzoo:ubuntu18.04-x64
+    DOCKER_BUILDKIT=1 docker build -t ascend-pytorch:centos7.6-x64 --build-arg BASE_VERSION=centos7.6-x64 .  || exit 1
+    DOCKER_BUILDKIT=1 docker build -t ascend-pytorch:ubuntu18.04-x64 --build-arg BASE_VERSION=ubuntu18.04-x64 . || exit 1
 else
-    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t pytorch-modelzoo:ubuntu18.04-arm64
+    DOCKER_BUILDKIT=1 docker build -t ascend-pytorch:centos7.6-arm64 --build-arg BASE_VERSION=centos7.6-arm64 . || exit 1
+    DOCKER_BUILDKIT=1 docker build -t ascend-pytorch:ubuntu18.04-arm64 --build-arg BASE_VERSION=ubuntu18.04-arm64 . || exit 1
 fi

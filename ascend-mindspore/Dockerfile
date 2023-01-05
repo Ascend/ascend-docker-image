@@ -31,8 +31,6 @@ RUN umask 0022 && \
     fi && \
     pip3 install /tmp/mindspore_ascend*.whl && \
     rm -rf $ASCEND_BASE/driver && \
-    rm -f /etc/ascend_install.info && \
-    rm -rf /root/.cache/pip && \
     rm -rf /tmp/*
 
 USER HwHiAiUser
