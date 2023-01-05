@@ -14,7 +14,7 @@ RUN yum -y update && \
     yum -y install wget zlib-devel bzip2-devel openssl-devel ncurses-devel \
     sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel \
     xz-devel libffi-devel hdf5-devel libicu patch pciutils libgl1-mesa-glx \
-    blas-devel lapack-devel openblas.x86_64 openblas-devel.x86_64 && \
+    blas-devel lapack-devel python-backports-lzma openblas.x86_64 openblas-devel.x86_64 && \
     yum clean all && \
     rm -rf /var/cache/yum
 

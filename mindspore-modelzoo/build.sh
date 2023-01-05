@@ -22,7 +22,7 @@ fi
 
 echo "start build"
 if [ $arch == "x86_64" ];then
-    DOCKER_BUILDKIT=1  docker build . -t mindspore-modelzoo
+    DOCKER_BUILDKIT=1  docker build . -t mindspore-modelzoo:ubuntu18.04-x64
 else
-    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t mindspore-modelzoo
+    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t mindspore-modelzoo:ubuntu18.04-arm64
 fi

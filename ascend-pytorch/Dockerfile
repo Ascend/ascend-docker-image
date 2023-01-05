@@ -16,6 +16,7 @@ RUN umask 0022 && \
     pip3 install --upgrade /tmp/torch-*.whl && \
     pip3 install mmcv==1.7.0 && \
     pip3 install torchvision==0.9.1 && \
+    pip3 install matplotlib && \
     rm -rf /root/.cache/pip && \
     rm -rf ./*
 

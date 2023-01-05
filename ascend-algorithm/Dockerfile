@@ -1,5 +1,5 @@
 ARG BASE_VERSION
-ARG BASE=ascendbase-train:$BASE_VERSION
+ARG BASE=ascendbase-toolkit:$BASE_VERSION
 FROM $BASE
 
 ARG CHIP=all

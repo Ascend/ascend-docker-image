@@ -97,4 +97,8 @@ if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-b
 fi
 
 echo "start build"
-DOCKER_BUILDKIT=1 docker build . -t all-in-one
+if [ $arch == "x86_64" ];then
+    DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-x64
+else
+    DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-arm64
+fi
