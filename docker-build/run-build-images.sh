@@ -190,9 +190,9 @@ main()
         build_pytorch15_modelzoo
     fi
 
-    # if [ $1 = "tensorflow-modelzoo" ]; then
-    #     build_tensorflow_modelzoo
-    # fi
+    if [ $1 = "tensorflow-modelzoo" ]; then
+        build_tensorflow_modelzoo
+    fi
 
     if [ $1 = "tensorflow2.6.5-modelzoo" ]; then
         build_tensorflow265_modelzoo
@@ -210,7 +210,7 @@ main()
         all_in_one
     fi
 
-    if [ $1 = "all" ]; then
+    if [ $1 = "modelzoo" ]; then
         build_mindspore_modelzoo
         build_pytorch_modelzoo
         build_pytorch15_modelzoo
@@ -220,6 +220,8 @@ main()
         build_infer_modelzoo_mxvision
         all_in_one
     fi
+
+    
 }
 
 main "$1"
