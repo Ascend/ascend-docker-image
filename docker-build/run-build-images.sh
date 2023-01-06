@@ -30,6 +30,7 @@ function get_pytorch_modelzoo_dataset_model()
         rm -rf Resnet50_Cifar_for_PyTorch/
         rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
     fi
+    git clone https://gitee.com/ascend/ModelZoo-PyTorch.git
     mv ModelZoo-PyTorch/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch .
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
