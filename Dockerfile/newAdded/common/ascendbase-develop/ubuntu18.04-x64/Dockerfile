@@ -29,7 +29,8 @@ ENV PATH=/usr/local/python${PY_VERSION}/bin:$PATH
 
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc 
+    && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc
 
 
 ###(2)安装python库
