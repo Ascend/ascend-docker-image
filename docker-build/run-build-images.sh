@@ -313,7 +313,7 @@ function parse_script_args()
                 build_ascend_tensorflow
             elif [[ "${image}" = "toolkit" ]]; then
                 build_ascend_toolkit
-            elif [[] "${image}" = "base-infer" ]]; then
+            elif [[ "${image}" = "base-infer" ]]; then
                 build_ascendbase_infer
             elif [[ "${image}" = "base-toolkit" ]]; then
                 build_ascendbase_toolkit
