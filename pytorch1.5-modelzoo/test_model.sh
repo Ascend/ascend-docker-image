@@ -4,7 +4,7 @@
 
 function start_test_model() {
     cd ~/InceptionV4_for_PyTorch_1.1_code
-    bash start_train.sh
+    python3 train_1p.py --data ./ --npu 0 --epochs 1
 }
 
 start_test_model
