@@ -240,6 +240,30 @@ function build_ascend_tensorflow()
     cd -
 }
 
+## 生成ascend-pytorch镜像
+function build_ascend_pytorch()
+{
+    ## 获取数据集和模型
+    if [ -d Resnet50_Cifar_for_PyTorch ] || [ -d ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
+        rm -rf Resnet50_Cifar_for_PyTorch/
+        rm -rf ../pytorch-modelzoo/Resnet50_Cifar_for_PyTorch/
+    fi
+    git clone https://gitee.com/ascend/ModelZoo-PyTorch.git
+    mv ModelZoo-PyTorch/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch .
+    rm -rf ModelZoo-PyTorch
+    mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
+    echo "download dataset cifar100"
+    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+    tar -xf cifar-100-python.tar.gz && rm -f cifar-100-python.tar.gz
+    mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
+    cp -r Resnet50_Cifar_for_PyTorch ../pytorch-modelzoo/
+
+    ## 构建镜像
+    cd ../ascend-pytorch
+    bash build.sh
+    cd -
+}
+
 ## 生成ascend-toolkit镜像
 function build_ascend_toolkit()
 {
@@ -310,6 +334,8 @@ function parse_script_args()
                 build_ascend_infer
             elif [[ "${image}" = "mindspore" ]]; then
                 build_ascend_mindspore
+            elif [[ "${image}" = "pytorch" ]]; then
+                build_ascend_pytorch
             elif [[ "${image}" = "tensorflow" ]]; then
                 build_ascend_tensorflow
             elif [[ "${image}" = "toolkit" ]]; then
@@ -325,6 +351,7 @@ function parse_script_args()
                 build_ascend_infer
                 build_ascend_toolkit
                 build_ascend_mindspore
+                build_ascend_pytorch
                 build_ascend_tensorflow
             else
                 echo "Please check the parameter of --common"
