@@ -27,10 +27,14 @@ RUN apt-get install -y gcc g++ make cmake zlib1g zlib1g-dev openssl libsqlite3-d
 ENV LD_LIBRARY_PATH=/usr/local/python${PY_VERSION}/lib:$LD_LIBRARY_PATH
 ENV PATH=/usr/local/python${PY_VERSION}/bin:$PATH
 
+
+SHELL [ "/bin/bash","-c" ]
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
     && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
+
 
 
 ###(2)安装python库
@@ -53,6 +57,7 @@ RUN mkdir ~/.pip \
     pip3 install absl-py && \
     pip3 install grpcio && \
     pip3 install pylint && \
+    pip3 install wheel && \
     rm -rf /root/.cache/pip
 
 
@@ -114,7 +119,3 @@ RUN rm -rf ./$MINDSTUDIO_PKG
 # CMD ["/usr/sbin/sshd", "-D"]
 
 # RUN source ~/.bashrc
-
-
-
-
