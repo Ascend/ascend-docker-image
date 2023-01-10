@@ -33,10 +33,12 @@ RUN yum install -y gcc gcc-c++ make cmake unzip zlib-devel libffi-devel openssl-
 ENV LD_LIBRARY_PATH=/usr/local/python${PY_VERSION}/lib:$LD_LIBRARY_PATH
 ENV PATH=/usr/local/python${PY_VERSION}/bin:$PATH
 
+SHELL [ "/bin/bash","-c" ]
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
     && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
 
 ##python库
 RUN mkdir ~/.pip \
@@ -57,6 +59,7 @@ RUN mkdir ~/.pip \
     pip3 install absl-py && \
     pip3 install grpcio && \
     pip3 install pylint && \
+    pip3 install wheel && \
     rm -rf /root/.cache/pip
 
 ###安装ascend-cann-toolkit
