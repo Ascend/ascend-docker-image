@@ -3,7 +3,6 @@ FROM centos:7
 WORKDIR /tmp
 COPY . ./
 
-
 RUN yum update -y && \
     yum makecache && \
     yum install -y wget && \
@@ -96,7 +95,7 @@ RUN umask 0022 && \
 
 RUN rm -rf ./$MINDSTUDIO_PKG
 
-RUN source ~/.bashrc
+# RUN source ~/.bashrc
 
 #     # 配置sshd && 环境变量
 # RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
