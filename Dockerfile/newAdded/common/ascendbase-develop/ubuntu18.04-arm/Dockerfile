@@ -3,10 +3,6 @@ FROM ubuntu:18.04
 WORKDIR /tmp
 COPY . ./
 
-###黄区必须打开这三条注释，不然apt-get命令会报错
-ENV http_proxy="http://p_atlas:proxy%40123@proxycn2.huawei.com:8080"
-ENV https_proxy="http://p_atlas:proxy%40123@proxycn2.huawei.com:8080"
-ENV no_proxy=127.0.0.1,*.huawei.com,localhost,local,.local
 
 RUN apt-get update && \
     apt install wget -y && \
