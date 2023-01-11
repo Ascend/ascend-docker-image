@@ -30,7 +30,6 @@ b.请在当前目录准备以下文件
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |EulerOS.repo | yum源配置文件。 | 仅容器镜像OS为EulerOS2.8时需准备。| 
-|libstdc++.so.6.0.24|动态库文件。|仅当容器镜像OS为CentOS时需要准备libstdc++.so.6.0.24文件。可以通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
 |Ascend-cann-toolkit_{version}_linux-{arch}.run|cann toolkit包|由用户自行准备 |
 |MindStudio_{version}_linux.tar.gz|MindStudio包|由用户自行准备 |
 **注意：cann toolkit和mindstudio有版本对应关系。**
@@ -78,9 +77,13 @@ cd Dockerfile/newAdded/modelzoo/ascend-{framework}/{arch}
 |apex-0.1+ascend.**-linux_{arch}.whl|torch apex包|获取链接|
 其中{version}表示torch版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
 
-在当前目录执行以下命令构建torch镜像torchenv。
+**x86_64**架构在当前目录执行以下命令构建torch镜像torchenv。
 ```shell
 docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg BASE_VERSION=base_version --build-arg TORCH_PKG=torch_pkg --build-arg APEX_PKG=apex_pkg .
+```
+**aarch**架构在当前目录执行以下命令构建torch镜像torchenv。
+```shell
+docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg BASE_VERSION=base_version --build-arg TORCH_PKG=torch_pkg --build-arg APEX_PKG=apex_pkg --build-arg TV_VERSION=tv_version.
 ```
 注意不要遗漏命令结尾的“.”,命令解释如表5所示
 表5 命令参数说明
@@ -92,6 +95,7 @@ docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg
 | BASE_VERSION| base_version为基础镜像的镜像标签，请用户自行更换。|
 | TORCH_PKG| torch_pkg为torch包名称，请用户自行更换，注意不要遗漏后缀。|
 | APEX_PKG| apex_pkg为apex包名称，请用户自行更换，注意不要遗漏后缀。|
+| TV_VERSION| pytorch对应的torchvision的版本，有版本对应关系。|
 
 当出现“Successfully built xxx”表示镜像构建成功。
 
@@ -104,11 +108,16 @@ docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg
 |Ascend-cann-tfplugin_{version}_linux-{arch}.run| tfplugin插件包，与基础镜像包的cann toolkit有版本对应关系 | 获取链接| 
 |ascend_install.info|软件包安装日志文件|（从host拷贝“/etc/ascend_install.info”文件。以实际路径为准。请注意拷贝到当前目后，将拷贝文件内的“UserName”和“UserGroup”这两行内容删除。 |
 |version.info|driver包版本信息文件|从host拷贝“/usr/local/Ascend/driver/version.info”文件。以实际路径为准。|
+|TF_PKG|tensorflow包|aarch架构需要用户自己准备包,见[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000034.html)，x86_64架构传入tensorflow版本号即可|
 其中{version}表示插件包版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
 
-在当前目录执行以下命令构建tensorflow镜像tensorflowenv。
+**x86_64**架构在当前目录执行以下命令构建tensorflow镜像tensorflowenv。
 ```shell
 docker build -t tenforflow_name:tenforflow_TAG --build-arg BASE_NAME=base_name --build-arg BASE_VERSION=base_version --build-arg TF_VERSION=tf_version --build-arg TFPLUGIN_PKG=tfplugin_pkg .
+```
+**aarch**架构在当前目录执行以下命令构建tensorflow镜像tensorflowenv。
+```shell
+docker build -t tenforflow_name:tenforflow_TAG --build-arg BASE_NAME=base_name --build-arg BASE_VERSION=base_version --build-arg TF_PKG=tf_pkg --build-arg TFPLUGIN_PKG=tfplugin_pkg .
 ```
 注意不要遗漏命令结尾的“.”,命令解释如表5所示
 表5 命令参数说明
