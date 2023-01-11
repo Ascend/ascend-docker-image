@@ -3,12 +3,16 @@ FROM ubuntu:18.04
 WORKDIR /tmp
 COPY . ./
 
-
-RUN apt-get update && \
+RUN apt-get update --fix-missing && \
     apt install wget -y && \
     apt clean 
 
 ARG PY_VERSION
+
+##底层依赖及python
+# RUN apt-get install -y libbz2-dev liblapack-dev openssh-server xterm firefox xdg-utils \
+#     libdbus-glib-1-dev gdb haveged x11-apps libxext-dev libxtst-dev libxrender-dev libgbm1
+
 ##安装Ascend-cann-toolkit及依赖
 ##(1)依赖
 RUN apt-get install -y gcc g++ make cmake zlib1g zlib1g-dev openssl libsqlite3-dev libssl-dev libffi-dev \
@@ -89,11 +93,6 @@ RUN apt-get install g++-aarch64-linux-gnu -y
 # ###安装mindstudio及依赖
 ARG MINDSTUDIO_PKG
 
-# RUN rm -rf !$MINDSTUDIO_PKG
-
-RUN apt-get install -y libbz2-dev liblapack-dev openssh-server xterm firefox xdg-utils \
-    libdbus-glib-1-dev gdb haveged x11-apps libxext-dev libxtst-dev libxrender-dev libgbm1
-
 RUN umask 0022 && \ 
     chmod +x $MINDSTUDIO_PKG && \ 
     tar -zxvf $MINDSTUDIO_PKG 
@@ -103,7 +102,7 @@ RUN rm -rf ./$MINDSTUDIO_PKG
 
     # 配置sshd && 环境变量
 # RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
-#     && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \
+#     && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \ 
 #     && sed -i 's/#X11UseLocalhost yes/X11UseLocalhost no/g' /etc/ssh/sshd_config  
     # ###87执行失败
     # && service ssh start 
