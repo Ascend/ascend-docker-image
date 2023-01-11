@@ -12,8 +12,8 @@ RUN yum update -y && \
 
 ARG PY_VERSION
 ##底层依赖及python
-RUN yum install -y libbz2-dev liblapack-dev openssh-server xterm firefox xdg-utils \
-    libdbus-glib-1-dev gdb haveged x11-apps libxext-dev libxtst-dev libxrender-dev libgbm1
+#RUN yum install -y libbz2-dev liblapack-dev openssh-server xterm firefox xdg-utils \
+#    libdbus-glib-1-dev gdb haveged x11-apps libxext-dev libxtst-dev libxrender-dev libgbm1
 
 RUN yum install -y gcc gcc-c++ make cmake unzip zlib-devel libffi-devel openssl-devel \
     pciutils net-tools sqlite-devel lapack-devel openblas-devel gcc-gfortran && \
