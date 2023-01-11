@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 WORKDIR /tmp
 COPY . ./
 
-
 RUN apt-get update && \
     apt install wget -y && \
     apt clean 
