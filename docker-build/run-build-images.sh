@@ -13,7 +13,6 @@ function get_mindspore_modelzoo_dataset_model()
     mv official/cv/resnet/ ../Resnet50_Cifar_for_MindSpore
     cd .. && rm -rf models
     mkdir -p Resnet50_Cifar_for_MindSpore/data/cifar10
-    # wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
     if [[ $1 = "all-in-one" ]]; then
@@ -35,7 +34,6 @@ function get_pytorch_modelzoo_dataset_model()
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    # wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
     if [[ $1 = "all-in-one" ]]; then
@@ -55,10 +53,8 @@ function get_tensorflow265_modelzoo_dataset_model()
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
     rm -rf ModelZoo-TensorFlow
-    # wget --no-check-certificate http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
     mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
-    # rm -f cifar-10-python.tar.gz
     if [[ $1 = "all-in-one" ]]; then
         cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../all-in-one/samples
         return
@@ -206,7 +202,6 @@ function build_ascend_mindspore()
     mv official/cv/resnet/ ../Resnet50_Cifar_for_MindSpore
     cd .. && rm -rf models
     mkdir -p Resnet50_Cifar_for_MindSpore/data/cifar10
-    # wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
     tar -xf cifar-10-binary.tar.gz
     mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
     cp -r Resnet50_Cifar_for_MindSpore ../ascend-mindspore/
@@ -228,10 +223,8 @@ function build_ascend_tensorflow()
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
     rm -rf ModelZoo-TensorFlow
-    # wget --no-check-certificate http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
     mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
     tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
-    # rm -f cifar-10-python.tar.gz
     cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../ascend-tensorflow/
 
     ## 构建镜像
@@ -253,7 +246,6 @@ function build_ascend_pytorch()
     rm -rf ModelZoo-PyTorch
     mkdir -p Resnet50_Cifar_for_PyTorch/data/cifar100
     echo "download dataset cifar100"
-    # wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
     tar -xf cifar-100-python.tar.gz
     mv cifar-100-python Resnet50_Cifar_for_PyTorch/data/cifar100/
     cp -r Resnet50_Cifar_for_PyTorch ../ascend-pytorch/
