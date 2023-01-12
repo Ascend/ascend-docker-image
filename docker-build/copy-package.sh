@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cp -rf /usr1/package/cifar-10* .
 # all-in-one
 cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/Ascend-mindxdl-elastic-ms_3.0.RC3_linux-$(arch).zip ../all-in-one/
