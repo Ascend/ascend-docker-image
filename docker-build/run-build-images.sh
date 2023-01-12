@@ -53,8 +53,8 @@ function get_tensorflow265_modelzoo_dataset_model()
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X/ .
     rm -rf ModelZoo-TensorFlow
-    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data
-    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data
+    mkdir -p Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
+    tar -xf cifar-10-python.tar.gz -C Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/
     if [[ $1 = "all-in-one" ]]; then
         cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../all-in-one/samples
         return
