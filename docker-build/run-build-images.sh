@@ -108,6 +108,7 @@ function build_tensorflow_modelzoo()
     git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
     mv ModelZoo-TensorFlow/TensorFlow/built-in/cv/image_classification/ResNet50_ID0058_for_TensorFlow/ .
     rm -rf ModelZoo-TensorFlow
+    unzip imagenet2012.zip
     mv imagenet2012 data
     # 将数据集放入模型代码目录，数据集存放到data目录
     mv data ResNet50_ID0058_for_TensorFlow/
