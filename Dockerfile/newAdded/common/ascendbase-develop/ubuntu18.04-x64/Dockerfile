@@ -3,15 +3,22 @@ FROM ubuntu:18.04
 WORKDIR /tmp
 COPY . ./
 
+
+###添加apt的源
+RUN  sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
+     && sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
+     && apt-get clean
+
 RUN apt-get update --fix-missing && \
     apt install wget -y && \
     apt clean 
 
 ARG PY_VERSION
 
-##底层依赖及python
-# RUN apt-get install -y libbz2-dev liblapack-dev openssh-server xterm firefox xdg-utils \
-#     libdbus-glib-1-dev gdb haveged x11-apps libxext-dev libxtst-dev libxrender-dev libgbm1
+##MindStudio依赖
+RUN apt-get install -y gcc g++ make cmake zlib1g-dev libbz2-dev libsqlite3-dev libssl-dev \
+    libffi-dev unzip pciutils net-tools libblas-dev gfortran libblas3 liblapack-dev openssh-server \
+    xterm firefox xdg-utils libdbus-glib-1-dev gdb
 
 ##安装Ascend-cann-toolkit及依赖
 ##(1)依赖
@@ -71,18 +78,8 @@ RUN umask 0022 && \
 
 ###配置canntoolkit环境变量
 RUN echo 'source /usr/local/Ascend/ascend-toolkit/set_env.sh'>>~/.bashrc
-# ENV ASCEND_TOOLKIT_HOME=/usr/local/Ascend/ascend-toolkit/latest
-# ENV LD_LIBRARY_PATH=${ASCEND_TOOLKIT_HOME}/lib64:${ASCEND_TOOLKIT_HOME}/lib64/plugin/opskernel:${ASCEND_TOOLKIT_HOME}/lib64/plugin/nnengine:$LD_LIBRARY_PATH
-# ENV PYTHONPATH=${ASCEND_TOOLKIT_HOME}/python/site-packages:${ASCEND_TOOLKIT_HOME}/opp/op_impl/built-in/ai_core/tbe:$PYTHONPATH
-# ENV PATH=${ASCEND_TOOLKIT_HOME}/bin:${ASCEND_TOOLKIT_HOME}/compiler/ccec_compiler/bin:$PATH
-# ENV ASCEND_AICPU_PATH=${ASCEND_TOOLKIT_HOME}
-# ENV ASCEND_OPP_PATH=${ASCEND_TOOLKIT_HOME}/opp
-# ENV TOOLCHAIN_HOME=${ASCEND_TOOLKIT_HOME}/toolkit
-# ENV ASCEND_HOME_PATH=${ASCEND_TOOLKIT_HOME}
-
 
 ##npu-smi 命令
-# ENV LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRARY_PATH
 RUN echo 'export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRARY_PATH'>>~/.bashrc
 
 
@@ -99,18 +96,3 @@ RUN umask 0022 && \
 
 
 RUN rm -rf ./$MINDSTUDIO_PKG
-
-    # 配置sshd && 环境变量
-# RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
-#     && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \ 
-#     && sed -i 's/#X11UseLocalhost yes/X11UseLocalhost no/g' /etc/ssh/sshd_config  
-    # ###87执行失败
-    # && service ssh start 
-
-# ##将root用户密码设置为root
-# RUN echo "root:root" | chpasswd
-# # 启动sshd服务并且暴露22端口
-# EXPOSE 22
-# CMD ["/usr/sbin/sshd", "-D"]
-
-# RUN source ~/.bashrc
