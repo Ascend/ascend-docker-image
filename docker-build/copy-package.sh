@@ -12,7 +12,11 @@ cp -r /usr1/package/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -r /usr1/package/torch-1.8.1-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -r /usr1/package/torch_npu-1.8.1rc3-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -r /usr1/package/Ascend-cann-tfplugin_6.0.RC1_linux-$(arch).run ../all-in-one/
-cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_$(arch).whl ../all-in-one/
+if [[ $(arch) == "x86_64" ]]; then
+    cp -r /usr1/package/tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl ../all-in-one/
+else
+    cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl ../all-in-one/
+fi
 # infer-modelzoo
 cp -r /usr1/package/ResNet152 ../infer-modelzoo/ # ResNet152
 cp -r /usr1/package/Ascend-mindxsdk-mxmanufacture_3.0.RC3_linux-$(arch).run ../infer-modelzoo/
@@ -42,7 +46,11 @@ cp -r /usr1/package/tensorflow-1.15.0-cp37-cp37m-manylinux2014_$(arch).whl ../te
 cp -r /usr1/package/Ascend-cann-toolkit_6.0.RC1_linux-$(arch).run ../tensorflow-modelzoo/
 # tensorflow2.6.5-modelzoo
 cp -r /usr1/package/Ascend-cann-tfplugin_6.0.RC1_linux-$(arch).run ../tensorflow2.6.5-modelzoo/
-cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_$(arch).whl ../tensorflow2.6.5-modelzoo/
+if [[ $(arch) == "x86_64" ]]; then
+    cp -r /usr1/package/tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl ../tensorflow2.6.5-modelzoo/
+else
+    cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl ../tensorflow2.6.5-modelzoo/
+fi
 cp -r /usr1/package/Ascend-cann-toolkit_6.0.RC1_linux-$(arch).run ../tensorflow2.6.5-modelzoo/
 
 # ascendbase-toolkit
@@ -71,4 +79,8 @@ cp -r /usr1/package/torch-1.8.1-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
 cp -r /usr1/package/torch_npu-1.8.1rc3-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
 # ascend-tensorflow
 cp -r /usr1/package/Ascend-cann-tfplugin_6.0.RC1_linux-$(arch).run ../ascend-tensorflow/
-cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_$(arch).whl ../ascend-tensorflow/
+if [[ $(arch) == "x86_64" ]]; then
+    cp -r /usr1/package/tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl ../ascend-tensorflow/
+else
+    cp -r /usr1/package/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl ../ascend-tensorflow/
+fi
