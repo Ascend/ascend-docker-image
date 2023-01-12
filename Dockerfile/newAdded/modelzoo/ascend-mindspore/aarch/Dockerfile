@@ -35,16 +35,6 @@ RUN umask 0022 && \
         pip3 install https://ms-release.obs.cn-north-4.myhuaweicloud.com/${MS_VERSION}/MindSpore/ascend/aarch64/mindspore_ascend-${MS_VERSION/-/}-cp39-cp39-linux_aarch64.whl --trusted-host ms-release.obs.cn-north-4.myhuaweicloud.com -i https://pypi.tuna.tsinghua.edu.cn/simple; \
     fi
 
-
-
-# ENV export GLOG_v=2 
-# ENV LD_LIBRARY_PATH=${LOCAL_ASCEND}/ascend-toolkit/latest/lib64:${LOCAL_ASCEND}/driver/lib64:${LOCAL_ASCEND}/driver/lib64/driver:${LOCAL_ASCEND}/ascend-toolkit/latest/opp/op_impl/built-in/ai_core/tbe/op_tiling:${LD_LIBRARY_PATH}
-# ENV TBE_IMPL_PATH=${LOCAL_ASCEND}/ascend-toolkit/latest/opp/op_impl/built-in/ai_core/tbe
-# ENV ASCEND_OPP_PATH=${LOCAL_ASCEND}/ascend-toolkit/latest/opp 
-# ENV ASCEND_AICPU_PATH=${ASCEND_OPP_PATH}/..
-# ENV PATH=${LOCAL_ASCEND}/ascend-toolkit/latest/compiler/ccec_compiler/bin/:${PATH}
-# ENV PYTHONPATH=${TBE_IMPL_PATH}:${PYTHONPATH}
-
 ###配置环境变量
 RUN echo 'GLOG_v=2'>>~/.bashrc \
     && echo 'LOCAL_ASCEND=/usr/local/Ascend'>>~/.bashrc \
@@ -62,14 +52,5 @@ RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ss
     && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \
     && sed -i 's/#X11UseLocalhost yes/X11UseLocalhost no/g' /etc/ssh/sshd_config 
 
-###启动ssh服务
-ADD run.sh /run.sh
-RUN chmod 755 /run.sh
-
-##将root用户密码设置为root
-RUN echo "root:root" | chpasswd
-# 启动sshd服务并且暴露22端口
+# 暴露22端口
 EXPOSE 22
-CMD ["/run.sh"]
-
-
