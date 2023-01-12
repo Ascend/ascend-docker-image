@@ -32,14 +32,5 @@ RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ss
     && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \
     && sed -i 's/#X11UseLocalhost yes/X11UseLocalhost no/g' /etc/ssh/sshd_config 
 
-###启动ssh服务
-ADD run.sh /run.sh
-RUN chmod 755 /run.sh
-
-##将root用户密码设置为root
-RUN echo "root:root" | chpasswd
-# 启动sshd服务并且暴露22端口
+# 暴露22端口
 EXPOSE 22
-CMD ["/run.sh"]
-
-
