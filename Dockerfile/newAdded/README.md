@@ -11,7 +11,7 @@
 ## 前提条件
 - 容器场景，需用户自行安装docker（版本要求大于等于18.03）。
 - 容器OS镜像可从Docker Hub拉取。
-- **下述步骤中用到的cann toolkit,MindStudio,tfplugin,python以及pytorch,tensorflow和mindspore都有对应的版本关系，需要用户核实好版本对应关系，否则可能会安装失败或者启动不了。**
+- **下述步骤中用到的cann toolkit,MindStudio,tfplugin,python以及pytorch,tensorflow和mindspore都有对应的版本关系，需要用户核实好版本对应关系，否则可能会安装失败或者启动不了。MindStudio与CANN的对应关系见[链接](https://www.hiascend.com/document/detail/zh/mindstudio/50RC3/releasenote/releasenote_000001.html)。CANN与对应的驱动及框架版本的对应关系见[链接](https://support.huawei.com/enterprise/zh/ascend-computing/ascend-data-center-solution-pid-251167910)**
 
 ## 构建基础镜像步骤
 1.以root用户登录服务器。
@@ -30,8 +30,8 @@ b.请在当前目录准备以下文件
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |EulerOS.repo | yum源配置文件。 | 仅容器镜像OS为EulerOS2.8时需准备。| 
-|Ascend-cann-toolkit_{version}_linux-{arch}.run|cann toolkit包|由用户自行准备 |
-|MindStudio_{version}_linux.tar.gz|MindStudio包|由用户自行准备 |
+|Ascend-cann-toolkit_{version}_linux-{arch}.run|cann toolkit包|由用户自行准备,见[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000018.html) |
+|MindStudio_{version}_linux.tar.gz|MindStudio包|由用户自行准备,见[链接](https://www.hiascend.com/software/mindstudio/download) |
 **注意：cann toolkit和mindstudio有版本对应关系。**
 c.在当前目录执行以下命令构建镜像ascend-base。
 ```
@@ -73,8 +73,8 @@ cd Dockerfile/newAdded/modelzoo/ascend-{framework}/{arch}
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |run.sh|启动ssh服务脚本|已存在于当前目录。|
-|torch-{version}+ascend.post5.**-linux_{arch}.whl| torch包 | 获取链接| 
-|apex-0.1+ascend.**-linux_{arch}.whl|torch apex包|获取链接|
+|torch-{version}+ascend.post5.**-linux_{arch}.whl| torch包 | 获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)| 
+|apex-0.1+ascend.**-linux_{arch}.whl|torch apex包|获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)|
 其中{version}表示torch版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
 
 **x86_64**架构在当前目录执行以下命令构建torch镜像torchenv。
@@ -105,10 +105,10 @@ docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |run.sh|启动ssh服务脚本|已存在于当前目录。|
-|Ascend-cann-tfplugin_{version}_linux-{arch}.run| tfplugin插件包，与基础镜像包的cann toolkit有版本对应关系 | 获取链接| 
+|Ascend-cann-tfplugin_{version}_linux-{arch}.run| tfplugin插件包，与基础镜像包的cann toolkit有版本对应关系 | 获取[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000018.html)| 
 |ascend_install.info|软件包安装日志文件|（从host拷贝“/etc/ascend_install.info”文件。以实际路径为准。请注意拷贝到当前目后，将拷贝文件内的“UserName”和“UserGroup”这两行内容删除。 |
 |version.info|driver包版本信息文件|从host拷贝“/usr/local/Ascend/driver/version.info”文件。以实际路径为准。|
-|TF_PKG|tensorflow包|aarch架构需要用户自己准备包,见[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000034.html)，x86_64架构传入tensorflow版本号即可|
+|TF_PKG|tensorflow包|aarch架构需要用户自己准备包,见[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000034.html)，x86_64架构传入tensorflow版本号即可,目前x86_64仅支持1.15和2.6版本|
 其中{version}表示插件包版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
 
 **x86_64**架构在当前目录执行以下命令构建tensorflow镜像tensorflowenv。
@@ -160,7 +160,7 @@ docker build -t mindspore_name:mindspore_TAG --build-arg BASE_NAME=base_name --b
 其中{mindspore_name:mindspore_TAG}为构建的mindspore镜像名称和标签。
 
 ## 从镜像启动容器和MindStudio
-
+**第一次启动容器时**
 从pytorch或者tensorflow或者mindspore镜像启动，需要映射宿主机的昇腾加速卡到容器，命令如下
 ```
 docker run -it -u root --ipc=host \
@@ -188,20 +188,33 @@ docker run -it -u root --ipc=host \
 /bin/bash
 ```
 其中{host_port:container_port}代表端口映射关系，host_port表示宿主机上未被占用的端口，container_port表示容器内ssh的端口，默认是22；{image_name:image_TAG}代表镜像名：镜像TAG。命令中默认挂载0-7张卡到容器中，可根据实际需要挂载device。
+进入容器后，启动ssh服务和设置登录的root用户及密码，命令如下：
+```shell
+service ssh start
+```
+修改root用户密码命令
+```shell
+passwd
+```
 最后通过mobaXterm或者xshell等工具连接容器。命令如下：
 ```shell
-ssh root@ip：host_port
+ssh -p host_port root@ip
 ```
-启动MindStudio
-找到对应目录，启动命令：
+**非第一次启动容器时**
+通过如下命令找到对应容器的ID
+```shell
+docker ps -a
+```
+确保容器是启动状态，再通过如下命令进入容器
+```shell
+docker exec -it {container ID} /bin/bash
+```
+container ID是需要进入的容器ID.
+
+**进入容器后通过配置ssh服务，设置密码，下次只要保证这个容器start的状态，就可以直接通过用户密码登录**
+
+### 启动MindStudio
+需要通过ssh登录容器，找到对应目录，启动命令：
 ```shell
 sh mindstudio.sh
 ```
-
-
-
-
-
-
-
-
