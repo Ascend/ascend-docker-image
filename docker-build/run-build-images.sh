@@ -283,7 +283,6 @@ function build_ascendbase_toolkit()
 
 function parse_script_args()
 {
-    echo "start to run"
     while true; do
         case "$1" in
         --help | -h)
