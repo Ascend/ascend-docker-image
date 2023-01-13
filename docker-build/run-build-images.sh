@@ -286,6 +286,10 @@ function parse_script_args()
     echo "start to run"
     while true; do
         case "$1" in
+        --help | -h)
+            NEED_HELP=yes
+            shift
+            ;;
         --modelzoo=*)
             image=$(echo "$1" | cut -d"=" -f2)
             if [[ "${image}" = "mindspore" ]]; then
@@ -366,6 +370,36 @@ function parse_script_args()
         esac
     done
 }
+
+if [[ "${NEED_HELP}" = yes ]]; then
+    cat <<EOF
+run-build-images.sh is used to build images
+
+Command: run-build-images.sh [OPTIONS]...
+
+Options:
+  -h, --help                    Displays the help information.
+  --modelzoo=mindspore          Specifies the modelzoo image to be created.
+             pytorch
+             pytorch15
+             tensorflow
+             tensorflow265
+             infer
+             infer-mxvision
+             all-in-one
+             all
+  --common=  algorithm           Specifies the common image to be created. 
+             infer
+             modelzoo
+             pytorch
+             tensorflow
+             toolkit
+             base-infer
+             base-toolkit
+             all
+EOF
+    exit 0
+fi
 
 main()
 {
