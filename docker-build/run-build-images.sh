@@ -381,7 +381,7 @@ Command: run-build-images.sh [OPTIONS]...
 
 Options:
     -h, --help                    Displays the help information.
-    --modelzoo=mindspore          Specifies the modelzoo image to be created.
+    --modelzoo= mindspore         Specifies the modelzoo image to be created.
                 pytorch
                 pytorch15
                 tensorflow
@@ -390,7 +390,7 @@ Options:
                 infer-mxvision
                 all-in-one
                 all
-    --common=  algorithm           Specifies the common image to be created. 
+    --common=   algorithm         Specifies the common image to be created. 
                 infer
                 modelzoo
                 pytorch
