@@ -371,39 +371,38 @@ function parse_script_args()
     done
 }
 
-if [[ "${NEED_HELP}" = yes ]]; then
-    cat <<EOF
-run-build-images.sh is used to build images
-
-Command: run-build-images.sh [OPTIONS]...
-
-Options:
-  -h, --help                    Displays the help information.
-  --modelzoo=mindspore          Specifies the modelzoo image to be created.
-             pytorch
-             pytorch15
-             tensorflow
-             tensorflow265
-             infer
-             infer-mxvision
-             all-in-one
-             all
-  --common=  algorithm           Specifies the common image to be created. 
-             infer
-             modelzoo
-             pytorch
-             tensorflow
-             toolkit
-             base-infer
-             base-toolkit
-             all
-EOF
-    exit 0
-fi
-
 main()
 {
-    parse_script_args $@  
+    parse_script_args $@
+    if [[ "${NEED_HELP}" = yes ]]; then
+    cat <<EOF
+    run-build-images.sh is used to build images
+
+    Command: run-build-images.sh [OPTIONS]...
+
+    Options:
+        -h, --help                    Displays the help information.
+        --modelzoo=mindspore          Specifies the modelzoo image to be created.
+                   pytorch
+                   pytorch15
+                   tensorflow
+                   tensorflow265
+                   infer
+                   infer-mxvision
+                   all-in-one
+                   all
+        --common=  algorithm           Specifies the common image to be created. 
+                   infer
+                   modelzoo
+                   pytorch
+                   tensorflow
+                   toolkit
+                   base-infer
+                   base-toolkit
+                   all
+EOF
+        exit 0
+    fi
 }
 
 main "$@"
