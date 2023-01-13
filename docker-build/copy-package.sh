@@ -3,11 +3,7 @@
 cp -rf /usr1/package/cifar-10* .
 # all-in-one
 cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../all-in-one/
-cp -rf /usr1/package/Ascend-mindxdl-elastic-ms_3.0.RC3_linux-$(arch).zip ../all-in-one/
-cd ../all-in-one/
-unzip Ascend-mindxdl-elastic-ms_3.0.RC3_linux-$(arch).zip
-mv py37/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl .
-cd -
+cp -rf /usr1/package/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/Ascend-cann-toolkit_6.0.RC1_linux-$(arch).run ../all-in-one/
 cp -rf /usr1/package/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/torch-1.8.1-cp37-cp37m-linux_$(arch).whl ../all-in-one/
