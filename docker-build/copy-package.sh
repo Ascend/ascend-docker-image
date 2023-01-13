@@ -43,7 +43,11 @@ cp -rf /usr1/package/Ascend-cann-toolkit_6.0.RC1_linux-$(arch).run ../pytorch1.5
 # tensorflow-modelzoo
 cp -rf /usr1/package/imagenet2012.zip ../docker-build/ # imagenet2012
 cp -rf /usr1/package/Ascend-cann-tfplugin_6.0.RC1_linux-$(arch).run ../tensorflow-modelzoo/
-cp -rf /usr1/package/tensorflow-1.15.0-cp37-cp37m-manylinux2010_$(arch).whl ../tensorflow-modelzoo/
+if [[ $(arch) == "x86_64" ]]; then
+    cp -rf /usr1/package/tensorflow-1.15.0-cp37-cp37m-manylinux2010_$(arch).whl ../tensorflow-modelzoo/
+else
+    cp -rf /usr1/package/tensorflow-1.15.0-cp37-cp37m-manylinux2014_$(arch).whl ../tensorflow-modelzoo/
+fi
 cp -rf /usr1/package/Ascend-cann-toolkit_6.0.RC1_linux-$(arch).run ../tensorflow-modelzoo/
 # tensorflow2.6.5-modelzoo
 cp -rf /usr1/package/Ascend-cann-tfplugin_6.0.RC1_linux-$(arch).run ../tensorflow2.6.5-modelzoo/
