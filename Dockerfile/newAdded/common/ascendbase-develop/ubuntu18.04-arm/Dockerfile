@@ -89,7 +89,7 @@ RUN echo 'export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRA
 
 
 ###配置交叉编译环境
-RUN apt-get install g++-aarch64-linux-gnu -y
+# RUN apt-get install g++-aarch64-linux-gnu -y
 
 
 # ###安装mindstudio及依赖
