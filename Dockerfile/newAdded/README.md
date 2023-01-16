@@ -29,7 +29,6 @@ b.请在当前目录准备以下文件
 | 文件       | 说明     | 获取方法        |
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
-|EulerOS.repo | yum源配置文件。 | 仅容器镜像OS为EulerOS2.8时需准备。| 
 |Ascend-cann-toolkit_{version}_linux-{arch}.run|cann toolkit包|由用户自行准备,见[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000018.html) |
 |MindStudio_{version}_linux.tar.gz|MindStudio包|由用户自行准备,见[链接](https://www.hiascend.com/software/mindstudio/download) |
 **注意：cann toolkit和mindstudio有版本对应关系。**
@@ -72,7 +71,6 @@ cd Dockerfile/newAdded/modelzoo/ascend-{framework}/{arch}
 | 文件       | 说明     | 获取方法        |
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
-|run.sh|启动ssh服务脚本|已存在于当前目录。|
 |torch-{version}+ascend.post5.**-linux_{arch}.whl| torch包 | 获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)| 
 |apex-0.1+ascend.**-linux_{arch}.whl|torch apex包|获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)|
 其中{version}表示torch版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
@@ -104,7 +102,6 @@ docker build -t torch_name:torch_TAG --build-arg BASE_NAME=base_name --build-arg
 | 文件       | 说明     | 获取方法        |
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
-|run.sh|启动ssh服务脚本|已存在于当前目录。|
 |Ascend-cann-tfplugin_{version}_linux-{arch}.run| tfplugin插件包，与基础镜像包的cann toolkit有版本对应关系 | 获取[链接](https://www.hiascend.com/document/detail/zh/canncommercial/60RC1/envdeployment/instg/instg_000018.html)| 
 |ascend_install.info|软件包安装日志文件|（从host拷贝“/etc/ascend_install.info”文件。以实际路径为准。请注意拷贝到当前目后，将拷贝文件内的“UserName”和“UserGroup”这两行内容删除。 |
 |version.info|driver包版本信息文件|从host拷贝“/usr/local/Ascend/driver/version.info”文件。以实际路径为准。|
@@ -137,7 +134,6 @@ docker build -t tenforflow_name:tenforflow_TAG --build-arg BASE_NAME=base_name -
 | 文件       | 说明     | 获取方法        |
 |:-----------:| :-------------:| :-------------:|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
-|run.sh|启动ssh服务脚本|已存在于当前目录。|
 
 在当前目录执行以下命令构建mindspore镜像mindsporeenv。
 ```shell
