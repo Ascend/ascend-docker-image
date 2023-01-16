@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 WORKDIR /tmp
 COPY . ./
 
-
 ###添加apt的源
 RUN  sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
      && sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
@@ -39,10 +38,7 @@ SHELL [ "/bin/bash","-c" ]
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
     && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc \
-    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
-
-
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc 
 
 ###(2)安装python库
 RUN mkdir ~/.pip \
@@ -67,6 +63,9 @@ RUN mkdir ~/.pip \
     pip3 install wheel && \
     rm -rf /root/.cache/pip
 
+###链接python3命令为安装的python版本
+RUN rm /usr/bin/python3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
 
 ###(3)安装ascend-cann-toolkit
 ARG CANN_TOOLKIT_PKG
@@ -81,7 +80,6 @@ RUN echo 'source /usr/local/Ascend/ascend-toolkit/set_env.sh'>>~/.bashrc
 
 ##npu-smi 命令
 RUN echo 'export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRARY_PATH'>>~/.bashrc
-
 
 ###配置交叉编译环境
 RUN apt-get install g++-aarch64-linux-gnu -y
