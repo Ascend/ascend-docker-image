@@ -5,9 +5,15 @@ COPY . ./
 
 
 ###添加apt的源
-RUN  sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
+RUN  sed -i "s@http://.*ports.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
      && sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
      && apt-get clean
+
+###添加apt的源
+# RUN apt install wget -y \
+#     && wget -O /etc/apt/sources.list https://repo.huaweicloud.com/repository/conf/Ubuntu-Ports-bionic.list \
+#     && apt-get update \
+#     && apt clean
 
 RUN apt-get update && \
     apt install wget -y && \
@@ -38,9 +44,7 @@ SHELL [ "/bin/bash","-c" ]
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
     && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc \
-    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
-
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc  
 
 ###(2)安装python库
 RUN mkdir ~/.pip \
@@ -65,6 +69,9 @@ RUN mkdir ~/.pip \
     pip3 install wheel && \
     rm -rf /root/.cache/pip
 
+###链接python3命令为安装的python版本
+RUN rm /usr/bin/python3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
 
 ###(3)安装ascend-cann-toolkit
 ARG CANN_TOOLKIT_PKG
