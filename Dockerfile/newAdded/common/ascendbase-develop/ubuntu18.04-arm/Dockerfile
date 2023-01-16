@@ -9,12 +9,6 @@ RUN  sed -i "s@http://.*ports.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt
      && sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /etc/apt/sources.list \
      && apt-get clean
 
-###添加apt的源
-# RUN apt install wget -y \
-#     && wget -O /etc/apt/sources.list https://repo.huaweicloud.com/repository/conf/Ubuntu-Ports-bionic.list \
-#     && apt-get update \
-#     && apt clean
-
 RUN apt-get update && \
     apt install wget -y && \
     apt clean 
