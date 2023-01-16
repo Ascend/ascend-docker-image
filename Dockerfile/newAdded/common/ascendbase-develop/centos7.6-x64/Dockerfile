@@ -3,12 +3,11 @@ FROM centos:7
 WORKDIR /tmp
 COPY . ./
 
-
 RUN yum update -y && \
     yum makecache && \
     yum install -y wget && \
     ###指定yum源
-    wget -O /etc/yum.repos.d/CentOS-Base.repo https://repo.huaweicloud.com/repository/conf/CentOS-8-reg.repo && \
+    wget -O /etc/yum.repos.d/CentOS-Base.repo https://repo.huaweicloud.com/repository/conf/CentOS-7-reg.repo && \
     yum clean all && \
     yum makecache
 
@@ -23,7 +22,7 @@ RUN yum install -y gcc gcc-c++ make cmake unzip zlib-devel bzip2-devel sqlite-de
 RUN yum install -y gcc gcc-c++ make cmake unzip zlib-devel libffi-devel openssl-devel \
     pciutils net-tools sqlite-devel lapack-devel openblas-devel gcc-gfortran && \
     ##可选（如果报错）
-    # yum install epel-release && \
+    # yum install epel-release && \ 
     wget https://repo.huaweicloud.com/python/${PY_VERSION}/Python-${PY_VERSION}.tgz && \
     tar -zxvf Python-${PY_VERSION}.tgz && cd Python-${PY_VERSION} && \
     ./configure --prefix=/usr/local/python${PY_VERSION} --enable-loadable-sqlite-extensions --enable-shared && \
@@ -38,8 +37,7 @@ SHELL [ "/bin/bash","-c" ]
 RUN echo 'export PY_VERSION='${PY_VERSION}>>~/.bashrc \
     && echo 'export LD_LIBRARY_PATH=/usr/local/python'${PY_VERSION}'/lib'>>~/.bashrc \
     && echo 'export PATH=/usr/local/python'${PY_VERSION}'/bin:${PATH}'>>~/.bashrc \
-    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc \
-    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
+    && echo 'export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:${PATH}'>>~/.bashrc
 
 ##python库
 RUN mkdir ~/.pip \
@@ -62,6 +60,9 @@ RUN mkdir ~/.pip \
     pip3 install pylint && \
     pip3 install wheel && \
     rm -rf /root/.cache/pip
+
+###链接python3命令为安装的python版本
+RUN ln -sf /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
 
 ###安装ascend-cann-toolkit
 ARG CANN_TOOLKIT_PKG
