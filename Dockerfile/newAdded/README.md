@@ -73,6 +73,7 @@ cd Dockerfile/newAdded/modelzoo/ascend-{framework}/{arch}
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。 |
 |torch-{version}+ascend.post5.**-linux_{arch}.whl| torch包 | 获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)| 
 |apex-0.1+ascend.**-linux_{arch}.whl|torch apex包|获取[链接](https://www.hiascend.com/software/ai-frameworks/commercial)|
+
 其中{version}表示torch版本，{arch}表示架构，与基础镜像中的cann toolkit包有版本对应关系，请根据实际情况替换。
 
 **x86_64**架构在当前目录执行以下命令构建torch镜像torchenv。
