@@ -3,7 +3,6 @@ ARG BASE_NAME
 ARG BASE=${BASE_NAME}:${BASE_VERSION}
 FROM $BASE
 
-
 WORKDIR /tmp
 COPY . ./
 
@@ -20,10 +19,6 @@ RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.5/sr
 RUN pip3 install Cython && \ 
     pip3 install h5py==2.8.0 
 
-# TensorFlow1.15配套的Python版本是：Python3.7.x（3.7.5~3.7.11）。
-# TensorFlow2.6.5配套的Python版本是：Python3.7.x（3.7.5~3.7.11）、Python3.8.x（3.8.0~3.8.11）、Python3.9.x（3.9.0~3.9.2）
-
-# aarch架构：
 ARG TF_PKG
 ARG TFPLUGIN_PKG
 ARG ASCEND_BASE=/usr/local/Ascend
@@ -44,10 +39,9 @@ RUN umask 0022 && \
 
 RUN echo 'source /usr/local/Ascend/tfplugin/set_env.sh'>>~/.bashrc 
 
-
-# 清理工作
-# RUN rm -f /etc/ascend_install.info
-    # rm -rf /tmp/*
+###清理工作
+RUN rm -rf ./$TF_PKG \
+    && rm -rf ./$TFPLUGIN_PKG 
 
 # 配置sshd && 环境变量
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
