@@ -3,7 +3,6 @@ FROM centos:7
 WORKDIR /tmp
 COPY . ./
 
-
 RUN yum update -y && \
     yum makecache && \
     yum install -y wget && \
@@ -11,7 +10,6 @@ RUN yum update -y && \
     wget -O /etc/yum.repos.d/CentOS-Base.repo https://repo.huaweicloud.com/repository/conf/CentOS-AltArch-7.repo && \
     yum clean all && \
     yum makecache
-
 
 ARG PY_VERSION
 ##MindStudio依赖
@@ -62,8 +60,15 @@ RUN mkdir ~/.pip \
     pip3 install wheel && \
     rm -rf /root/.cache/pip
 
-###链接python3命令为安装的python版本
-RUN ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
+###链接python和python3命令为安装的python版本
+RUN rm -rf /usr/bin/python3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3 \
+    && rm -rf /usr/bin/pip3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/pip${PY_VERSION: 0: 3} /usr/bin/pip3 \
+    && rm -rf /usr/bin/python \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python \
+    && rm -rf /usr/bin/pip \
+    && ln -s /usr/local/python${PY_VERSION}/bin/pip${PY_VERSION: 0: 3} /usr/bin/pip 
     
 ###安装ascend-cann-toolkit
 ARG CANN_TOOLKIT_PKG
@@ -76,21 +81,17 @@ RUN umask 0022 && \
 ###配置canntoolkit环境变量
 RUN echo 'source /usr/local/Ascend/ascend-toolkit/set_env.sh'>>~/.bashrc
 
-
 ##npu-smi 命令
 RUN echo 'export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRARY_PATH'>>~/.bashrc
 
-# ###配置交叉编译环境
-# RUN yum install g++-aarch64-linux-gnu -y
-
 # ###安装mindstudio及依赖
 ARG MINDSTUDIO_PKG
-
-# RUN rm -rf !$MINDSTUDIO_PKG
 
 RUN umask 0022 && \ 
     chmod +x $MINDSTUDIO_PKG && \ 
     tar -zxvf $MINDSTUDIO_PKG 
 
-
-RUN rm -rf ./$MINDSTUDIO_PKG
+###清理工作
+RUN rm -rf ./$MINDSTUDIO_PKG \
+    && rm -rf ./Python* \
+    && rm -rf ./$CANN_TOOLKIT_PKG 
