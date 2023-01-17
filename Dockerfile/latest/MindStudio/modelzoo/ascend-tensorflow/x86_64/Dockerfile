@@ -3,14 +3,9 @@ ARG BASE_NAME
 ARG BASE=${BASE_NAME}:${BASE_VERSION}
 FROM $BASE
 
-
 WORKDIR /tmp
 COPY . ./
 
-# TensorFlow1.15配套的Python版本是：Python3.7.x（3.7.5~3.7.11）。
-# TensorFlow2.6.5配套的Python版本是：Python3.7.x（3.7.5~3.7.11）、Python3.8.x（3.8.0~3.8.11）、Python3.9.x（3.9.0~3.9.2）
-
-# x64架构：
 ARG TF_VERSION
 ARG TF_PKG=tensorflow-cpu==$TF_VERSION
 ARG TFPLUGIN_PKG
@@ -32,6 +27,10 @@ RUN umask 0022 && \
 
 ###配置tfplugin环境变量
 RUN echo 'source /usr/local/Ascend/tfplugin/set_env.sh'>>~/.bashrc 
+
+###清理工作
+RUN rm -rf ./$TF_PKG \
+    && rm -rf ./$TFPLUGIN_PKG 
 
 # 配置sshd && 环境变量
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
