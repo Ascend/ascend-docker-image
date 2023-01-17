@@ -15,5 +15,5 @@ if [ $arch == "x86_64" ];then
 else
     docker build -t ascend-algorithm:centos7.6-arm64 --build-arg BASE_VERSION=centos7.6-arm64 . || exit 1
     docker build -t ascend-algorithm:ubuntu18.04-arm64 --build-arg BASE_VERSION=ubuntu18.04-arm64 . || exit 1
-    docker build -t ascend-algorithm:peneuler20.03-arm64 --build-arg BASE_VERSION=openeuler20.03-arm64 . || exit 1
+    docker build -t ascend-algorithm:openeuler20.03-arm64 --build-arg BASE_VERSION=openeuler20.03-arm64 . || exit 1
 fi
