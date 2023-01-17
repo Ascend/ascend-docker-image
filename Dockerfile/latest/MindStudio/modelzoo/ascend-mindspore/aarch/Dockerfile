@@ -3,7 +3,6 @@ ARG BASE_NAME
 ARG BASE=${BASE_NAME}:${BASE_VERSION}
 FROM $BASE
 
-
 WORKDIR /tmp
 COPY . ./
 
@@ -11,8 +10,6 @@ ARG ASCEND_BASE=/usr/local/Ascend
 
 # MindSpore安装
 ARG MS_VERSION
-# ARG MS_VERSION=1.8.0
-
 
 ENV LOCAL_ASCEND=/usr/local/Ascend 
 
@@ -20,8 +17,6 @@ RUN pip3 uninstall te topi hccl -y && \
     pip3 install ${LOCAL_ASCEND}/ascend-toolkit/latest/lib64/topi-*-py3-none-any.whl && \
     pip3 install ${LOCAL_ASCEND}/ascend-toolkit/latest/lib64/te-*-py3-none-any.whl && \
     pip3 install ${LOCAL_ASCEND}/ascend-toolkit/latest/lib64/hccl-*-py3-none-any.whl 
-
-
 
 SHELL [ "/bin/bash","-c" ]
 ###根据容器内的python版本执行对应的mindspore安装命令
@@ -44,8 +39,6 @@ RUN echo 'GLOG_v=2'>>~/.bashrc \
     && echo 'ASCEND_AICPU_PATH=${ASCEND_OPP_PATH}/..'>>~/.bashrc \
     && echo 'PATH=${LOCAL_ASCEND}/ascend-toolkit/latest/compiler/ccec_compiler/bin/:${PATH}'>>~/.bashrc \
     && echo 'PYTHONPATH=${TBE_IMPL_PATH}:${PYTHONPATH}'>>~/.bashrc 
-
-# USER hwMindX
 
 # 配置sshd && 环境变量
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
