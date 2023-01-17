@@ -18,11 +18,11 @@ if [[ $(arch) == "x86_64" ]]; then
     docker tag ascend-pytorch:ubuntu18.04-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-pytorch:22.0.RC3-ubuntu18.04-x64
     docker tag ascend-tensorflow:centos7.6-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-tensorflow:22.0.RC3-centos7.6-x64
     docker tag ascend-tensorflow:ubuntu18.04-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-tensorflow:22.0.RC3-ubuntu18.04-x64
-    docker tag ascend-infer swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-centos7.6-x64
-    docker tag ascend-infer swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-ubuntu18.04-x64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-openeuler20.03-x64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-centos7.6-x64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-ubuntu18.04-x64
+    docker tag ascend-infer:centos7.6-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-centos7.6-x64
+    docker tag ascend-infer:ubuntu18.04-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-ubuntu18.04-x64
+    docker tag ascend-algorithm:openeuler20.03-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-openeuler20.03-x64
+    docker tag ascend-algorithm:ubuntu18.04-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-centos7.6-x64
+    docker tag ascend-algorithm:centos7.6-x64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-ubuntu18.04-x64
 else
     # modelzoo arm64
     docker tag all-in-one:ubuntu18.04-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/all-in-one:22.0.RC3-ubuntu18.04-arm64
@@ -43,9 +43,9 @@ else
     docker tag ascend-pytorch:ubuntu18.04-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-pytorch:22.0.RC3-ubuntu18.04-arm64
     docker tag ascend-tensorflow:centos7.6-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-tensorflow:22.0.RC3-centos7.6-arm64
     docker tag ascend-tensorflow:ubuntu18.04-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-tensorflow:22.0.RC3-ubuntu18.04-arm64
-    docker tag ascend-infer swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-centos7.6-arm64
-    docker tag ascend-infer swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-ubuntu18.04-arm64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-openeuler20.03-arm64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-centos7.6-arm64
-    docker tag ascend-algorithm swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-ubuntu18.04-arm64
+    docker tag ascend-infer:centos7.6-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-centos7.6-arm64
+    docker tag ascend-infer:ubuntu18.04-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-infer:22.0.RC3-ubuntu18.04-arm64
+    docker tag ascend-algorithm:openeuler20.03-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-openeuler20.03-arm64
+    docker tag ascend-algorithm:ubuntu18.04-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-centos7.6-arm64
+    docker tag ascend-algorithm:centos7.6-arm64 swr.cn-north-4.myhuaweicloud.com/destiny/ascend-algorithm:22.0.RC3-ubuntu18.04-arm64
 fi
