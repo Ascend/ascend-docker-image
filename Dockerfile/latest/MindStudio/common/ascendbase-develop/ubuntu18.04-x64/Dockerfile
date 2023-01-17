@@ -14,8 +14,10 @@ RUN apt-get update --fix-missing && \
 
 ARG PY_VERSION
 
-##MindStudio依赖
-RUN apt-get install -y gcc g++ make cmake zlib1g-dev libbz2-dev libsqlite3-dev libssl-dev \
+##MindStudio依赖及交叉编译环境
+###配置交叉编译环境
+RUN apt-get install g++-aarch64-linux-gnu -y \
+    && apt-get install -y gcc g++ make cmake zlib1g-dev libbz2-dev libsqlite3-dev libssl-dev \
     libffi-dev unzip pciutils net-tools libblas-dev gfortran libblas3 liblapack-dev openssh-server \
     xterm firefox xdg-utils libdbus-glib-1-dev gdb
 
@@ -63,9 +65,15 @@ RUN mkdir ~/.pip \
     pip3 install wheel && \
     rm -rf /root/.cache/pip
 
-###链接python3命令为安装的python版本
-RUN rm /usr/bin/python3 \
-    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3
+###链接python和python3命令为安装的python版本
+RUN rm -rf /usr/bin/python3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python3 \
+    && rm -rf /usr/bin/pip3 \
+    && ln -s /usr/local/python${PY_VERSION}/bin/pip${PY_VERSION: 0: 3} /usr/bin/pip3 \
+    && rm -rf /usr/bin/python \
+    && ln -s /usr/local/python${PY_VERSION}/bin/python${PY_VERSION: 0: 3} /usr/bin/python \
+    && rm -rf /usr/bin/pip \
+    && ln -s /usr/local/python${PY_VERSION}/bin/pip${PY_VERSION: 0: 3} /usr/bin/pip 
 
 ###(3)安装ascend-cann-toolkit
 ARG CANN_TOOLKIT_PKG
@@ -81,16 +89,14 @@ RUN echo 'source /usr/local/Ascend/ascend-toolkit/set_env.sh'>>~/.bashrc
 ##npu-smi 命令
 RUN echo 'export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/driver:$LD_LIBRARY_PATH'>>~/.bashrc
 
-###配置交叉编译环境
-RUN apt-get install g++-aarch64-linux-gnu -y
-
-
-# ###安装mindstudio及依赖
+# ###安装mindstudio
 ARG MINDSTUDIO_PKG
 
 RUN umask 0022 && \ 
     chmod +x $MINDSTUDIO_PKG && \ 
     tar -zxvf $MINDSTUDIO_PKG 
 
-
-RUN rm -rf ./$MINDSTUDIO_PKG
+###清理工作
+RUN rm -rf ./$MINDSTUDIO_PKG \
+    && rm -rf ./Python* \
+    && rm -rf ./$CANN_TOOLKIT_PKG 
