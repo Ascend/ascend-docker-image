@@ -36,7 +36,7 @@ fi
 
 # 检查pytorch依赖文件
 if [ ! -d dllogger ]; then
-    git clone https://github.com/NVIDIA/dllogger.git
+    git clone https://gitee.com/mirrors_NVIDIA/dllogger
 fi
 
 have_apex=$(find . | grep apex | grep -c "$arch")
