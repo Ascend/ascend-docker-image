@@ -19,13 +19,18 @@ RUN OS_ID=$(grep -oP "^ID=\"?\K\w+" /etc/os-release) && \
 
 ARG TORCH_PKG
 ARG TV_VERSION
+ARG APEX_PKG
 
 ### pytorch v1.5.0对应torchvision==0.6.0，PyTorch 1.8.1需安装0.9.1版本，PyTorch 1.11.0需安装0.12.0版本
 RUN pip3 install --upgrade ${TORCH_PKG} && \
     pip3 install torchvision==${TV_VERSION} 
 
-RUN echo 'source env.sh'>>~/.bashrc
+# 安装apex
+RUN pip3 install $APEX_PKG
 
+###清理工作
+RUN rm -rf ./$TORCH_PKG \
+    && rm -rf ./$APEX_PKG 
 
 # 配置sshd && 环境变量
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
