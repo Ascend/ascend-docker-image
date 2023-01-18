@@ -3,7 +3,7 @@
 arch=$(uname -m)
 
 if [ ! -d dllogger ];then
-    git clone https://gitee.com/mirrors_NVIDIA/dllogger.git
+    git clone https://gitee.com/mirrors_NVIDIA/dllogger
 fi
 
 have_apex=$(find . |grep apex|grep $arch|wc -l)
