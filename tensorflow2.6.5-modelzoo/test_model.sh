@@ -2,7 +2,7 @@
 
 cd ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test
 . /usr/local/Ascend/tfplugin/set_env.sh && . /usr/local/Ascend/ascend-toolkit/set_env.sh
-bash train_full_1p_static.sh --data_path=/home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar-10-batches-py/ --train_epochs=20&
+bash train_full_1p_static.sh --data_path=/home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-py/ --train_epochs=20&
 sleep 5
 tail -f output/train_.log &
 sleep 300
