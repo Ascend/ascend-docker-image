@@ -20,8 +20,7 @@ cp -rf /usr1/package/Ascend-mindxsdk-mxmanufacture_3.0.RC3_linux-$(arch).run ../
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../infer-modelzoo/
 # infer-modelzoo-mxvision
 cp -rf /usr1/package/ResNet152 ../infer-modelzoo-mxvision/ # ResNet152
-cp -rf /usr1/package/Ascend-mindxsdk-mxvision_3.0.RC3_linux-$(arch).run ../infer-modelzoo-mxvisio
-n/
+cp -rf /usr1/package/Ascend-mindxsdk-mxvision_3.0.RC3_linux-$(arch).run ../infer-modelzoo-mxvision/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../infer-modelzoo-mxvision/
 # mindspore-modelzoo
 cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../mindspore-modelzoo/
