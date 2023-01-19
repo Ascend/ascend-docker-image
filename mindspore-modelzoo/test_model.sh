@@ -11,7 +11,8 @@ function start_test_model() {
     local wait_time
     wait_time=0
     while true; do
-        sleep 10
+        sleep 20
+        wait_time=$((wait_time+20))
         ckpt_file_exists=$(find train/output/checkpoint/ -name 'resnet*.ckpt' | wc -l)
         if [ "$ckpt_file_exists" -eq 1 ]; then
             echo test mindspore model success

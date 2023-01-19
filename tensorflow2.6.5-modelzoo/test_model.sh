@@ -8,8 +8,8 @@ tail -f output/train_.log &
 sleep 300
 if [ "$(grep -c Epoch ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
     echo test tensorflow2 model success
-    return 0
+    exit 0
 else
     echo test tensorflow2 model failed
-    return 1
+    exit 1
 fi  
