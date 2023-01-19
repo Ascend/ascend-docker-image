@@ -7,4 +7,5 @@ function start_test_model() {
     python3 train_1p.py --data ./ --npu 0 --epochs 1
 }
 
-start_test_model
+start_test_model || exit 1
+echo test pytorch model success

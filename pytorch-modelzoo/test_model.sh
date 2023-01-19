@@ -10,10 +10,10 @@ function start_test_model() {
     sleep 600
     if [ "$(grep -c Epoch ~/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ]; then
         echo test pytorch model success
-        return 0
+        exit 0
     else
         echo test pytorch model failed
-        return 1
+        exit 1
     fi
 }
 
