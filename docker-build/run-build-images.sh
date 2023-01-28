@@ -390,7 +390,7 @@ Options:
                 infer-mxvision
                 all-in-one
                 all
-    --common=   algorithm         Specifies the common image to be created. 
+    --common=   algorithm          Specifies the common image to be created. 
                 infer
                 modelzoo
                 pytorch
