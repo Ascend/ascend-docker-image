@@ -5,7 +5,7 @@ COPY . ./
 
 # Python 3.7.5
 RUN apt update && \
-    apt install --no-install-recommends wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
+    apt install --no-install-recommends bc wget unzip zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev \
     libreadline-dev libffi-dev curl libbz2-dev libhdf5-dev pciutils -y && \
     apt clean && rm -rf /var/lib/apt/lists/* && \
     wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tar.xz && \

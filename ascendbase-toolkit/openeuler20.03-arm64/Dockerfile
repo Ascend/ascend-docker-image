@@ -4,7 +4,7 @@ WORKDIR /tmp
 COPY . ./
 
 # 安装编译环境
-RUN yum install -y wget gcc gcc-c++ make libtool zlib zlib-devel pcre sudo libffi-devel\
+RUN yum install -y bc wget gcc gcc-c++ make libtool zlib zlib-devel pcre sudo libffi-devel\
     pcre-devel pcre2-devel perl-devel perl-ExtUtils-Embed openssl openssl-devel python-pip && \
     yum clean all && \
     rm -rf /var/cache/yum
