@@ -45,7 +45,7 @@ if [ "$have_apex" == 0 ]; then
     exit 1
 fi
 
-have_torch=$(find . | grep "torch-1.8.1" | grep -c "$arch")
+have_torch=$(find . | grep "torch-1.8" | grep -c "$arch")
 if [ "$have_torch" == 0 ]; then
     echo "please put pytorch wheel package here"
     exit 1
