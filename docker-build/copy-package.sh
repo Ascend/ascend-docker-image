@@ -33,8 +33,8 @@ cp -rf /usr1/package/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl ../pytorch-mod
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../pytorch-modelzoo/
 # pytorch1.5-modelzoo
 cp -rf /usr1/package/InceptionV4_for_PyTorch_1.1_code ../pytorch1.5-modelzoo/ # InceptionV4_for_PyTorch_1.1_code
-cp -rf /usr1/package/apex1.5/apex-0.1+ascend.20221219-cp37-cp37m-linux_$(arch).whl ../pytorch1.5-modelzoo/
-cp -rf /usr1/package/torch-1.5.0+ascend.post7.20221219-cp37-cp37m-linux_$(arch).whl ../pytorch1.5-modelzoo/
+cp -rf /usr1/package/apex1.5/apex-0.1*linux_$(arch).whl ../pytorch1.5-modelzoo/
+cp -rf /usr1/package/torch-1.5.0*linux_$(arch).whl ../pytorch1.5-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../pytorch1.5-modelzoo/
 # tensorflow-modelzoo
 cp -rf /usr1/package/imagenet2012.zip ../docker-build/ # imagenet2012
