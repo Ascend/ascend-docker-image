@@ -5,7 +5,7 @@ cp -rf /usr1/package/cifar-10* .
 cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../all-in-one/
-cp -rf /usr1/package/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../all-in-one/
+cp -rf /usr1/package/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/torch-1.8*linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/Ascend-cann-tfplugin*-$(arch).run ../all-in-one/
