@@ -30,14 +30,19 @@ function start_test_tf2() {
     bash train_full_1p_static.sh --data_path=/home/HwHiAiUser/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-py/ --train_epochs=5 &
     sleep 5
     tail -f output/train_.log &
-    sleep 300
-    if [ "$(grep -c Epoch ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ]; then
-        echo test tensorflow2 model success
-        return 0
-    else
-        echo test tensorflow2 model failed
-        return 1
-    fi
+    while true;do
+        sleep 20
+        wait_time=$((wait_time+20))
+        if [ "$(grep -c "Stop graph engine succeed" ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] && [ "$(grep -c Epoch ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
+            sleep 20
+            echo test tensorflow2 model success
+            return 0
+        fi
+        if [ "$(grep -c "Error" ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] || [ ${wait_time} -eq 1000 ];then
+            echo test tensorflow2 model failed
+            return 1
+        fi 
+    done
 }
 
 function start_test_pytorch() {
@@ -45,14 +50,19 @@ function start_test_pytorch() {
     bash train_performance_1p.sh &
     sleep 5
     tail -f output/0/train_0.log &
-    sleep 600
-    if [ "$(grep -c Epoch ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ]; then
-        echo test pytorch model success
-        return 0
-    else
-        echo test pytorch model failed
-        return 1
-    fi
+    while true;do
+        sleep 20
+        wait_time=$((wait_time+20))
+        if [ "$(grep -c "THPModule_npu_shutdown success" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] && [ "$(grep -c Epoch ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
+            sleep 20
+            echo test pytorch model success
+            return 0
+        fi
+        if [ "$(grep -c "Error" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] || [ ${wait_time} -eq 1000 ];then
+            echo test pytorch model failed
+            return 1
+        fi 
+    done
 }
 
 result=0
