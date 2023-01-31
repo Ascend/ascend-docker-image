@@ -75,7 +75,7 @@ cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../ascend-toolkit/
 # ascend-mindspore
 cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../ascend-mindspore/
 # ascend-pytorch
-cp -rf /usr1/package/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
+cp -rf /usr1/package/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
 cp -rf /usr1/package/torch-1.8*linux_$(arch).whl ../ascend-pytorch/
 cp -rf /usr1/package/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
 # ascend-tensorflow
