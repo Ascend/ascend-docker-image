@@ -27,13 +27,13 @@ cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../mind
 cp -rf ../all-in-one/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl ../mindspore-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../mindspore-modelzoo/
 # pytorch-modelzoo
-cp -rf /usr1/package/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../pytorch-modelzoo/
+cp -rf /usr1/package/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../pytorch-modelzoo/
 cp -rf /usr1/package/torch-1.8*linux_$(arch).whl ../pytorch-modelzoo/
 cp -rf /usr1/package/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl ../pytorch-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../pytorch-modelzoo/
 # pytorch1.5-modelzoo
 cp -rf /usr1/package/InceptionV4_for_PyTorch_1.1_code ../pytorch1.5-modelzoo/ # InceptionV4_for_PyTorch_1.1_code
-cp -rf /usr1/package/apex-0.1+ascend.20221219-cp37-cp37m-linux_$(arch).whl ../pytorch1.5-modelzoo/
+cp -rf /usr1/package/apex1.5/apex-0.1+ascend.20221219-cp37-cp37m-linux_$(arch).whl ../pytorch1.5-modelzoo/
 cp -rf /usr1/package/torch-1.5.0+ascend.post7.20221219-cp37-cp37m-linux_$(arch).whl ../pytorch1.5-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../pytorch1.5-modelzoo/
 # tensorflow-modelzoo
