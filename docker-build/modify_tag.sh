@@ -8,7 +8,7 @@ if [[ $(arch) == "x86_64" ]]; then
     docker tag pytorch-modelzoo:ubuntu18.04-x64 ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-x64
     docker tag tensorflow2.6.5-modelzoo:ubuntu18.04-x64 ${repository}/tensorflow-modelzoo:${version}-2.6.5-ubuntu18.04-x64
     docker tag tensorflow-modelzoo:ubuntu18.04-x64 ${repository}/tensorflow-modelzoo:${version}-ubuntu18.04-x64
-    docker tag infer-modelzoo-mxvision:ubuntu18.04-x64 ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-x64
+    docker tag infer-modelzoo-mxvision:ubuntu18.04-x64 ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-x64
     docker tag infer-modelzoo:ubuntu18.04-x64 ${repository}/infer-modelzoo:${version}-ubuntu18.04-x64
     docker tag mindspore-modelzoo:ubuntu18.04-x64 ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-x64
 
@@ -33,7 +33,7 @@ else
     docker tag pytorch-modelzoo:ubuntu18.04-arm64 ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-arm64
     docker tag tensorflow2.6.5-modelzoo:ubuntu18.04-arm64 ${repository}/tensorflow-modelzoo:${version}-2.6.5-ubuntu18.04-arm64
     docker tag tensorflow-modelzoo:ubuntu18.04-arm64 ${repository}/tensorflow-modelzoo:${version}-ubuntu18.04-arm64
-    docker tag infer-modelzoo-mxvision:ubuntu18.04-arm64 ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-arm64
+    docker tag infer-modelzoo-mxvision:ubuntu18.04-arm64 ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-arm64
     docker tag infer-modelzoo:ubuntu18.04-arm64 ${repository}/infer-modelzoo:${version}-ubuntu18.04-arm64
     docker tag mindspore-modelzoo:ubuntu18.04-arm64 ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-arm64
 
