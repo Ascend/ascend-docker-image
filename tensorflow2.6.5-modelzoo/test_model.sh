@@ -11,11 +11,11 @@ function start_test_model() {
         wait_time=$((wait_time+20))
         if [ "$(grep -c "Stop graph engine succeed" ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] && [ "$(grep -c Epoch ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
             sleep 20
-            echo test tensorflow2 model success
+            echo test tensorflow-modelzoo model success
             exit 0
         fi
         if [ "$(grep -c "Error" ~/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] || [ ${wait_time} -eq 1000 ];then
-            echo test tensorflow2 model failed
+            echo test tensorflow-modelzoo model failed
             exit 1
         fi 
     done

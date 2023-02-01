@@ -15,11 +15,11 @@ function start_test_mindspore() {
         wait_time=$((wait_time+20))
         ckpt_file_exists=$(find train/output/checkpoint/ -name 'resnet*.ckpt' | wc -l)
         if [ "$ckpt_file_exists" -eq 1 ]; then
-            echo test mindspore model success
+            echo test mindspore-modelzoo model success
             return 0
         fi
         if [ "$ckpt_file_exists" -eq 0 ] && [ $wait_time -gt 400 ]; then
-            echo test mindspore model failed
+            echo test mindspore-modelzoo model failed
             return 1
         fi
     done
@@ -35,11 +35,11 @@ function start_test_tf2() {
         wait_time=$((wait_time+20))
         if [ "$(grep -c "Stop graph engine succeed" ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] && [ "$(grep -c Epoch ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ];then
             sleep 20
-            echo test tensorflow2 model success
+            echo test tensorflow-modelzoo model success
             return 0
         fi
         if [ "$(grep -c "Error" ~/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/test/output/train_.log)" -gt 0 ] || [ ${wait_time} -eq 1000 ];then
-            echo test tensorflow2 model failed
+            echo test tensorflow-modlezoo model failed
             return 1
         fi 
     done
@@ -55,11 +55,11 @@ function start_test_pytorch() {
         wait_time=$((wait_time+20))
         if [ "$(grep -c "THPModule_npu_shutdown success" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] && [ "$(grep -c Epoch ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
             sleep 20
-            echo test pytorch model success
+            echo test pytorch-modelzoo model success
             return 0
         fi
         if [ "$(grep -c "Error" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] || [ ${wait_time} -eq 1000 ];then
-            echo test pytorch model failed
+            echo test pytorch-modelzoo model failed
             return 1
         fi 
     done

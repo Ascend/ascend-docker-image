@@ -14,11 +14,11 @@ function start_test_model() {
         sleep 10
         ckpt_file_exists=$(find train/output/checkpoint/ -name 'resnet*.ckpt' | wc -l)
         if [ "$ckpt_file_exists" -eq 1 ]; then
-            echo test mindspore model success
+            echo test ascend-mindspore model success
             return 0
         fi
         if [ "$ckpt_file_exists" -eq 0 ] && [ $wait_time -gt 400 ]; then
-            echo test mindspore model failed
+            echo test ascend-mindspore model failed
             return 1
         fi
     done
