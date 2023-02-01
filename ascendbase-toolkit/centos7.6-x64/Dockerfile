@@ -50,7 +50,7 @@ RUN pip3 install -U pip && \
 RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
     tar -zxvf zlib-1.2.9.tar.gz && \
     cd zlib-1.2.9 && \
-    ./configure --libdir=/lib64/ && \
+    ./configure --libdir=/usr/lib64/ && \
     make && \
     make install && \
     rpm -qa | grep zlib | xargs rpm -e --nodeps && \
