@@ -1,6 +1,6 @@
 version=22.0.0
-repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
-# repository=swr.cn-north-4.myhuaweicloud.com/destiny
+# repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
+repository=swr.cn-north-4.myhuaweicloud.com/destiny
 if [[ $(arch) == "x86_64" ]]; then
     # modelzoo x64
     docker push ${repository}/all-in-one:${version}-ubuntu18.04-x64
