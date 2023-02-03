@@ -46,6 +46,16 @@ RUN pip3 install -U pip && \
     pip3 install pycocotools && \
     rm -rf /root/.cache/pip
 
+# 安装zlib-1.2.9
+RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
+    tar -zxvf zlib-1.2.9.tar.gz && \
+    cd zlib-1.2.9 && \
+    ./configure --libdir=/lib64/ && \
+    make && \
+    make install && \
+    rpm -qa | grep zlib | xargs rpm -e --nodeps && \
+    ldconfig
+
 # 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod +x /lib64/$LIBSTDCXX && \
