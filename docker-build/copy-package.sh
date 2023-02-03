@@ -2,7 +2,7 @@
 
 cp -rf /usr1/package/cifar-10* .
 # all-in-one
-cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../all-in-one/
+cp -rf /usr1/package/mindspore_ascend-*linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl ../all-in-one/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../all-in-one/
 cp -rf /usr1/package/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../all-in-one/
@@ -16,14 +16,14 @@ else
 fi
 # infer-modelzoo
 cp -rf /usr1/package/ResNet152 ../infer-modelzoo/ # ResNet152
-cp -rf /usr1/package/Ascend-mindxsdk-mxmanufacture_3.0.RC3_linux-$(arch).run ../infer-modelzoo/
+cp -rf /usr1/package/Ascend-mindxsdk-mxmanufacture_*linux-$(arch).run ../infer-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../infer-modelzoo/
 # infer-modelzoo-mxvision
 cp -rf /usr1/package/ResNet152 ../infer-modelzoo-mxvision/ # ResNet152
-cp -rf /usr1/package/Ascend-mindxsdk-mxvision_3.0.RC3_linux-$(arch).run ../infer-modelzoo-mxvision/
+cp -rf /usr1/package/Ascend-mindxsdk-mxvision_*linux-$(arch).run ../infer-modelzoo-mxvision/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../infer-modelzoo-mxvision/
 # mindspore-modelzoo
-cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../mindspore-modelzoo/
+cp -rf /usr1/package/mindspore_ascend-*linux_$(arch).whl ../mindspore-modelzoo/
 cp -rf ../all-in-one/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl ../mindspore-modelzoo/
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../mindspore-modelzoo/
 # pytorch-modelzoo
@@ -73,7 +73,7 @@ cp -rf /usr1/package/Ascend-cann-nnrt*-$(arch).run ../ascend-infer/
 # ascend-toolkit
 cp -rf /usr1/package/Ascend-cann-toolkit*-$(arch).run ../ascend-toolkit/
 # ascend-mindspore
-cp -rf /usr1/package/mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl ../ascend-mindspore/
+cp -rf /usr1/package/mindspore_ascend-*linux_$(arch).whl ../ascend-mindspore/
 # ascend-pytorch
 cp -rf /usr1/package/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl ../ascend-pytorch/
 cp -rf /usr1/package/torch-1.8*linux_$(arch).whl ../ascend-pytorch/
