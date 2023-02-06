@@ -16,6 +16,7 @@ while true;do
     file_size2=$(wc -c < log/train_${device_id}.log)
     ckpt_file_exists=$(find d_solution/ckpt${device_id}/ -name 'model.ckpt-1000.data*' | wc -l)
     if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 1 ];then
+        sleep 20
         echo test tensorflow-modelzoo model success
         exit 0
     fi
