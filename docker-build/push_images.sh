@@ -23,9 +23,9 @@ if [[ $(arch) == "x86_64" ]]; then
     docker push ${repository}/ascend-tensorflow:${version}-ubuntu18.04-x64
     docker push ${repository}/ascend-infer:${version}-centos7.6-x64
     docker push ${repository}/ascend-infer:${version}-ubuntu18.04-x64
-    docker push ${repository}/ascend-algorithm:${version}-openeuler20.03-x64
-    docker push ${repository}/ascend-algorithm:${version}-centos7.6-x64
-    docker push ${repository}/ascend-algorithm:${version}-ubuntu18.04-x64
+    docker push ${repository}/algorithm:${version}-openeuler20.03-x64
+    docker push ${repository}/algorithm:${version}-centos7.6-x64
+    docker push ${repository}/algorithm:${version}-ubuntu18.04-x64
 else
     # modelzoo arm64
     docker push ${repository}/all-in-one:${version}-ubuntu18.04-arm64
@@ -48,7 +48,7 @@ else
     docker push ${repository}/ascend-tensorflow:${version}-ubuntu18.04-arm64
     docker push ${repository}/ascend-infer:${version}-centos7.6-arm64
     docker push ${repository}/ascend-infer:${version}-ubuntu18.04-arm64
-    docker push ${repository}/ascend-algorithm:${version}-openeuler20.03-arm64
-    docker push ${repository}/ascend-algorithm:${version}-centos7.6-arm64
-    docker push ${repository}/ascend-algorithm:${version}-ubuntu18.04-arm64
+    docker push ${repository}/algorithm:${version}-openeuler20.03-arm64
+    docker push ${repository}/algorithm:${version}-centos7.6-arm64
+    docker push ${repository}/algorithm:${version}-ubuntu18.04-arm64
 fi
