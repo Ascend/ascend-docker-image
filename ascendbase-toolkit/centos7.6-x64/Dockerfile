@@ -11,9 +11,9 @@ RUN yum -y update && \
     yum -y install devtoolset-7 && \
     yum -y install devtoolset-7-gcc-c++ && \
     yum -y install epel-release && \
-    yum -y install wget zlib-devel bzip2-devel openssl-devel ncurses-devel \
+    yum -y install bc wget zlib-devel bzip2-devel openssl-devel ncurses-devel \
     sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel \
-    xz-devel libffi-devel hdf5-devel libicu patch pciutils libgl1-mesa-glx \
+    xz-devel libffi-devel hdf5-devel libicu patch pciutils mesa-libGL \
     blas-devel lapack-devel python-backports-lzma openblas.x86_64 openblas-devel.x86_64 && \
     yum clean all && \
     rm -rf /var/cache/yum
@@ -45,6 +45,16 @@ RUN pip3 install -U pip && \
     pip3 install protobuf scipy requests mpmath Pillow && \
     pip3 install pycocotools && \
     rm -rf /root/.cache/pip
+
+# 安装zlib-1.2.9
+RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
+    tar -zxvf zlib-1.2.9.tar.gz && \
+    cd zlib-1.2.9 && \
+    ./configure --libdir=/lib64/ && \
+    make && \
+    make install && \
+    rpm -qa | grep zlib | xargs rpm -e --nodeps && \
+    ldconfig
 
 # 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \

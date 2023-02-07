@@ -8,4 +8,4 @@ function start_test_model() {
 }
 
 start_test_model || exit 1
-echo test pytorch model success
+echo test pytorch-modelzoo model success
