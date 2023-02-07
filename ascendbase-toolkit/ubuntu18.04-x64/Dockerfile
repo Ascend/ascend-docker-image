@@ -6,7 +6,7 @@ COPY . ./
 # 系统包 + Pip3
 RUN apt update && \
     apt install --no-install-recommends ca-certificates -y && \
-    apt install --no-install-recommends wget -y && \
+    apt install --no-install-recommends bc wget -y && \
     apt install --no-install-recommends curl gcc make g++ pkg-config unzip -y && \
     apt install --no-install-recommends libblas3 liblapack3 gfortran vim -y && \
     apt install --no-install-recommends liblapack-dev libblas-dev libhdf5-dev libffi-dev -y && \
