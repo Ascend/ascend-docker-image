@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rings-config-mindx-dls-test     # The value of JobName must be the same as the name attribute of the following job. The prefix rings-config- cannot be modified.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+  labels:
+    ring-controller.atlas: ascend-910
+data:
+  hccl.json: |
+    {
+        "status":"initializing"
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fault-config-mindx-dls-test     # The value of JobName must be the same as the name attribute of the following job. The prefix fault-config- cannot be modified.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+data:
+  fault-npus: |
+    {
+        "status":"initializing"
+    }
+  checkCode: ""
+---
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: mindx-dls-test                  # The value must be consistent with the name of ConfigMap.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+  labels:
+    ring-controller.atlas: ascend-910   # The HCCL-Controller distinguishes Ascend 910 and other processors based on this label.
+spec:
+  minAvailable: 2                       # The value of minAvailable is 1 in a single-node scenario and N in an N-node distributed scenario.
+  schedulerName: volcano                # Use the Volcano scheduler to schedule jobs.
+  policies:
+    - event: PodEvicted
+      action: RestartJob
+  plugins:
+    ssh: []
+    env: []
+    svc: []
+  maxRetry: 3
+  queue: default
+  tasks:
+  - name: "default-test"
+    replicas: 2                         # The value of replicas is 1 in a single-node scenario and N in an N-node scenario. The number of NPUs in the requests field is 8 in an N-node scenario.
+    template:
+      metadata:
+        labels:
+          app: mindspore
+          ring-controller.atlas: ascend-910
+      spec:
+        terminationGracePeriodSeconds: 360
+        containers:
+        - image: ascendhub.huawei.com/public-ascendhub/mindspore-modelzoo:22.0.0         # Training framework image, which can be modified.
+          imagePullPolicy: IfNotPresent
+          name: mindspore
+          env:
+          - name: mindx-dls-test        # The value must be consistent with the value of JobName.
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: XDL_IP                # IP address of the physical node, which is used to identify the node where the pod is running
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          command: ["/bin/bash", "-c", "cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts; bash train_start.sh /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/logs ../train.py --data_path=/home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin/ --dataset=resnet50 --run_distribute=True --device_num=8"] # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
+          #args: [ "while true; do sleep 30000; done;"  ]                            # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
+                                                                                     # The command is 'kubectl exec -it -n {namespace} {podname} bash'
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts; bash pre_stop.sh"]
+          resources:
+            requests:
+              huawei.com/Ascend910: 8                                                # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
+            limits:
+              huawei.com/Ascend910: 8                                                # The value must be consistent with that in requests.
+          volumeMounts:
+          - name: ascend-910-config
+            mountPath: /user/serverid/devindex/config
+          - name: fault-config
+            mountPath: /user/restore/fault/config
+          - name: ascend-driver
+            mountPath: /usr/local/Ascend/driver
+          - name: ascend-add-ons
+            mountPath: /usr/local/Ascend/add-ons
+          - name: log-mindxelastic
+            mountPath: /var/log/mindx-dl/elastic
+          - name: localtime
+            mountPath: /etc/localtime
+        nodeSelector:
+          host-arch: huawei-x86                                # Configure the label based on the actual job.
+        volumes:
+        - name: ascend-910-config
+          configMap:
+            name: rings-config-mindx-dls-test                  # Correspond to the ConfigMap name above.
+        - name: fault-config
+          configMap:
+            name: fault-config-mindx-dls-test                  # Correspond to the ConfigMap name above.
+        - name: ascend-driver
+          hostPath:
+            path: /usr/local/Ascend/driver                     # Configure the NPU driver and mount it to Docker.
+        - name: ascend-add-ons
+          hostPath:
+            path: /usr/local/Ascend/add-ons                    # Configure the add-ons driver of the NPU and mount it to Docker.
+        - name: log-mindxelastic
+          hostPath:
+            path: /var/log/mindx-dl/elastic                    # Configure the path of log
+            type: Directory
+        - name: localtime
+          hostPath:
+            path: /etc/localtime                               # Configure the Docker time.
+        restartPolicy: OnFailure
