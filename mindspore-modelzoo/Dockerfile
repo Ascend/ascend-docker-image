@@ -48,6 +48,8 @@ RUN groupadd  HwHiAiUser -g 1000 && \
 # python包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
+    mkdir -p /job/code /home/HwHiAiUser/samples/scripts && \
+    chown HwHiAiUser:HwHiAiUser -R /job /home/HwHiAiUser/samples && \
     pip3 install pip -U && \
     pip3 install -r /tmp/requirements.txt && \
     pip3 install /tmp/mindx_elastic*.whl && \
@@ -66,6 +68,7 @@ $FWK_PYTHON_PATH/schedule_search.egg:\
 $TBE_IMPL_PATH:\
 $PYTHONPATH
 ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:\
+/usr/local/Ascend/driver/lib64/:\
 /usr/local/Ascend/driver/lib64/common/:\
 /usr/local/Ascend/driver/lib64/driver/:\
 /usr/local/Ascend/add-ons/:\
@@ -75,8 +78,9 @@ $LD_LIBRARY_PATH
 # CANN包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
-    chmod +x /tmp/Ascend-cann-toolkit*.run && \
+    chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-mindx-toolbox*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # TRAIN_FRAMEWORK安装
     pip3 install /tmp/mindspore_ascend*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/te-*.whl && \
@@ -89,7 +93,9 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 
 USER HwHiAiUser
 
-COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/Resnet50_Cifar_for_MindSpore
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore
+COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_imagenet2012_for_MindSpore /home/HwHiAiUser/samples/Resnet50_imagenet2012_for_MindSpore
+COPY --chown=HwHiAiUser:HwHiAiUser vpc_resnet50_imagenet_classification /home/HwHiAiUser/samples/vpc_resnet50_imagenet_classification
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 WORKDIR /home/HwHiAiUser/
