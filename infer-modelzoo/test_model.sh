@@ -9,8 +9,4 @@ if [ "$(grep -c "Destroy streams successfully" /home/HwHiAiUser/log/mindxsdk/log
 else
     echo test infer-modelzoo model failed
     exit 1
-<<<<<<< HEAD
-fi
-=======
 fi 
->>>>>>> upstream/master
