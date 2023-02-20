@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fault-config-hccl-test     # The value of JobName must be the same as the name attribute of the following job. The prefix fault-config- cannot be modified.
+  namespace: vcjob 
+  labels:
+    ring-controller.atlas: ascend-910                     # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+data:
+  hostfile: |
+    51.38.68.177:8
+    51.38.68.155:8
+---
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: hccl-test                  # The value must be consistent with the name of ConfigMap.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+  labels:
+    ring-controller.atlas: ascend-910   # The HCCL-Controller distinguishes Ascend 910 and other processors based on this label.
+spec:
+  minAvailable: 2                       # The value of minAvailable is 1 in a single-node scenario and N in an N-node distributed scenario.
+  schedulerName: volcano                # Use the Volcano scheduler to schedule jobs.
+  policies:
+    - event: PodEvicted
+      action: RestartJob
+  plugins:
+    env: []
+    svc: []
+  maxRetry: 3
+  queue: default
+  tasks:
+  - name: "default-test"
+    replicas: 2                         # The value of replicas is 1 in a single-node scenario and N in an N-node scenario. The number of NPUs in the requests field is 8 in an N-node scenario.
+    template:
+      metadata:
+        labels:
+          app: hccl-test
+          ring-controller.atlas: ascend-910
+      spec:
+        terminationGracePeriodSeconds: 360
+        hostNetwork: true
+        securityContent:
+          runAsUser: 0
+          privileged: true
+        containers:
+        - name: hccl-test-c
+          image: hccl-test:ubuntu18.04-x64         # Training framework image, which can be modified.
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: HOSTS_IP                # IP address of the physical node, which is used to identify the node where the pod is running
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: NODE_NAME        # The value must be consistent with the value of JobName.
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: HOST_IP                # IP address of the physical node, which is used to identify the node where the pod is running
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          command: ["/bin/bash", "-c", "cd /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test;cat hostfile_dir/hostfile > hostfile;
+          echo start all_gather_test;mpirun -f hostfile -n 16 ./run.sh 'all_gather_test -b 8k -e 64M -f 2 -d fp32 -p 8';
+          echo start all_reduce_test;mpirun -f hostfile -n 16 ./run.sh 'all_reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';
+          echo start alltoallv_test;mpirun -f hostfile -n 16 ./run.sh 'alltoallv_test -b 8k -e 64M -f 2 -d fp32  -p 8';
+          echo start broadcast_test;mpirun -f hostfile -n 16 ./run.sh 'broadcast_test -b 8k -e 64M -f 2 -d fp32 -p 8';
+          echo start reduce_scatter_test;mpirun -f hostfile -n 16 ./run.sh 'reduce_scatter_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';
+          echo start reduce_test;mpirun -f hostfile -n 16 ./run.sh 'reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';"] # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
+          #args: [ "while true; do sleep 30000; done;"  ]                            # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
+                                                                                     # The command is 'kubectl exec -it -n {namespace} {podname} bash'
+          resources:
+            requests:
+              huawei.com/Ascend910: 8                                                # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
+            limits:
+              huawei.com/Ascend910: 8                                                # The value must be consistent with that in requests.
+          volumeMounts:
+          - name: ip-config
+            mountPath: /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test/hostfile_dir
+          - name: ssh-dir
+            mountPath: /root/.ssh
+          - name: ascend-driver
+            mountPath: /usr/local/Ascend/driver
+          - name: ascend-add-ons
+            mountPath: /usr/local/Ascend/add-ons
+          - name: log-npu
+            mountPath: /usr/slog
+          - name: localtime
+            mountPath: /etc/localtime
+        volumes:
+        - name: ip-config
+          configMap:
+            name: fault-config-hccl-test                  # Correspond to the ConfigMap name above.
+        - name: ssh-dir
+          hostPath:
+            path: /root/.ssh
+        - name: ascend-driver
+          hostPath:
+            path: /usr/local/Ascend/driver                     # Configure the NPU driver and mount it to Docker.
+        - name: ascend-add-ons
+          hostPath:
+            path: /usr/local/Ascend/add-ons                    # Configure the add-ons driver of the NPU and mount it to Docker.
+        - name: log-npu
+          hostPath:
+            path: /var/log/npu                                 # Configure the path of log
+            type: Directory
+        - name: localtime
+          hostPath:
+            path: /etc/localtime                               # Configure the Docker time.
+        restartPolicy: OnFailure
