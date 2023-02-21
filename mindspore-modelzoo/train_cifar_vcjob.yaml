@@ -68,17 +68,13 @@ spec:
           command: ["/bin/bash", "-c", "cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts; bash train_start.sh /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/logs ../train.py --data_path=/home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin/ --dataset=resnet50 --run_distribute=True --device_num=8"] # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
           #args: [ "while true; do sleep 30000; done;"  ]                            # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
                                                                                      # The command is 'kubectl exec -it -n {namespace} {podname} bash'
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/bash", "-c", "cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts; bash pre_stop.sh"]
           resources:
             requests:
               huawei.com/Ascend910: 8                                                # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
             limits:
               huawei.com/Ascend910: 8                                                # The value must be consistent with that in requests.
           volumeMounts:
-          - name: ascend-910-config
+          - name: ascend-config
             mountPath: /user/serverid/devindex/config
           - name: fault-config
             mountPath: /user/restore/fault/config
@@ -86,14 +82,12 @@ spec:
             mountPath: /usr/local/Ascend/driver
           - name: ascend-add-ons
             mountPath: /usr/local/Ascend/add-ons
-          - name: log-mindxelastic
-            mountPath: /var/log/mindx-dl/elastic
           - name: localtime
             mountPath: /etc/localtime
         nodeSelector:
           host-arch: huawei-x86                                # Configure the label based on the actual job.
         volumes:
-        - name: ascend-910-config
+        - name: ascend-config
           configMap:
             name: rings-config-mindx-dls-test                  # Correspond to the ConfigMap name above.
         - name: fault-config
@@ -105,10 +99,6 @@ spec:
         - name: ascend-add-ons
           hostPath:
             path: /usr/local/Ascend/add-ons                    # Configure the add-ons driver of the NPU and mount it to Docker.
-        - name: log-mindxelastic
-          hostPath:
-            path: /var/log/mindx-dl/elastic                    # Configure the path of log
-            type: Directory
         - name: localtime
           hostPath:
             path: /etc/localtime                               # Configure the Docker time.

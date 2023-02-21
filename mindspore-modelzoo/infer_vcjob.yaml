@@ -64,11 +64,11 @@ spec:
                                                               # The command is 'kubectl exec -it -n {namespace} {podname} bash'
           resources:
             requests:
-              huawei.com/Ascend910: 1                 # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
+              huawei.com/Ascend310P: 1                 # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
             limits:
-              huawei.com/Ascend910: 1                 # The value must be consistent with that in requests.
+              huawei.com/Ascend310P: 1                 # The value must be consistent with that in requests.
           volumeMounts:
-          - name: ascend-910-config
+          - name: ascend-config
             mountPath: /user/serverid/devindex/config
           - name: ascend-driver
             mountPath: /usr/local/Ascend/driver
@@ -79,7 +79,7 @@ spec:
         nodeSelector:
           host-arch: huawei-x86                       # Configure the label based on the actual job.
         volumes:
-        - name: ascend-910-config
+        - name: ascend-config
           configMap:
             name: rings-config-mindx-dls-test         # Correspond to the ConfigMap name above.
         - name: ascend-driver
