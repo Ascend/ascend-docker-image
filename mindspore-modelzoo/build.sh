@@ -20,6 +20,12 @@ if [ $have_toolkit == 0 ]; then
     exit 1
 fi
 
+have_toolbox=$(find . |grep cann|grep toolbox|grep $arch|wc -l)
+if [ $have_toolkit == 0 ]; then
+    echo "please put toolbox package here"
+    exit 1
+fi
+
 echo "start build"
 if [ $arch == "x86_64" ];then
     DOCKER_BUILDKIT=1  docker build . -t mindspore-modelzoo:ubuntu18.04-x64
