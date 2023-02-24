@@ -35,15 +35,15 @@ function start_test_model() {
         device_id=$(grep device_id train_1p.sh|head -1|cut -d'=' -f2)
         echo test start
         sleep 5
-        tail -f main.log&
+        tail -f log/train_${device_id}.log&
         wait_time=0
         while true;do
-            file_size=$(wc -c < main.log)
+            file_size=$(wc -c < log/train_${device_id}.log)
             sleep 20
             wait_time=$((wait_time+20))
-            file_size2=$(wc -c < main.log)
-            ckpt_file_exists=$(find d_solution/ckpt${device_id}/ -name 'model.ckpt-1000.data*' | wc -l)
-            if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 1 ];then
+            file_size2=$(wc -c < log/train_${device_id}.log)
+            ckpt_file_exists=$(find d_solution/ -name 'model.ckpt-0.data*' | wc -l)
+            if [ $file_size -eq $file_size2 ] && [ $ckpt_file_exists -eq 8 ];then
                 sleep 20
                 echo test tensorflow-modelzoo model success
                 exit 0
