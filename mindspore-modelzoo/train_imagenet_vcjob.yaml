@@ -86,6 +86,8 @@ spec:
             mountPath: /usr/local/Ascend/add-ons
           - name: localtime
             mountPath: /etc/localtime
+          - name: dshm
+            mountPath: /dev/shm
         nodeSelector:
           host-arch: huawei-x86                                # Configure the label based on the actual job.
         volumes:
@@ -107,4 +109,8 @@ spec:
         - name: localtime
           hostPath:
             path: /etc/localtime                               # Configure the Docker time.
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
         restartPolicy: OnFailure
