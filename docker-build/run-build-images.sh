@@ -3,23 +3,22 @@
 ## 获取mindspore-modelzoo数据集和模型
 function get_mindspore_modelzoo_dataset_model()
 {
-    if [ -d Resnet50_Cifar_for_MindSpore ] || [ -d ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore ]; then
-        rm -rf Resnet50_Cifar_for_MindSpore
+    if [ -d ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore ]; then
         rm -rf ../mindspore-modelzoo/Resnet50_Cifar_for_MindSpore
     fi
-    export GIT_SSL_NO_VERIFY=1
-    git clone https://gitee.com/mindspore/models.git
-    cd models && git checkout r1.9
-    mv official/cv/resnet/ ../Resnet50_Cifar_for_MindSpore
-    cd .. && rm -rf models
-    mkdir -p Resnet50_Cifar_for_MindSpore/data/cifar10
-    tar -xf cifar-10-binary.tar.gz
-    mv cifar-10-batches-bin Resnet50_Cifar_for_MindSpore/data/cifar10/
+    if [ -d ../mindspore-modelzoo/Resnet50_imagenet2012_for_MindSpore ]; then
+        rm -rf ../mindspore-modelzoo/Resnet50_imagenet2012_for_MindSpore
+    fi
+    if [ -d ../mindspore-modelzoo/vpc_resnet50_imagenet_classification ]; then
+        rm -rf ../mindspore-modelzoo/vpc_resnet50_imagenet_classification
+    fi
     if [[ $1 = "all-in-one" ]]; then
         cp -r Resnet50_Cifar_for_MindSpore ../all-in-one/samples
         return
     fi
     cp -r Resnet50_Cifar_for_MindSpore ../mindspore-modelzoo/
+    cp -r Resnet50_imagenet2012_for_MindSpore ../mindspore-modelzoo/
+    cp -r vpc_resnet50_imagenet_classification ../mindspore-modelzoo/
 }
 
 ## 获取pytorch1.8.1-modelzoo数据集和模型
