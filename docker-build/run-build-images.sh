@@ -280,6 +280,14 @@ function build_ascendbase_toolkit()
     cd -
 }
 
+## 生成hccl-test镜像
+function build_hccl_test()
+{
+    cd ../hccl-test
+    bash build.sh
+    cd -
+}
+
 function parse_script_args()
 {
     while true; do
@@ -339,6 +347,8 @@ function parse_script_args()
                 build_ascendbase_infer
             elif [[ "${image}" = "base-toolkit" ]]; then
                 build_ascendbase_toolkit
+            elif [[ "${image}" = "hccl-test" ]]; then
+                build_hccl_test
             elif [[ "${image}" = "all" ]]; then
                 build_ascendbase_toolkit
                 build_ascendbase_infer
@@ -348,6 +358,7 @@ function parse_script_args()
                 build_ascend_mindspore
                 build_ascend_pytorch
                 build_ascend_tensorflow
+                build_hccl_test
             else
                 echo "Please check the parameter of --common"
                 exit 1
@@ -397,6 +408,7 @@ Options:
                 toolkit
                 base-infer
                 base-toolkit
+                hccl-test
                 all
 EOF
         exit 0
