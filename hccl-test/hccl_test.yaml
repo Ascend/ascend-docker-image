@@ -39,6 +39,8 @@ spec:
       spec:
         terminationGracePeriodSeconds: 360
         hostNetwork: true
+        nodeSelector:
+          host-arch: huawei-x86
         securityContent:
           runAsUser: 0
           privileged: true
