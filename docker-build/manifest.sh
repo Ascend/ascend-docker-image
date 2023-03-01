@@ -60,4 +60,6 @@ docker manifest create ${repository}/ascend-tensorflow:${version}-ubuntu18.04 --
 docker manifest push ${repository}/ascend-tensorflow:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-tensorflow:${version}-centos7.6 --amend ${repository}/ascend-tensorflow:${version}-centos7.6-x64 --amend ${repository}/ascend-tensorflow:${version}-centos7.6-arm64
 docker manifest push ${repository}/ascend-tensorflow:${version}-centos7.6
-
+#hccl-test
+docker manifest create ${repository}/hccl-test:${version}-ubuntu18.04 --amend ${repository}/hccl-test:${version}-ubuntu18.04-x64 --amend ${repository}/hccl-test:${version}-ubuntu18.04-arm64
+docker manifest push ${repository}/hccl-test:${version}-ubuntu18.04

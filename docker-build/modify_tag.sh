@@ -26,6 +26,7 @@ if [[ $(arch) == "x86_64" ]]; then
     docker tag ascend-algorithm:openeuler20.03-x64 ${repository}/algorithm:${version}-openeuler20.03-x64
     docker tag ascend-algorithm:ubuntu18.04-x64 ${repository}/algorithm:${version}-centos7.6-x64
     docker tag ascend-algorithm:centos7.6-x64 ${repository}/algorithm:${version}-ubuntu18.04-x64
+    docker tag hccl-test:ubuntu18.04-x64 ${repository}/hccl-test:${version}-ubuntu18.04-x64
 else
     # modelzoo arm64
     docker tag all-in-one:ubuntu18.04-arm64 ${repository}/all-in-one:${version}-ubuntu18.04-arm64
@@ -51,4 +52,5 @@ else
     docker tag ascend-algorithm:openeuler20.03-arm64 ${repository}/algorithm:${version}-openeuler20.03-arm64
     docker tag ascend-algorithm:ubuntu18.04-arm64 ${repository}/algorithm:${version}-centos7.6-arm64
     docker tag ascend-algorithm:centos7.6-arm64 ${repository}/algorithm:${version}-ubuntu18.04-arm64
+    docker tag hccl-test:ubuntu18.04-arm64 ${repository}/hccl-test:${version}-ubuntu18.04-arm64
 fi
