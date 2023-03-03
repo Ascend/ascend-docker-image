@@ -63,10 +63,10 @@ spec:
                 fieldPath: status.hostIP
           command: ["/bin/bash", "-c", "mkdir -p /run/sshd; /usr/sbin/sshd -p 33333;
           cd /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test;cat hostfile_dir/hostfile > hostfile;
-          if [ ${NODE_NAME} != 'HOST_1' ];then
-            sleep 1000
+          if [ $NODE_NAME != 'HOST_1' ];then
+            sleep 200;
           else
-            export HCCL_SOCKET_IFNAME="enp198s0f0";
+            export HCCL_SOCKET_IFNAME='enp198s0f0';
             echo start all_gather_test;mpirun -f hostfile -n 16  all_gather_test -b 8k -e 64M -f 2 -d fp32 -p 8;
             echo start all_reduce_test;mpirun -f hostfile -n 16  all_reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8;
             echo start alltoallv_test;mpirun -f hostfile -n 16  alltoallv_test -b 8k -e 64M -f 2 -d fp32  -p 8 ;
