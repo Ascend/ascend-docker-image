@@ -61,13 +61,19 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.hostIP
-          command: ["/bin/bash", "-c", "cd /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test;cat hostfile_dir/hostfile > hostfile;
-          echo start all_gather_test;mpirun -f hostfile -n 16 ./run.sh 'all_gather_test -b 8k -e 64M -f 2 -d fp32 -p 8';
-          echo start all_reduce_test;mpirun -f hostfile -n 16 ./run.sh 'all_reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';
-          echo start alltoallv_test;mpirun -f hostfile -n 16 ./run.sh 'alltoallv_test -b 8k -e 64M -f 2 -d fp32  -p 8';
-          echo start broadcast_test;mpirun -f hostfile -n 16 ./run.sh 'broadcast_test -b 8k -e 64M -f 2 -d fp32 -p 8';
-          echo start reduce_scatter_test;mpirun -f hostfile -n 16 ./run.sh 'reduce_scatter_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';
-          echo start reduce_test;mpirun -f hostfile -n 16 ./run.sh 'reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8';"] # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
+          command: ["/bin/bash", "-c", "mkdir -p /run/sshd; /usr/sbin/sshd -p 33333;
+          cd /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test;cat hostfile_dir/hostfile > hostfile;
+          if [ $NODE_NAME != 'HOST_1' ];then
+            sleep 200;
+          else
+            export HCCL_SOCKET_IFNAME='enp198s0f0';
+            echo start all_gather_test;mpirun -f hostfile -n 16  all_gather_test -b 8k -e 64M -f 2 -d fp32 -p 8;
+            echo start all_reduce_test;mpirun -f hostfile -n 16  all_reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8;
+            echo start alltoallv_test;mpirun -f hostfile -n 16  alltoallv_test -b 8k -e 64M -f 2 -d fp32  -p 8 ;
+            echo start broadcast_test;mpirun -f hostfile -n 16  broadcast_test -b 8k -e 64M -f 2 -d fp32 -p 8;
+            echo start reduce_scatter_test;mpirun -f hostfile -n 16  reduce_scatter_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8;
+            echo start reduce_test;mpirun -f hostfile -n 16  reduce_test -b 8k -e 64M -f 2 -d fp32 -o sum -p 8;
+          fi"] # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
           #args: [ "while true; do sleep 30000; done;"  ]                            # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
                                                                                      # The command is 'kubectl exec -it -n {namespace} {podname} bash'
           resources:
