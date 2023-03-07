@@ -10,7 +10,7 @@
 
 2. 默认在两个节点上进行集群训练。可修改`minAvailable: 2`和`replicas: 2`的值，需同时修改且值一样，定义集群训练的节点数。
 
-3. 默认挂载Ascend910芯片且是满配8卡，可修改数量。修改位置如下。
+3. 默认挂载Ascend910芯片且是满配8卡，可修改数量。requests和limits需保持一致。修改位置如下。
 
    ```yaml
    resources:
@@ -28,7 +28,7 @@
    ```
 
 5. 编辑train_cifar_vcjob.yaml或train_imagenet_vcjob文件，可修改上述4个地方。执行`kubectl apply -f train_cifar_vcjob.yaml`下发任务，此时使用cifar10数据集进行训练；执行`kubectl apply -f train_imagenet_vcjob.yaml`下发任务，此时使用imagenet2012数据集进行训练。执行`kubectl delete -f train_cifar_vcjob.yaml`或`kubectl delete -f train_imagenet_vcjob.yaml`删除任务。
-   注意事项：使用imagenet2012数据集时请配置数据集的正确路径，修改位置如下。
+   注意事项：使用imagenet2012数据集时请配置数据集的正确路径，且目录及其子目录的属主属组均为HwHiAiUser。修改位置如下。
 
    ```yaml
    - name: data
@@ -41,7 +41,7 @@
 推理基于Caffe ResNet-50网络（单输入、单Batch）实现图片分类的功能。
 
 1. 默认镜像：`ascendhub.huawei.com/public-ascendhub/mindspore-modelzoo:22.0.0`，可修改image字段来修改使用的镜像。
-2. 默认挂载芯片：Ascend310P，对应310P芯片，可修改为环境上对应的芯片名，例如910芯片修改为Ascend910。1指单卡，可修改数量挂载多卡。修改位置如下。
+2. 默认挂载芯片：Ascend310P，对应310P芯片，可修改为环境上对应的芯片名，例如910芯片修改为Ascend910。1指单卡，可修改数量挂载多卡，requests和limits需保持一致。修改位置如下。
 
    ```yaml
    resources:
@@ -73,3 +73,5 @@
 4. 默认架构：x86_64，如果运行环境为arm，请改成huawei-arm，修改位置参考**单机推理**。
 
 5. 编辑dmi_vcjob.yaml文件，可修改上述3个地方。执行`kubectl apply -f dmi_vcjob.yaml`下发任务，执行`kubectl delete -f dmi_vcjob.yaml`删除任务。
+
+注意事项：310不支持功耗测试。
