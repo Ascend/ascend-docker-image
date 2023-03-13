@@ -19,8 +19,6 @@ RUN umask 0022 && \
     groupadd  HwHiAiUser -g 1000 && \
     useradd -d /home/HwHiAiUser -u 1000 -g 1000 -m -s /bin/bash HwHiAiUser && \
     mkdir -p $ASCEND_BASE/driver && \
-    cp version.info $ASCEND_BASE/driver/ && \
-    cp ascend_install.info /etc/ && \
     if [ "$CHIP" != "all" ]; \
     then \
         CHIPOPTION="--chip=$CHIP"; \
@@ -32,7 +30,6 @@ RUN umask 0022 && \
     --install-for-all $CHIPOPTION && \
     rm $NNRT_PKG && \
     rm -rf $ASCEND_BASE/driver && \
-    rm -f /etc/ascend_install.info && \
     rm -rf ./*
 
 ENV ASCEND_AICPU_PATH=$ASCEND_BASE/nnrt/latest \
