@@ -59,6 +59,8 @@ function get_tensorflow265_modelzoo_dataset_model()
         return
     fi
     cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
+    rm -rf ../tensorflow2.6.5-modelzoo/ResNet50_ID0360_for_TensorFlow2.X
+    cp -rf /usr1/package/ResNet50_ID0360_for_TensorFlow2.X/* ../tensorflow2.6.5-modelzoo/
 }
 
 ## 生成mindspore-modelzoo镜像
@@ -99,14 +101,12 @@ function build_pytorch15_modelzoo()
 ## 数据集需手动放置到docker-build下
 function build_tensorflow_modelzoo()
 {
-    if [ -d ResNet50_ID0058_for_TensorFlow ] || [ -d ../tensorflow-modelzoo/Resnet50_Cifar_for_PyTorch/ ]; then
+    if [ -d ResNet50_ID0058_for_TensorFlow ] || [ -d ../tensorflow-modelzoo/ResNet50_ID0058_for_TensorFlow/ ]; then
         rm -rf ResNet50_ID0058_for_TensorFlow/
         rm -rf ../tensorflow-modelzoo/ResNet50_ID0058_for_TensorFlow/
     fi
+    cp -rf /usr1/package/ResNet50_ID0058_for_TensorFlow/* .
     mkdir data
-    git clone https://gitee.com/ascend/ModelZoo-TensorFlow.git
-    mv ModelZoo-TensorFlow/TensorFlow/built-in/cv/image_classification/ResNet50_ID0058_for_TensorFlow/ .
-    rm -rf ModelZoo-TensorFlow
     unzip imagenet2012.zip
     mv imagenet2012 data
     # 将数据集放入模型代码目录，数据集存放到data目录
