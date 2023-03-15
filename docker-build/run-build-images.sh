@@ -105,7 +105,7 @@ function build_tensorflow_modelzoo()
         rm -rf ResNet50_ID0058_for_TensorFlow/
         rm -rf ../tensorflow-modelzoo/ResNet50_ID0058_for_TensorFlow/
     fi
-    cp -rf /usr1/package/ResNet50_ID0058_for_TensorFlow/* .
+    cp -rf /usr1/package/ResNet50_ID0058_for_TensorFlow .
     mkdir data
     unzip imagenet2012.zip
     mv imagenet2012 data
