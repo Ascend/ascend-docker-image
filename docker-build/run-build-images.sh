@@ -58,9 +58,6 @@ function get_tensorflow265_modelzoo_dataset_model()
         cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../all-in-one/samples
         return
     fi
-    git clone https://gitee.com/ascend/mindxdl-deploy.git
-    mv mindxdl-deploy/samples/train/* Keras-MnasNet_ID3518_for_TensorFlow2.X/test/
-    rm -rf mindxdl-deploy
     cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
 }
 
@@ -114,9 +111,6 @@ function build_tensorflow_modelzoo()
     mv imagenet2012 data
     # 将数据集放入模型代码目录，数据集存放到data目录
     mv data ResNet50_ID0058_for_TensorFlow/
-    git clone https://gitee.com/ascend/mindxdl-deploy.git
-    mv mindxdl-deploy/samples/train/* ResNet50_ID0058_for_TensorFlow/test/
-    rm -rf mindxdl-deploy
     cp -r ResNet50_ID0058_for_TensorFlow ../tensorflow-modelzoo
     
     ## 构建镜像
