@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rings-config-mindx-dls-test     # The value of JobName must be the same as the name attribute of the following job. The prefix rings-config- cannot be modified.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+  labels:
+    ring-controller.atlas: ascend-910   # The value cannot be modified. Service operations will be performed based on this label.
+data:
+  hccl.json: |
+    {
+        "status":"initializing"
+    }
+---
+apiVersion: batch.volcano.sh/v1alpha1   # The value cannot be changed. The volcano API must be used.
+kind: Job                               # Only the job type is supported at present.
+metadata:
+  name: mindx-dls-test                  # The value must be consistent with the name of ConfigMap.
+  namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
+  labels:
+    ring-controller.atlas: ascend-910   # The value must be the same as the label in ConfigMap and cannot be changed.
+    fault-scheduling: "force"
+spec:
+  minAvailable: 2                       # The value of minAvailable is 1 in a single-node scenario and N in an N-node distributed scenario.
+  schedulerName: volcano                # Use the Volcano scheduler to schedule jobs.
+  policies:
+    - event: PodEvicted
+      action: RestartJob
+  plugins:
+    ssh: []
+    env: []
+    svc: []
+  maxRetry: 3
+  queue: default
+  tasks:
+  - name: "default-test"
+    replicas: 2                              # The value of replicas is 1 in a single-node scenario and N in an N-node scenario. The number of NPUs in the requests field is 8 in an N-node scenario.
+    template:
+      metadata:
+        labels:
+          app: tf
+          ring-controller.atlas: ascend-910  # The value must be the same as the label in ConfigMap and cannot be changed.
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: volcano.sh/job-name
+                      operator: In
+                      values:
+                        - mindx-dls-test
+                topologyKey: kubernetes.io/hostname
+        containers:
+        - image: ascendhub.huawei.com/public-ascendhub/tensorflow-modelzoo:22.0.0-2.6.5               # Training framework image, which can be modified.
+          imagePullPolicy: IfNotPresent
+          name: tf
+          env:
+          - name: mindx-dls-test                               # The value must be the same as that of Jobname.
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: XDL_IP                                       # IP address of the physical node, which is used to identify the node where the pod is running
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: framework
+            value: "Tensorflow"
+          command:
+          - "/bin/bash"
+          - "-c"
+          # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
+          - "cd /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X/test;bash train_start.sh /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X/ /home/HwHiAiUser/samples/logs tensorflow/resnet_ctl_imagenet_main.py --data_dir=/job/data --distribution_strategy=one_device --use_tf_while_loop=true --epochs_between_evals=1 --skip_eval --enable_checkpoint_and_export --model_dir=/home/HwHiAiUser/samples/ --batch_size=2048 --train_epochs=5 --base_learning_rate=3.96 --over_dump=False --data_dump_flag=False --data_dump_step=10 --profiling=False --autotune=False --warmup_epochs=5 --label_smoothing=0.1 --weight_decay=0.000025 --num_accumulation_steps=1 --train_steps=625 --optimizer=SGD --lr_schedule=polynomial --drop_eval_remainder=True --eval_offset_epochs=2"
+          #args: [ "while true; do sleep 30000; done;"  ]     # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
+                                                              # The command is 'kubectl exec -it -n {namespace} {podname} bash'
+          resources:
+            requests:
+              huawei.com/Ascend910: 8                 # Number of required NPUs. The maximum value is 8. You can add lines below to configure resources such as memory and CPU.
+            limits:
+              huawei.com/Ascend910: 8                 # The value must be consistent with that in requests.
+          volumeMounts:
+          - name: ascend-910-config
+            mountPath: /user/serverid/devindex/config
+          - name: data
+            mountPath: /job/data                      # Path of the training dataset in the container.
+          - name: slog
+            mountPath: /var/log/npu
+          - name: ascend-driver
+            mountPath: /usr/local/Ascend/driver
+          - name: ascend-add-ons
+            mountPath: /usr/local/Ascend/add-ons
+          - name: localtime
+            mountPath: /etc/localtime
+        nodeSelector:
+          host-arch: huawei-x86                       # Configure the label based on the actual job.
+        volumes:
+        - name: ascend-910-config
+          configMap:
+            name: rings-config-mindx-dls-test         # Correspond to the ConfigMap name above.
+        - name: data
+          hostPath:
+            path: "/data/imagenet_TF"    # Configure the path of the training set.
+        - name: slog
+          hostPath:
+            path: /var/log/npu                        # Configure the NPU log path and mount it to the local host.
+        - name: ascend-driver
+          hostPath:
+            path: /usr/local/Ascend/driver
+        - name: ascend-add-ons
+          hostPath:
+            path: /usr/local/Ascend/add-ons
+        - name: localtime
+          hostPath:
+            path: /etc/localtime                      # Configure the Docker time.
+        restartPolicy: OnFailure
