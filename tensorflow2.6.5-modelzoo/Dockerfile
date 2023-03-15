@@ -80,6 +80,8 @@ $LD_LIBRARY_PATH
 # Ascend包
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
+    mkdir -p /home/HwHiAiUser/samples/scripts && \
+    chown HwHiAiUser:HwHiAiUser -R /home/HwHiAiUser/samples && \
     cp /tmp/ascend_install.info /etc/ && \
     mkdir -p /usr/local/Ascend/driver/ && \
     cp /tmp/version.info /usr/local/Ascend/driver/ && \
@@ -98,7 +100,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 
 USER HwHiAiUser
 
-COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Keras-MnasNet_ID3518_for_TensorFlow2.X /home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser Keras-MnasNet_ID3518_for_TensorFlow2.X /home/HwHiAiUser/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_ID0360_for_TensorFlow2.X /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X
 WORKDIR /home/HwHiAiUser/
