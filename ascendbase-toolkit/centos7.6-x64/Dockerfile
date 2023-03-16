@@ -43,7 +43,7 @@ RUN pip3 install -U pip && \
     pip3 install decorator numpy kiwisolver matplotlib \
     sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools && \
     pip3 install protobuf scipy requests mpmath Pillow && \
-    pip3 install pycocotools && \
+    pip3 install pycocotools absl-py && \
     rm -rf /root/.cache/pip
 
 # 安装zlib-1.2.9
