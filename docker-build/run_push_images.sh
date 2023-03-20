@@ -27,7 +27,7 @@ push_pytorch_modelzoo()
 
 push_pytorch15_modelzoo()
 {
-    docker tag pytorch15-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag pytorch1.5-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
     docker push ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
 }
 
