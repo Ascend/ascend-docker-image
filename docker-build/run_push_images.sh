@@ -138,94 +138,89 @@ push_ascendbase_infer()
 
 function parse_script_args()
 {
-    while true; do
-        case "$1" in
-        --help | -h)
-            NEED_HELP=yes
-            shift
-            ;;
-        --modelzoo=*)
-            image=$(echo "$1" | cut -d"=" -f2)
-            if [[ "${image}" = "mindspore" ]]; then
-                push_mindspore_modelzoo
-            elif [[ "${image}" = "pytorch" ]]; then
-                push_pytorch_modelzoo
-            elif [[ "${image}" = "pytorch15" ]]; then
-                push_pytorch15_modelzoo
-            elif [[ "${image}" = "tensorflow" ]]; then
-                push_tensorflow_modelzoo
-            elif [[ "${image}" = "tensorflow265" ]]; then
-                push_tensorflow265_modelzoo
-            elif [[ "${image}" = "infer" ]]; then
-                push_infer_modelzoo
-            elif [[ "${image}" = "infer-mxvision" ]]; then
-                push_infer_modelzoo_mxvision
-            elif [[ "${image}" = "all-in-one" ]]; then
-                push_all_in_one
-            elif [[ "${image}" = "all" ]]; then
-                push_mindspore_modelzoo
-                push_pytorch_modelzoo
-                push_pytorch15_modelzoo
-                push_tensorflow_modelzoo
-                push_tensorflow265_modelzoo
-                push_infer_modelzoo
-                push_infer_modelzoo_mxvision
-                push_all_in_one
-            else
-                echo "Please check the parameter of --modelzoo"
-                exit 1
-            fi
-            shift
-            ;;
-        --common=*)
-            image=$(echo "$1" | cut -d"=" -f2)
-            if [[ "${image}" = "algorithm" ]]; then
-                push_ascend_algorithm
-            elif [[ "${image}" = "infer" ]]; then
-                push_ascend_infer
-            elif [[ "${image}" = "mindspore" ]]; then
-                push_ascend_mindspore
-            elif [[ "${image}" = "pytorch" ]]; then
-                push_ascend_pytorch
-            elif [[ "${image}" = "tensorflow" ]]; then
-                push_ascend_tensorflow
-            elif [[ "${image}" = "toolkit" ]]; then
-                push_ascend_toolkit
-            elif [[ "${image}" = "base-infer" ]]; then
-                push_ascendbase_infer
-            elif [[ "${image}" = "base-toolkit" ]]; then
-                push_ascendbase_toolkit
-            elif [[ "${image}" = "hccl-test" ]]; then
-                push_hccl_test
-            elif [[ "${image}" = "all" ]]; then
-                push_ascendbase_toolkit
-                push_ascendbase_infer
-                push_ascend_algorithm
-                push_ascend_infer
-                push_ascend_toolkit
-                push_ascend_mindspore
-                push_ascend_pytorch
-                push_ascend_tensorflow
-                push_hccl_test
-            else
-                echo "Please check the parameter of --common"
-                exit 1
-            fi
-            shift
-            ;;
-        -*)
+    case "$1" in
+    --help | -h)
+        NEED_HELP=yes
+        ;;
+    --modelzoo=*)
+        image=$(echo "$1" | cut -d"=" -f2)
+        if [[ "${image}" = "mindspore" ]]; then
+            push_mindspore_modelzoo
+        elif [[ "${image}" = "pytorch" ]]; then
+            push_pytorch_modelzoo
+        elif [[ "${image}" = "pytorch15" ]]; then
+            push_pytorch15_modelzoo
+        elif [[ "${image}" = "tensorflow" ]]; then
+            push_tensorflow_modelzoo
+        elif [[ "${image}" = "tensorflow265" ]]; then
+            push_tensorflow265_modelzoo
+        elif [[ "${image}" = "infer" ]]; then
+            push_infer_modelzoo
+        elif [[ "${image}" = "infer-mxvision" ]]; then
+            push_infer_modelzoo_mxvision
+        elif [[ "${image}" = "all-in-one" ]]; then
+            push_all_in_one
+        elif [[ "${image}" = "all" ]]; then
+            push_mindspore_modelzoo
+            push_pytorch_modelzoo
+            push_pytorch15_modelzoo
+            push_tensorflow_modelzoo
+            push_tensorflow265_modelzoo
+            push_infer_modelzoo
+            push_infer_modelzoo_mxvision
+            push_all_in_one
+        else
+            echo "Please check the parameter of --modelzoo"
+            exit 1
+        fi
+        ;;
+    --common=*)
+        image=$(echo "$1" | cut -d"=" -f2)
+        if [[ "${image}" = "algorithm" ]]; then
+            push_ascend_algorithm
+        elif [[ "${image}" = "infer" ]]; then
+            push_ascend_infer
+        elif [[ "${image}" = "mindspore" ]]; then
+            push_ascend_mindspore
+        elif [[ "${image}" = "pytorch" ]]; then
+            push_ascend_pytorch
+        elif [[ "${image}" = "tensorflow" ]]; then
+            push_ascend_tensorflow
+        elif [[ "${image}" = "toolkit" ]]; then
+            push_ascend_toolkit
+        elif [[ "${image}" = "base-infer" ]]; then
+            push_ascendbase_infer
+        elif [[ "${image}" = "base-toolkit" ]]; then
+            push_ascendbase_toolkit
+        elif [[ "${image}" = "hccl-test" ]]; then
+            push_hccl_test
+        elif [[ "${image}" = "all" ]]; then
+            push_ascendbase_toolkit
+            push_ascendbase_infer
+            push_ascend_algorithm
+            push_ascend_infer
+            push_ascend_toolkit
+            push_ascend_mindspore
+            push_ascend_pytorch
+            push_ascend_tensorflow
+            push_hccl_test
+        else
+            echo "Please check the parameter of --common"
+            exit 1
+        fi
+        ;;
+    -*)
+        echo "Unsupported parameters: $1"
+        exit 1
+        ;;
+    *)
+        if [ "$1" != "x" ]; then
             echo "Unsupported parameters: $1"
             exit 1
-            ;;
-        *)
-            if [ "x$1" != "x" ]; then
-                echo "Unsupported parameters: $1"
-                exit 1
-            fi
-            break
-            ;;
-        esac
-    done
+        fi
+        break
+        ;;
+    esac
 }
 
 main()
