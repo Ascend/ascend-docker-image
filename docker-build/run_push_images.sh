@@ -21,14 +21,14 @@ push_mindspore_modelzoo()
 
 push_pytorch_modelzoo()
 {
-    docker tag pytorch-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag pytorch-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-${ARCH}
     docker push ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
 }
 
 push_pytorch15_modelzoo()
 {
-    docker tag pytorch15-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch15-modelzoo:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/pytorch15-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag pytorch15-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
 }
 
 push_tensorflow_modelzoo()
