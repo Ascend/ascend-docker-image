@@ -10,7 +10,7 @@ scipy
 requests 
 attrs 
 wheel 
-Pillow==7.2.0 
+Pillow==9.1 
 wheel 
 setuptools 
 matplotlib 
