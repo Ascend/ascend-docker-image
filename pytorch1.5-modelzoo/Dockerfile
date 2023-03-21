@@ -68,6 +68,8 @@ RUN groupadd  HwHiAiUser -g 1000 && \
 #安装toolkit
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
+    mkdir -p /home/HwHiAiUser/samples/scripts && \
+    chown HwHiAiUser:HwHiAiUser -R /home/HwHiAiUser/samples && \
     chmod +x /tmp/Ascend-cann-toolkit*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
@@ -79,7 +81,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 
 USER HwHiAiUser
 
-COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser InceptionV4_for_PyTorch_1.1_code /home/HwHiAiUser/InceptionV4_for_PyTorch_1.1_code
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser InceptionV4_for_PyTorch_1.1_code /home/HwHiAiUser/samples/InceptionV4_for_PyTorch_1.1_code
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_for_PyTorch /home/HwHiAiUser/samples/ResNet50_for_PyTorch
 WORKDIR /home/HwHiAiUser/

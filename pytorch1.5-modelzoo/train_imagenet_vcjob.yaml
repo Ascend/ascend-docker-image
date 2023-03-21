@@ -42,7 +42,7 @@ spec:
       spec:
         hostNetwork: true
         containers:
-        - image: ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0-1.8.1               # Training framework image, which can be modified.
+        - image: ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0               # Training framework image, which can be modified.
           imagePullPolicy: IfNotPresent
           name: pytorch
           env:
