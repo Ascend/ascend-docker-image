@@ -60,7 +60,7 @@ function get_tensorflow265_modelzoo_dataset_model()
     fi
     cp -r Keras-MnasNet_ID3518_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
     rm -rf ../tensorflow2.6.5-modelzoo/ResNet50_ID0360_for_TensorFlow2.X
-    cp -rf /usr1/package/ResNet50_ID0360_for_TensorFlow2.X/* ../tensorflow2.6.5-modelzoo/
+    cp -rf /usr1/package/ResNet50_ID0360_for_TensorFlow2.X ../tensorflow2.6.5-modelzoo/
 }
 
 ## 生成mindspore-modelzoo镜像
