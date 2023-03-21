@@ -23,7 +23,7 @@ export DEVICE_ID=<设备id>
 
 集群训练支持resnet50模型 + imagenet2012数据集，imagenet2012需从物理机挂载。
 
-1. 默认镜像：`ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0`，可修改image字段来修改使用的镜像。
+1. 默认镜像：`ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0-1.8.1`，可修改image字段来修改使用的镜像。
 
 2. 默认在两个节点上进行集群训练。可修改`minAvailable: 2`和`replicas: 2`的值，需同时修改且值一样，定义集群训练的节点数。
 
