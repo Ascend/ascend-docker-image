@@ -98,12 +98,13 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     rm -rf /tmp/* && \
     rm -rf /root/.cache/pip
 
+RUN mkdir -p /user/serverid/devindex/config  && \
+    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
 COPY --chown=HwHiAiUser:HwHiAiUser Keras-MnasNet_ID3518_for_TensorFlow2.X /home/HwHiAiUser/samples/Keras-MnasNet_ID3518_for_TensorFlow2.X
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_ID0360_for_TensorFlow2.X /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X
-RUN mkdir -p /user/serverid/devindex/config  && \
-    cp /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X/configs/rank_table_8p.json /user/serverid/devindex/config/hccl.json
+RUN cp /home/HwHiAiUser/samples/ResNet50_ID0360_for_TensorFlow2.X/configs/rank_table_8p.json /user/serverid/devindex/config/hccl.json
 WORKDIR /home/HwHiAiUser/
