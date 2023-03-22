@@ -91,6 +91,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     rm -rf /tmp/*  && \
     rm -rf /root/.cache/pip
 
+RUN mkdir -p /user/serverid/devindex/config  && \
+    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
@@ -98,4 +100,5 @@ COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_MindSpore /home/HwHiAiUser
 COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_imagenet2012_for_MindSpore /home/HwHiAiUser/samples/Resnet50_imagenet2012_for_MindSpore
 COPY --chown=HwHiAiUser:HwHiAiUser vpc_resnet50_imagenet_classification /home/HwHiAiUser/samples/vpc_resnet50_imagenet_classification
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser hccl.json /user/serverid/devindex/config/hccl.json
 WORKDIR /home/HwHiAiUser/
