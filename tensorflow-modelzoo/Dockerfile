@@ -98,7 +98,7 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 
 USER HwHiAiUser
 
-COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_ID0058_for_TensorFlow /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_ID0058_for_TensorFlow /home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 WORKDIR /home/HwHiAiUser/
