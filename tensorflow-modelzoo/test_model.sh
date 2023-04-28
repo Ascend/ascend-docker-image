@@ -2,11 +2,12 @@
 
 # 0卡跑训练，需将数据集的位置修改到真实路径
 function start_test_model() {
-    cd /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/scripts/ || exit 1
+    cd /home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/scripts/ || exit 1
     if [ $1 == 1p ];then
-        sed -i 's@--data_path=/data/imagenet/@--data_path=/home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/data/imagenet2012@' train_1p.sh
+        device_id=$(ls /dev|grep davinci | tr -cd [0-7])
+        sed -i "s/device_id=0/device_id=${device_id}/" train_1p.sh
+        sed -i 's@--data_path=/data/imagenet/@--data_path=/home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/data/imagenet2012@' train_1p.sh
         bash train_1p.sh&
-        device_id=$(grep device_id train_1p.sh|head -1|cut -d'=' -f2)
         echo test start
         sleep 5
         tail -f log/train_${device_id}.log&
@@ -29,7 +30,7 @@ function start_test_model() {
         done
     fi
     if [ $1 == 8p ];then
-        sed -i 's@--data_path=/data/imagenet/@--data_path=/home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/data/imagenet2012@' train_sample.sh
+        sed -i 's@--data_path=/data/imagenet/@--data_path=/home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/data/imagenet2012@' train_sample.sh
         chmod +x train_sample.sh
         bash train_8p.sh&
         device_id=$(grep device_id train_1p.sh|head -1|cut -d'=' -f2)
