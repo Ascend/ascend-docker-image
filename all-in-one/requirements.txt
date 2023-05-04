@@ -1,6 +1,7 @@
 wheel
 setuptools
 attrs
+absl-py
 numpy 
 decorator 
 sympy==1.4 

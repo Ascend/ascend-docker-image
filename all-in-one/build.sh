@@ -1,8 +1,15 @@
 #!/bin/bash
 
 arch=$(uname -m)
+if [ -d ./samples ]; then
+    rm -rf ./samples
+fi
+mkdir -p ./samples/scripts
 
 # 检查mindspore依赖文件
+cp -rf /usr1/package330/mindspore-*linux_$(arch).whl .
+cp -rf /usr1/package330/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl .
+
 have_mindspore=$(find . | grep "mindspore" | grep -c "$arch")
 if [ "$have_mindspore" == 0 ]; then
     echo "please put mindspore wheel package here"
@@ -15,26 +22,15 @@ if [ "$have_elastic" == 0 ]; then
     exit 1
 fi
 
-if [ ! -d samples/Resnet50_Cifar_for_MindSpore ]; then
-    echo "please put Resnet50_Cifar_for_MindSpore here"
-    echo "it can be download from https://gitee.com/mindspore/models/tree/master/official/cv/ResNet"
-    exit 1
-fi
+cp -rf /usr1/package330/mindspore-modelzoo-data-model/Resnet50_Cifar_for_MindSpore ./samples
 
-if [ ! -d samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin ]; then
-    mkdir -p samples/Resnet50_Cifar_for_MindSpore/data/cifar10
-    echo "download dataset cifar10"
-    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz
-    tar -xf cifar-10-binary.tar.gz -C samples/Resnet50_Cifar_for_MindSpore/data/cifar10
-fi
-
-have_toolkit=$(find . | grep cann | grep toolkit | grep -c "$arch")
-if [ "$have_toolkit" == 0 ]; then
-    echo "please put toolkit package here"
-    exit 1
-fi
 
 # 检查pytorch依赖文件
+cp -rf /usr1/package330/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package330/torch-1.8*linux_$(arch).whl .
+cp -rf /usr1/package330/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl .
+
+
 if [ ! -d dllogger ]; then
     git clone https://gitee.com/mirrors_NVIDIA/dllogger
 fi
@@ -57,24 +53,13 @@ if [ "$have_torch_npu" == 0 ]; then
     exit 1
 fi
 
-if [ ! -d samples/Resnet50_Cifar_for_PyTorch ]; then
-    echo "please put Resnet50_Cifar_for_PyTorch here"
-    echo "it can be download from https://gitee.com/ascend/ModelZoo-PyTorch/tree/master/PyTorch/built-in/cv/classification/Resnet50_Cifar_for_PyTorch"
-    exit 1
-fi
-
-if [ ! -d samples/Resnet50_Cifar_for_PyTorch/data/cifar100/cifar-100-python ]; then
-    mkdir -p samples/Resnet50_Cifar_for_PyTorch/data/cifar100
-    echo "download dataset cifar100"
-    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
-    tar -xf cifar-100-python.tar.gz -C samples/Resnet50_Cifar_for_PyTorch/data/cifar100
-fi
+cp -rf /usr1/package330/Resnet50_Cifar_for_PyTorch ./samples
 
 # 检查tensorflow依赖文件
-have_tfplugin=$(find . | grep cann | grep tfplugin | grep -c "$arch")
-if [ "$have_tfplugin" == 0 ]; then
-    echo "please put tfplugin package here"
-    exit 1
+if [[ $(arch) == "x86_64" ]]; then
+    cp -rf /usr1/package330/tensorflow-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl .
+else
+    cp -rf /usr1/package330/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl .
 fi
 
 have_tensorflow=$(find . | grep "tensorflow" | grep -c "$arch")
@@ -83,22 +68,27 @@ if [ "$have_tensorflow" == 0 ]; then
     exit 1
 fi
 
-if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X ]; then
-    echo "please put Keras-MnasNet_ID3518_for_TensorFlow2.X here"
-    echo "it can be download from https://gitee.com/ascend/ModelZoo-TensorFlow/tree/master/TensorFlow2/built-in/cv/image_classification/Keras-MnasNet_ID3518_for_TensorFlow2.X"
-    exit 1
-fi
-
-if [ ! -d samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10/cifar-10-batches-py ]; then
-    mkdir -p samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
-    echo "download dataset cifar10"
-    wget --no-check-certificate https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-    tar -xf cifar-10-python.tar.gz -C samples/Keras-MnasNet_ID3518_for_TensorFlow2.X/data/cifar10
-fi
+cp -r /usr1/package330/Keras-MnasNet_ID3518_for_TensorFlow2.X ./samples
 
 echo "start build"
 if [ $arch == "x86_64" ];then
+    rm -f Ascend-cann-*-$(arch).run
+    cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
+    cp -rf /usr1/package330/Ascend-cann-tfplugin_6.3*-$(arch).run .
+    cp -rf /usr1/package330/Ascend-cann-kernels-910_6.3.RC1_linux.run .
     DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-x64
+    # rm -f Ascend-cann-*-$(arch).run
+    # cp -rf /usr1/package330/Ascend-cann-toolkit_6.1*-$(arch).run .
+    # cp -rf /usr1/package330/Ascend-cann-tfplugin_6.1*-$(arch).run .
+    # DOCKER_BUILDKIT=1 docker build . -t all-in-one:910b-ubuntu18.04-x64
 else
+    rm -f Ascend-cann-*-$(arch).run
+    cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
+    cp -rf /usr1/package330/Ascend-cann-tfplugin_6.3*-$(arch).run .
+    cp -rf /usr1/package330/Ascend-cann-kernels-910_6.3.RC1_linux.run .
     DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-arm64
+    # rm -f Ascend-cann-*-$(arch).run
+    # cp -rf /usr1/package330/Ascend-cann-toolkit_6.1*-$(arch).run .
+    # cp -rf /usr1/package330/Ascend-cann-tfplugin_6.1*-$(arch).run .
+    # DOCKER_BUILDKIT=1 docker build . -t all-in-one:910b-ubuntu18.04-arm64
 fi

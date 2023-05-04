@@ -1,4 +1,4 @@
-version=22.0.0
+version=23.0.0
 repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
 
 #modelzoo
@@ -6,14 +6,14 @@ repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
 docker manifest rm ${repository}/all-in-one:${version}
 docker manifest create ${repository}/all-in-one:${version} --amend ${repository}/all-in-one:${version}-ubuntu18.04-x64 --amend ${repository}/all-in-one:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/all-in-one:${version}
-#pytorch-modelzoo
-docker manifest rm ${repository}/pytorch-modelzoo:${version}
-docker manifest create ${repository}/pytorch-modelzoo:${version} --amend ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-x64 --amend ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-arm64
-docker manifest push ${repository}/pytorch-modelzoo:${version}
 #pytorch1.8.1-modelzoo
 docker manifest rm ${repository}/pytorch-modelzoo:${version}-1.8.1
 docker manifest create ${repository}/pytorch-modelzoo:${version}-1.8.1 --amend ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-x64 --amend ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-arm64
 docker manifest push ${repository}/pytorch-modelzoo:${version}-1.8.1
+#pytorch1.11.0-modelzoo
+docker manifest rm ${repository}/pytorch-modelzoo:${version}-1.11.0
+docker manifest create ${repository}/pytorch-modelzoo:${version}-1.11.0 --amend ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-x64 --amend ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-arm64
+docker manifest push ${repository}/pytorch-modelzoo:${version}-1.11.0
 #mindspore-modelzoo
 docker manifest rm ${repository}/mindspore-modelzoo:${version}
 docker manifest create ${repository}/mindspore-modelzoo:${version} --amend ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-x64 --amend ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-arm64
@@ -74,6 +74,13 @@ docker manifest push ${repository}/ascend-pytorch:${version}-ubuntu18.04
 docker manifest rm ${repository}/ascend-pytorch:${version}-centos7.6
 docker manifest create ${repository}/ascend-pytorch:${version}-centos7.6 --amend ${repository}/ascend-pytorch:${version}-centos7.6-x64 --amend ${repository}/ascend-pytorch:${version}-centos7.6-arm64
 docker manifest push ${repository}/ascend-pytorch:${version}-centos7.6
+#ascend-pytorch1.11.0
+docker manifest rm ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04
+docker manifest create ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04 --amend ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-x64 --amend ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-arm64
+docker manifest push ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04
+docker manifest rm ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6
+docker manifest create ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-x64 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-arm64
+docker manifest push ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6
 #ascend-tensorflow
 docker manifest rm ${repository}/ascend-tensorflow:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-tensorflow:${version}-ubuntu18.04 --amend ${repository}/ascend-tensorflow:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-tensorflow:${version}-ubuntu18.04-arm64
