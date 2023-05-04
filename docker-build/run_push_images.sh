@@ -65,12 +65,12 @@ push_all_in_one()
 
 push_ascend_algorithm()
 {
-    docker tag ascend_algorithm:ubuntu18.04-${ARCH} ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_algorithm:centos7.6-${ARCH} ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker tag ascend_algorithm:openeuler20.03-${ARCH} ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
+    docker tag ascend-algorithm:ubuntu18.04-${ARCH} ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-algorithm:centos7.6-${ARCH} ${repository}/algorithm:${version}-centos7.6-${ARCH}
+    docker push ${repository}/algorithm:${version}-centos7.6-${ARCH}
+    docker tag ascend-algorithm:openeuler20.03-${ARCH} ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
+    docker push ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
 }
 
 push_ascend_infer()
@@ -214,6 +214,7 @@ function parse_script_args()
             push_ascend_toolkit
             push_ascend_mindspore
             push_ascend_pytorch
+            push_ascend_pytorch1110
             push_ascend_tensorflow
             push_hccl_test
         else
@@ -248,6 +249,7 @@ Options:
     -h, --help                    Displays the help information.
     --modelzoo= mindspore         Specifies the modelzoo image to be created.
                 pytorch
+                pytorch1.11.0
                 tensorflow
                 tensorflow265
                 infer
@@ -258,6 +260,7 @@ Options:
                 infer
                 modelzoo
                 pytorch
+                pytorch1.11.0
                 tensorflow
                 toolkit
                 base-infer
