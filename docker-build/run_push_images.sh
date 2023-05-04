@@ -1,4 +1,4 @@
-version=22.0.0
+version=23.0.RC1
 public_repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
 private_repository=swr.cn-east-3.myhuaweicloud.com/zy-shanghai-1
 if [[ $2 == "public" ]]; then
@@ -17,6 +17,8 @@ push_mindspore_modelzoo()
 {
     docker tag mindspore-modelzoo:ubuntu18.04-${ARCH} ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-${ARCH}
     docker push ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag mindspore-modelzoo:910b-ubuntu18.04-${ARCH} ${repository}/mindspore-modelzoo:${version}-910b-ubuntu18.04-${ARCH}
+    docker push ${repository}/mindspore-modelzoo:${version}-910b-ubuntu18.04-${ARCH}
 }
 
 push_pytorch_modelzoo()
@@ -25,10 +27,10 @@ push_pytorch_modelzoo()
     docker push ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-${ARCH}
 }
 
-push_pytorch15_modelzoo()
+push_pytorch1110_modelzoo()
 {
-    docker tag pytorch1.5-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag pytorch1.11.0-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker push ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-${ARCH}
 }
 
 push_tensorflow_modelzoo()
@@ -63,12 +65,12 @@ push_all_in_one()
 
 push_ascend_algorithm()
 {
-    docker tag ascend_algorithm:ubuntu18.04-${ARCH} ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_algorithm:centos7.6-${ARCH} ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker tag ascend_algorithm:openeuler20.03-${ARCH} ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
+    docker tag ascend-algorithm:ubuntu18.04-${ARCH} ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-algorithm:centos7.6-${ARCH} ${repository}/algorithm:${version}-centos7.6-${ARCH}
+    docker push ${repository}/algorithm:${version}-centos7.6-${ARCH}
+    docker tag ascend-algorithm:openeuler20.03-${ARCH} ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
+    docker push ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
 }
 
 push_ascend_infer()
@@ -101,6 +103,14 @@ push_ascend_pytorch()
     docker push ${repository}/ascend_pytorch:${version}-ubuntu18.04-${ARCH}
     docker tag ascend_pytorch:centos7.6-${ARCH} ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
     docker push ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
+}
+
+push_ascend_pytorch1110()
+{
+    docker tag ascend_pytorch1.11.0:ubuntu18.04-${ARCH} ${repository}/ascend_pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend_pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker tag ascend_pytorch1.11.0:centos7.6-${ARCH} ${repository}/ascend_pytorch:${version}-1.11.0-centos7.6-${ARCH}
+    docker push ${repository}/ascend_pytorch:${version}-1.11.0-centos7.6-${ARCH}
 }
 
 push_ascend_tensorflow()
@@ -148,8 +158,8 @@ function parse_script_args()
             push_mindspore_modelzoo
         elif [[ "${image}" = "pytorch" ]]; then
             push_pytorch_modelzoo
-        elif [[ "${image}" = "pytorch15" ]]; then
-            push_pytorch15_modelzoo
+        elif [[ "${image}" = "pytorch1.11.0" ]]; then
+            push_pytorch1110_modelzoo
         elif [[ "${image}" = "tensorflow" ]]; then
             push_tensorflow_modelzoo
         elif [[ "${image}" = "tensorflow265" ]]; then
@@ -163,7 +173,7 @@ function parse_script_args()
         elif [[ "${image}" = "all" ]]; then
             push_mindspore_modelzoo
             push_pytorch_modelzoo
-            push_pytorch15_modelzoo
+            push_pytorch1110_modelzoo
             push_tensorflow_modelzoo
             push_tensorflow265_modelzoo
             push_infer_modelzoo
@@ -184,6 +194,8 @@ function parse_script_args()
             push_ascend_mindspore
         elif [[ "${image}" = "pytorch" ]]; then
             push_ascend_pytorch
+        elif [[ "${image}" = "pytorch1.11.0" ]]; then
+            push_ascend_pytorch1110
         elif [[ "${image}" = "tensorflow" ]]; then
             push_ascend_tensorflow
         elif [[ "${image}" = "toolkit" ]]; then
@@ -202,6 +214,7 @@ function parse_script_args()
             push_ascend_toolkit
             push_ascend_mindspore
             push_ascend_pytorch
+            push_ascend_pytorch1110
             push_ascend_tensorflow
             push_hccl_test
         else
@@ -236,7 +249,7 @@ Options:
     -h, --help                    Displays the help information.
     --modelzoo= mindspore         Specifies the modelzoo image to be created.
                 pytorch
-                pytorch15
+                pytorch1.11.0
                 tensorflow
                 tensorflow265
                 infer
@@ -247,6 +260,7 @@ Options:
                 infer
                 modelzoo
                 pytorch
+                pytorch1.11.0
                 tensorflow
                 toolkit
                 base-infer

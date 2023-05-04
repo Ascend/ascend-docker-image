@@ -60,7 +60,7 @@ spec:
           - "/bin/bash"
           - "-c"
           # Commands for running the training script. Ensure that the involved commands and paths exist on Docker.
-          - "cd /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/test;chmod +x train_start.sh;bash train_start.sh /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/ /home/HwHiAiUser/ResNet50_ID0058_for_TensorFlow/logs src/mains/res50.py --config_file=res50_256bs_8p --max_train_steps=1000 --iterations_per_loop=100 --debug=True --eval=False --data_path=/job/data/imagenet_TF"
+          - "cd /home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/test;chmod +x train_start.sh;bash train_start.sh /home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/ /home/HwHiAiUser/samples/ResNet50_ID0058_for_TensorFlow/logs src/mains/res50.py --config_file=res50_256bs_8p --max_train_steps=1000 --iterations_per_loop=100 --debug=True --eval=False --data_path=/job/data/imagenet_TF"
           #args: [ "while true; do sleep 30000; done;"  ]     # Comment out the preceding line and enable this line. You can manually run the training script in the container to facilitate debugging.
                                                               # The command is 'kubectl exec -it -n {namespace} {podname} bash'
           resources:

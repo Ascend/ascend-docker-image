@@ -2,20 +2,37 @@
 
 |软件或文件|获取方法|
 |:-----------:| :-------------:|
-|mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl |[获取链接](https://www.mindspore.cn/versions)|
-|mindx_elastic-0.0.1-py37-none-linux_$(arch).whl |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl + torch-1.8*linux_$(arch).whl + torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/pytorch1.8.1-3.0.0-release.zip)|
-|apex-0.1+ascend.20221219-cp37-cp37m-linux_$(arch).whl + torch-1.5.0+ascend.post7.20221219-cp37-cp37m-linux_$(arch).whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/pytorch1.5.0-3.0.0-release.zip)|
-|tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl |[获取链接](https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/f0/22/46ddf2cbf994560279889cd090e2eea16cc3e0bb53fb8a6cacbae2ea4782/tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl)|                              
-|tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl)|
+|mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/aarch64/mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl)|
+|mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/x86_64/mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726691&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726692&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_aarch64.whl)|
+|pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_x86_64.whl)|
+|torch-1.8.1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.8.1-cp37-cp37m-linux_aarch64.whl)|
+|torch-1.8.1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.8.1-cp37-cp37m-linux_x86_64.whl)|
+|torch_npu-1.8.1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch_npu-1.8.1-cp37-cp37m-linux_aarch64.whl)|
+|torch_npu-1.8.1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch_npu-1.8.1-cp37-cp37m-linux_x86_64.whl)|
+|pytorch1.11.0:apex-0.1+ascend-cp37-cp37m-linux_aarch64.whl |[获取链接](https://gitee.com/ascend/apex/releases/download/v3.0.0-1.11.0/apex-0.1_ascend-cp37-cp37m-linux_aarch64.whl)|
+|pytorch1.11.0:apex-0.1+ascend-cp37-cp37m-linux_x86_64.whl |[获取链接](https://gitee.com/ascend/apex/releases/download/v3.0.0-1.11.0/apex-0.1_ascend-cp37-cp37m-linux_x86_64.whl)|
+|torch-1.11.0-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.11.0-cp37-cp37m-linux_aarch64.whl)|
+|torch-1.11.0-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.11.0-cp37-cp37m-linux_x86_64.whl)|
+|torch_npu-1.11.0rc2-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch_npu-1.11.0rc2-cp37-cp37m-linux_aarch64.whl)|
+|torch_npu-1.11.0rc2-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch_npu-1.11.0rc2-cp37-cp37m-linux_x86_64.whl)|
 |tensorflow-1.15.0-cp37-cp37m-manylinux2010_x86_64..whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-1.15.0-cp37-cp37m-manylinux2010_x86_64.whl)|
 |tensorflow-1.15.0-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-1.15.0-cp37-cp37m-manylinux2014_aarch64.whl)|
-|Ascend-mindxsdk-mxmanufacture_3.0.RC3_linux-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|Ascend-mindxsdk-mxvision_3.0.RC3_linux-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|Ascend-cann-toolkit*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-cann-tfplugin*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-cann-nnrt*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-mindx-toolbox_3.0.0_linux-x86_64.run |[获取链接](https://www.hiascend.com/software/mindx-dl/community)|
+|tensorflow-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl)|
+|tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl)|
+|Ascend-cann-kernels-910_6.3.RC1_linux.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-kernels-910_6.3.RC1_linux.run)|
+|Ascend-cann-nnrt_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-nnrt_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-nnrt_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-nnrt_6.3.RC1_linux-x86_64.run)|
+|Ascend-cann-tfplugin_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-tfplugin_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run)|
+|Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726676&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726670&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726682&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726684&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
 |libstdc++.so.6.0.24 |OS为CentOS时，通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
 
 # 构建推理容器镜像

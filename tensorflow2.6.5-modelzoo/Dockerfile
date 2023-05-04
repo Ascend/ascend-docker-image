@@ -17,7 +17,7 @@ RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main res
     apt-get -o "Acquire::https::Verify-Peer=false" update && \
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends ca-certificates && \
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends pciutils wget libxml2 g++ automake make xz-utils libbz2-dev libssl-dev vim zip unzip dos2unix autoconf libtool \
-    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 liblzma-dev\
+    libgl1-mesa-glx zlib1g zlib1g-dev libffi-dev libfreetype6-dev pkg-config libpng-dev numactl libopenblas-dev bzip2 libblas3 liblapack3 liblzma-dev libsqlite3-dev\
     libblas-dev gfortran libhdf5-dev libicu60 libxml2-dev libxslt-dev curl gcc cython3 python3-h5py libgmpxx4ldbl openssl sudo  less htop && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
@@ -86,10 +86,10 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     mkdir -p /usr/local/Ascend/driver/ && \
     cp /tmp/version.info /usr/local/Ascend/driver/ && \
     chmod 755 /usr/local/Ascend && \
-    chmod +x /tmp/Ascend-cann-toolkit*.run && \
-    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    chmod +x /tmp/Ascend-cann-tfplugin*.run && \
-    bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    chmod +x /tmp/*.run && \
+    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
+    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
 # 安装tensorflow
     ARCH=$(uname -m) && \
     pip3 install /tmp/tensorflow*_${ARCH}.whl && \
@@ -99,7 +99,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     rm -rf /root/.cache/pip
 
 RUN mkdir -p /user/serverid/devindex/config  && \
-    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config
+    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config && \
+    chmod -R o+x /user
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt

@@ -6,14 +6,17 @@ function start_test_mindspore() {
     sed -i 's/epoch_size: 90/epoch_size: 5/' ~/samples/Resnet50_Cifar_for_MindSpore/config/resnet50_cifar10_config.yaml
     cd ~/samples/Resnet50_Cifar_for_MindSpore/scripts || exit 1
     bash ~/samples/Resnet50_Cifar_for_MindSpore/scripts/run_standalone_train.sh ~/samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin ~/samples/Resnet50_Cifar_for_MindSpore/config/resnet50_cifar10_config.yaml &
-    sleep 5s
-    tail -f ~/samples/Resnet50_Cifar_for_MindSpore/scripts/train/log &
+    while [ ! -e /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts/outputs/resnet50/cifar10/log/rank_0/log.txt ]
+    do
+        sleep 1
+    done
+    tail -f /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts/outputs/resnet50/cifar10/log/rank_0/log.txt &
     local wait_time
     wait_time=0
     while true; do
         sleep 20
         wait_time=$((wait_time+20))
-        ckpt_file_exists=$(find train/output/checkpoint/ -name 'resnet*.ckpt' | wc -l)
+        ckpt_file_exists=$(find outputs/resnet50/cifar10/ckpt/ -name 'resnet*.ckpt' | wc -l)
         if [ "$ckpt_file_exists" -eq 1 ]; then
             echo test mindspore-modelzoo model success
             return 0
