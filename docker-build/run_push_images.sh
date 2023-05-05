@@ -53,8 +53,8 @@ push_infer_modelzoo()
 
 push_infer_modelzoo_mxvision()
 {
-    docker tag infer-modelzoo-mxvision:ubuntu18.04-${ARCH} ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-${ARCH}
+    docker tag infer-modelzoo:mxvision-ubuntu18.04-${ARCH} ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-${ARCH}
+    docker push ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-${ARCH}
 }
 
 push_all_in_one()
@@ -75,50 +75,50 @@ push_ascend_algorithm()
 
 push_ascend_infer()
 {
-    docker tag ascend_infer:ubuntu18.04-${ARCH} ${repository}/ascend_infer:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_infer:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_infer:centos7.6-${ARCH} ${repository}/ascend_infer:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_infer:${version}-centos7.6-${ARCH}
+    docker tag ascend-infer:ubuntu18.04-${ARCH} ${repository}/ascend-infer:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-infer:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-infer:centos7.6-${ARCH} ${repository}/ascend-infer:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascend-infer:${version}-centos7.6-${ARCH}
 }
 
 push_ascend_toolkit()
 {
-    docker tag ascend_toolkit:ubuntu18.04-${ARCH} ${repository}/ascend_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_toolkit:centos7.6-${ARCH} ${repository}/ascend_toolkit:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_toolkit:${version}-centos7.6-${ARCH}
+    docker tag ascend-toolkit:ubuntu18.04-${ARCH} ${repository}/ascend-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-toolkit:centos7.6-${ARCH} ${repository}/ascend-toolkit:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascend-toolkit:${version}-centos7.6-${ARCH}
 }
 
 push_ascend_mindspore()
 {
-    docker tag ascend_mindspore:ubuntu18.04-${ARCH} ${repository}/ascend_mindspore:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_mindspore:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_mindspore:centos7.6-${ARCH} ${repository}/ascend_mindspore:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_mindspore:${version}-centos7.6-${ARCH}
+    docker tag ascend-mindspore:ubuntu18.04-${ARCH} ${repository}/ascend-mindspore:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-mindspore:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-mindspore:centos7.6-${ARCH} ${repository}/ascend-mindspore:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascend-mindspore:${version}-centos7.6-${ARCH}
 }
 
 push_ascend_pytorch()
 {
-    docker tag ascend_pytorch:ubuntu18.04-${ARCH} ${repository}/ascend_pytorch:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_pytorch:centos7.6-${ARCH} ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
+    docker tag ascend-pytorch:ubuntu18.04-${ARCH} ${repository}/ascend-pytorch:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-pytorch:centos7.6-${ARCH} ${repository}/ascend-pytorch:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-centos7.6-${ARCH}
 }
 
 push_ascend_pytorch1110()
 {
-    docker tag ascend_pytorch1.11.0:ubuntu18.04-${ARCH} ${repository}/ascend_pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
-    docker tag ascend_pytorch1.11.0:centos7.6-${ARCH} ${repository}/ascend_pytorch:${version}-1.11.0-centos7.6-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-1.11.0-centos7.6-${ARCH}
+    docker tag ascend-pytorch1.11.0:ubuntu18.04-${ARCH} ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker tag ascend-pytorch1.11.0:centos7.6-${ARCH} ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-${ARCH}
 }
 
 push_ascend_tensorflow()
 {
-    docker tag ascend_tensorflow:ubuntu18.04-${ARCH} ${repository}/ascend_tensorflow:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_tensorflow:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_tensorflow:centos7.6-${ARCH} ${repository}/ascend_tensorflow:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_tensorflow:${version}-centos7.6-${ARCH}
+    docker tag ascend-tensorflow:ubuntu18.04-${ARCH} ${repository}/ascend-tensorflow:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-tensorflow:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-tensorflow:centos7.6-${ARCH} ${repository}/ascend-tensorflow:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascend-tensorflow:${version}-centos7.6-${ARCH}
 }
 
 push_hccl_test()
@@ -129,20 +129,20 @@ push_hccl_test()
 
 push_ascendbase_toolkit()
 {
-    docker tag ascendbase_toolkit:ubuntu18.04-${ARCH} ${repository}/ascendbase_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker tag ascendbase_toolkit:centos7.6-${ARCH} ${repository}/ascendbase_toolkit:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-centos7.6-${ARCH}
-    docker tag ascendbase_toolkit:openeuler20.03-${ARCH} ${repository}/ascendbase_toolkit:${version}-openeuler20.03-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-openeuler20.03-${ARCH}
+    docker tag ascendbase-toolkit:ubuntu18.04-${ARCH} ${repository}/ascendbase-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker tag ascendbase-toolkit:centos7.6-${ARCH} ${repository}/ascendbase-toolkit:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-centos7.6-${ARCH}
+    docker tag ascendbase-toolkit:openeuler20.03-${ARCH} ${repository}/ascendbase-toolkit:${version}-openeuler20.03-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-openeuler20.03-${ARCH}
 }
 
 push_ascendbase_infer()
 {
-    docker tag ascendbase_infer:ubuntu18.04-${ARCH} ${repository}/ascendbase_infer:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascendbase_infer:${version}-ubuntu18.04-${ARCH}
-    docker tag ascendbase_infer:centos7.6-${ARCH} ${repository}/ascendbase_infer:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascendbase_infer:${version}-centos7.6-${ARCH}
+    docker tag ascendbase-infer:ubuntu18.04-${ARCH} ${repository}/ascendbase-infer:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascendbase-infer:${version}-ubuntu18.04-${ARCH}
+    docker tag ascendbase-infer:centos7.6-${ARCH} ${repository}/ascendbase-infer:${version}-centos7.6-${ARCH}
+    docker push ${repository}/ascendbase-infer:${version}-centos7.6-${ARCH}
 }
 
 
