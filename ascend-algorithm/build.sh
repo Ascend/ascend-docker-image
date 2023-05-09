@@ -2,6 +2,8 @@
 
 arch=$(uname -m)
 
+cp -rf /usr1/package330/Ascend-cann-nnrt*-$(arch).run .
+
 have_nnrt=$(find . |grep cann|grep nnrt|grep $arch|wc -l)
 if [ $have_nnrt == 0 ]; then
     echo "please put nnrt package here"

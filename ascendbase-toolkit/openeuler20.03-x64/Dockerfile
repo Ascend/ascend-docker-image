@@ -33,7 +33,7 @@ RUN umask 0022  && \
 RUN pip3 install -U pip && \
     pip3 install decorator numpy kiwisolver matplotlib \
     sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools && \
-    pip3 install protobuf scipy requests mpmath Pillow && \
+    pip3 install protobuf attrs attr scipy requests psutil absl-py mpmath Pillow && \
     pip3 install pycocotools && \
     rm -rf /root/.cache/pip
 
