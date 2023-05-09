@@ -13,7 +13,7 @@ $ASCEND_BASE/driver/lib64:\
 $ASCEND_BASE/driver/lib64/common:\
 $ASCEND_BASE/driver/lib64/driver:\
 $ASCEND_BASE/driver/tools/hccn_tool/:\
-$TOOLKIT_PATH/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/x86_64/:\
+$TOOLKIT_PATH/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/aarch64/:\
 $LD_LIBRARY_PATH
 
 # 2. 训练引擎TOOLKIT安装

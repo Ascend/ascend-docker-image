@@ -42,12 +42,12 @@ RUN umask 0022  && \
 RUN pip3 install -U pip && \
     pip3 install decorator numpy kiwisolver matplotlib \
     sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools && \
-    pip3 install protobuf scipy requests mpmath Pillow && \
-    pip3 install pycocotools absl-py && \
+    pip3 install protobuf scipy requests psutil mpmath Pillow && \
+    pip3 install pycocotools attrs attr absl-py && \
     rm -rf /root/.cache/pip
 
 # 安装zlib-1.2.9
-RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
+RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz --no-check-certificate && \
     tar -zxvf zlib-1.2.9.tar.gz && \
     cd zlib-1.2.9 && \
     ./configure --libdir=/lib64/ && \
@@ -58,7 +58,7 @@ RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
 
 # 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
-    chmod +x /lib64/$LIBSTDCXX && \
+    chmod 755 /lib64/$LIBSTDCXX && \
     ldconfig
 
 # 清理临时目录

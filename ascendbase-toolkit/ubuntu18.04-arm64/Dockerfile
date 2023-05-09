@@ -43,9 +43,9 @@ RUN pip3 install -U pip && \
     pip3 install cffi==1.12.3 && \
     pip3 install pyyaml && \
     pip3 install pathlib2 && \
-    pip3 install protobuf && \
+    pip3 install protobuf attrs attr && \
     pip3 install scipy && \
-    pip3 install requests absl-py && \
+    pip3 install requests psutil absl-py && \
     rm -rf /root/.cache/pip
 
 # 设置环境变量
