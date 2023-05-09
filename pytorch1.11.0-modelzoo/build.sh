@@ -2,9 +2,9 @@
 
 arch=$(uname -m)
 
-cp -rf /usr1/package330/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl .
-cp -rf /usr1/package330/torch-1.8*linux_$(arch).whl .
-cp -rf /usr1/package330/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package330/apex1.11/apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package330/torch-1.11.0*linux_$(arch).whl .
+cp -rf /usr1/package330/torch_npu-1.11.0-cp37-cp37m-linux_$(arch).whl .
 cp -rf /usr1/package330/Resnet50_Cifar_for_PyTorch .
 cp -rf /usr1/package330/ResNet50_for_PyTorch .
 
@@ -18,7 +18,7 @@ if [ $have_apex == 0 ]; then
     exit 1
 fi
 
-have_torch=$(find . |grep "torch-1.8"|grep $arch|wc -l)
+have_torch=$(find . |grep "torch-1.11.0"|grep $arch|wc -l)
 if [ $have_torch == 0 ]; then
     echo "please put pytorch wheel package here"
     exit 1
@@ -35,10 +35,10 @@ if [ $arch == "x86_64" ];then
     rm -f Ascend-cann-*-$(arch).run
     cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
     cp -rf /usr1/package330/Ascend-cann-kernels-910_6.3.RC1_linux.run .
-    DOCKER_BUILDKIT=1  docker build . -t pytorch-modelzoo:ubuntu18.04-x64
+    DOCKER_BUILDKIT=1  docker build . -t pytorch1.11.0-modelzoo:ubuntu18.04-x64
 else
     rm -f Ascend-cann-*-$(arch).run
     cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
     cp -rf /usr1/package330/Ascend-cann-kernels-910_6.3.RC1_linux.run .
-    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t pytorch-modelzoo:ubuntu18.04-arm64
+    DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t pytorch1.11.0-modelzoo:ubuntu18.04-arm64
 fi

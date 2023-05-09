@@ -2,6 +2,10 @@
 
 arch=$(uname -m)
 
+cp -rf /usr1/package330/ResNet152 .
+cp -rf /usr1/package330/Ascend-mindxsdk-mxvision_*linux-$(arch).run .
+cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
+
 have_mxvision=$(find . |grep "mxvision"|grep $arch|wc -l)
 if [ $have_mxvision == 0 ]; then
     echo "please put mxvision wheel package here"
@@ -16,7 +20,7 @@ fi
 
 echo "start build"
 if [ $arch == "x86_64" ];then
-    DOCKER_BUILDKIT=1 docker build . -t infer-modelzoo-mxvision:ubuntu18.04-x64
+    DOCKER_BUILDKIT=1 docker build . -t infer-modelzoo:mxvision-ubuntu18.04-x64
 else
-    DOCKER_BUILDKIT=1 docker build . -f Dockerfile_aarch64 -t infer-modelzoo-mxvision:ubuntu18.04-arm64
+    DOCKER_BUILDKIT=1 docker build . -f Dockerfile_aarch64 -t infer-modelzoo:mxvision-ubuntu18.04-arm64
 fi
