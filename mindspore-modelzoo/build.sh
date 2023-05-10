@@ -6,6 +6,13 @@ arch=$(uname -m)
 cp -rf /usr1/package330/mindspore-*linux_$(arch).whl .
 cp -rf /usr1/package330/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl .
 cp -rf /usr1/package330/Ascend-mindx-toolbox*-$(arch).run .
+if [ $arch == "x86_64" ];then
+    cp -rf /usr1/package330/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 .
+    cp -rf /usr1/package330/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 .
+else
+    cp -rf /usr1/package330/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-aarch64-1.0-r2.0 .
+    cp -rf /usr1/package330/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-aarch64-1.0-r2.0 .
+fi
 
 #准备模型和数据集
 if [ -d Resnet50_Cifar_for_MindSpore ]; then

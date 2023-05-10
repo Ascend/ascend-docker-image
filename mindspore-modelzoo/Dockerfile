@@ -60,7 +60,7 @@ ENV GLOG_v=2
 ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
 ENV TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe
 ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
-ENV PATH=$TOOLKIT_PATH/ccec_compiler/bin/:$PATH
+ENV PATH=$TOOLKIT_PATH/ccec_compiler/bin/:/usr/local/Ascend/toolbox/latest/Ascend-DMI/bin:$PATH
 ENV ASCEND_OPP_PATH=$TOOLKIT_PATH/opp
 ENV ASCEND_AICPU_PATH=$TOOLKIT_PATH
 ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/lib64:\
@@ -69,6 +69,8 @@ ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/lib64:\
 /usr/local/Ascend/driver/lib64/driver/:\
 /usr/local/Ascend/driver/tools/hccn_tool/:\
 $TOOLKIT_PATH/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/x86_64/:\
+/usr/local/Ascend/toolbox/latest/Ascend-DMI/lib64:\
+/user/local/dcmi:\
 $LD_LIBRARY_PATH
 
 # CANN包
@@ -98,4 +100,8 @@ COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_imagenet2012_for_MindSpore /home/HwH
 COPY --chown=HwHiAiUser:HwHiAiUser vpc_resnet50_imagenet_classification /home/HwHiAiUser/samples/vpc_resnet50_imagenet_classification
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 COPY --chown=HwHiAiUser:HwHiAiUser hccl.json /user/serverid/devindex/config/hccl.json 
+COPY --chown=HwHiAiUser:HwHiAiUser run_ais.py /home/HwHiAiUser/samples/scripts/run_ais.py
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
+
 WORKDIR /home/HwHiAiUser/
