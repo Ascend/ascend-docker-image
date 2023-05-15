@@ -127,6 +127,12 @@ push_hccl_test()
     docker push ${repository}/hccl-test:${version}-ubuntu18.04-${ARCH}
 }
 
+push_cluster()
+{
+    docker tag cluster-flops-test:${ARCH} ${repository}/cluster-flops-test:${version}-${ARCH}
+    docker push ${repository}/cluster-flops-test:${version}-${ARCH}
+}
+
 push_ascendbase_toolkit()
 {
     docker tag ascendbase-toolkit:ubuntu18.04-${ARCH} ${repository}/ascendbase-toolkit:${version}-ubuntu18.04-${ARCH}
@@ -164,8 +170,6 @@ function parse_script_args()
             push_tensorflow_modelzoo
         elif [[ "${image}" = "tensorflow265" ]]; then
             push_tensorflow265_modelzoo
-        elif [[ "${image}" = "infer" ]]; then
-            push_infer_modelzoo
         elif [[ "${image}" = "infer-mxvision" ]]; then
             push_infer_modelzoo_mxvision
         elif [[ "${image}" = "all-in-one" ]]; then
@@ -176,7 +180,6 @@ function parse_script_args()
             push_pytorch1110_modelzoo
             push_tensorflow_modelzoo
             push_tensorflow265_modelzoo
-            push_infer_modelzoo
             push_infer_modelzoo_mxvision
             push_all_in_one
         else
@@ -206,6 +209,8 @@ function parse_script_args()
             push_ascendbase_toolkit
         elif [[ "${image}" = "hccl-test" ]]; then
             push_hccl_test
+        elif [[ "${image}" = "cluster" ]]; then
+            push_cluster
         elif [[ "${image}" = "all" ]]; then
             push_ascendbase_toolkit
             push_ascendbase_infer
@@ -217,6 +222,7 @@ function parse_script_args()
             push_ascend_pytorch1110
             push_ascend_tensorflow
             push_hccl_test
+            push_cluster
         else
             echo "Please check the parameter of --common"
             exit 1
@@ -266,6 +272,7 @@ Options:
                 base-infer
                 base-toolkit
                 hccl-test
+                cluster
                 all
 EOF
         exit 0

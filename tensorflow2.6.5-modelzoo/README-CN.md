@@ -3,16 +3,6 @@
 本目录用于构建tensorflow-modelzoo容器镜像。镜像以ubuntu18.04为基础镜像，其中中包含
 python3.7.5,tensorflow2.6.5, CANN, 和Keras-MnasNet_ID3518_for_TensorFlow2.X（单机单卡）样例、ResNet50_ID0360_for_TensorFlow2.X（集群训练）样例。
 
-## 运行
-
-进入容器中，默认NPU设备号为0。 如果是挂载的其他设备,执行
-
-```bash
-export DEVICE_ID=<设备id>
-```
-
-指定训练使用的设备
-
 ## 制作镜像
 
 在本目录运行build.sh即可。当条件不满足时，查看build.sh的报错。

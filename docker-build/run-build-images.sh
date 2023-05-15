@@ -26,8 +26,6 @@ function parse_script_args()
                 build_image tensorflow-modelzoo
             elif [[ "${image}" = "tensorflow265" ]]; then
                 build_image tensorflow2.6.5-modelzoo
-            elif [[ "${image}" = "infer" ]]; then
-                build_image infer-modelzoo
             elif [[ "${image}" = "infer-mxvision" ]]; then
                 build_image infer-modelzoo-mxvision
             elif [[ "${image}" = "all-in-one" ]]; then
@@ -38,7 +36,6 @@ function parse_script_args()
                 build_image pytorch1.11.0-modelzoo
                 build_image tensorflow-modelzoo
                 build_image tensorflow2.6.5-modelzoo
-                build_image infer-modelzoo
                 build_image infer-modelzoo-mxvision
                 build_image all-in-one
             else
@@ -69,6 +66,8 @@ function parse_script_args()
                 build_image ascendbase-toolkit
             elif [[ "${image}" = "hccl-test" ]]; then
                 build_image hccl-test
+            elif [[ "${image}" = "cluster" ]]; then
+                build_image cluster-flops-test
             elif [[ "${image}" = "all" ]]; then
                 build_image ascendbase-toolkit
                 build_image ascendbase-infer
@@ -80,6 +79,7 @@ function parse_script_args()
                 build_image ascend-pytorch1.11.0
                 build_image ascend-tensorflow
                 build_image hccl-test
+                build_image cluster
             else
                 echo "Please check the parameter of --common"
                 exit 1
@@ -131,6 +131,7 @@ Options:
                 base-infer
                 base-toolkit
                 hccl-test
+                cluster
                 all
 EOF
         exit 0

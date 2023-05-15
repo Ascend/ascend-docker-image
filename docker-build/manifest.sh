@@ -26,10 +26,6 @@ docker manifest push ${repository}/tensorflow-modelzoo:${version}
 docker manifest rm ${repository}/tensorflow-modelzoo:${version}-2.6.5
 docker manifest create ${repository}/tensorflow-modelzoo:${version}-2.6.5 --amend ${repository}/tensorflow-modelzoo:${version}-2.6.5-ubuntu18.04-x64 --amend ${repository}/tensorflow-modelzoo:${version}-2.6.5-ubuntu18.04-arm64
 docker manifest push ${repository}/tensorflow-modelzoo:${version}-2.6.5
-#infer-modelzoo
-docker manifest rm ${repository}/infer-modelzoo:${version}
-docker manifest create ${repository}/infer-modelzoo:${version} --amend ${repository}/infer-modelzoo:${version}-ubuntu18.04-x64 --amend ${repository}/infer-modelzoo:${version}-ubuntu18.04-arm64
-docker manifest push ${repository}/infer-modelzoo:${version}
 #infer-modelzoo-mxvision
 docker manifest rm ${repository}/infer-modelzoo:${version}-mxvision
 docker manifest create ${repository}/infer-modelzoo:${version}-mxvision --amend ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-x64 --amend ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-arm64
