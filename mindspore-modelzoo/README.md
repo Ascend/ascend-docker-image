@@ -82,3 +82,9 @@ mindspore-modelzoo镜像作为有效算力验收时使用的镜像，支持resne
 
 1. 所有待验收节点请获取[mindspore-modelzoo](https://ascendhub.huawei.com/#/detail/mindspore-modelzoo)镜像，镜像版本>=23.0.RC1。
 2. 所有节点获取镜像后，选择一个节点作为管理节点，在管理节点获取[有效算力验收工具](https://gitee.com/ascend/ascend-toolbox/tags)，相关使用说明请参考该工具的使用文档。
+
+**有效算力验收镜像中使用文件的来源**：
+  |文件|获取方法|
+  |:-----------:| :-------------:|
+  |run_ais.py|[ascend-toolbox](https://gitee.com/ascend/ascend-toolbox/tree/dev)工具中|
+  |train_*Ais-Benchmark-Stubs\*|参考[tools文档](https://gitee.com/ascend/tools/blob/master/ais-bench_workload/doc/ais-bench_workload%E6%9E%84%E5%BB%BA%E6%95%99%E7%A8%8B.md)|
