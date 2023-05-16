@@ -4,7 +4,7 @@ arch=$(uname -m)
 
 cp -rf /usr1/package330/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl .
 cp -rf /usr1/package330/torch-1.8*linux_$(arch).whl .
-cp -rf /usr1/package330/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package330/torch_npu-1.8.1.post1-cp37-cp37m-linux_$(arch).whl .
 cp -rf /usr1/package330/Resnet50_Cifar_for_PyTorch .
 cp -rf /usr1/package330/ResNet50_for_PyTorch .
 

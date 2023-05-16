@@ -16,8 +16,7 @@ RUN umask 0022 && \
     make && \
     make install && \
     cd $TOOLKIT_PATH/tools/hccl_test && \
-    make MPI_HOME=/usr/local/mpich-3.2.1 ASCEND_DIR=$TOOLKIT_PATH/aarch64-linux && \
-    sed -i 's/当前计算节点ip/\$HOST_IP/g' /usr/local/Ascend/ascend-toolkit/latest/tools/hccl_test/run.sh
+    make MPI_HOME=/usr/local/mpich-3.2.1 ASCEND_DIR=$TOOLKIT_PATH/aarch64-linux
 
 ENV PATH=$PATH:/usr/local/mpich-3.2.1/bin:$TOOLKIT_PATH/tools/hccl_test/bin
 
