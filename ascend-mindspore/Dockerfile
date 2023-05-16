@@ -31,6 +31,7 @@ RUN umask 0022 && \
     fi && \
     pip3 install /tmp/mindspore*.whl && \
     pip3 install /usr/local/Ascend/ascend-toolkit/latest/fwkacllib/lib64/te-*.whl && \
+    pip3 install /usr/local/Ascend/ascend-toolkit/latest/fwkacllib/lib64/hccl-*.whl && \ 
     rm -rf $ASCEND_BASE/driver && \
     rm -rf /tmp/*
 
