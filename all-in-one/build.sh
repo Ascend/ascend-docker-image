@@ -28,7 +28,7 @@ cp -rf /usr1/package330/mindspore-modelzoo-data-model/Resnet50_Cifar_for_MindSpo
 # 检查pytorch依赖文件
 cp -rf /usr1/package330/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl .
 cp -rf /usr1/package330/torch-1.8*linux_$(arch).whl .
-cp -rf /usr1/package330/torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package330/torch_npu-1.8.1.post1-cp37-cp37m-linux_$(arch).whl .
 
 
 if [ ! -d dllogger ]; then

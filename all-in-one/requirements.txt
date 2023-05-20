@@ -23,7 +23,7 @@ Pillow==7.2.0
 pycocotools==2.0.6 
 pytest 
 py-spy
-tables==3.6.1 
+tables
 torchvision==0.9.1
 mmcv==1.7.0 
 matplotlib
