@@ -4,8 +4,8 @@
 |:-----------:| :-------------:|
 |mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/aarch64/mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl)|
 |mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/x86_64/mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl)|
-|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726691&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
-|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726692&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip)|
 |pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_aarch64.whl)|
 |pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_x86_64.whl)|
 |torch-1.8.1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://repo.huaweicloud.com/kunpeng/archive/Ascend/PyTorch/torch-1.8.1-cp37-cp37m-linux_aarch64.whl)|
@@ -29,10 +29,10 @@
 |Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run)|
 |Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run)|
 |Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run)|
-|Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726676&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
-|Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726670&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
-|Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726682&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
-|Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run |[获取链接](https://download.huawei.com/edownload/e/download.do?actionFlag=download&mid=SUPE_SW&nid=ESW2000726684&partNo=3001&path=fixnode01|23710424|251366513|22892968|252501207|258923333|258923335|258923337|258949677)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run)|
 |libstdc++.so.6.0.24 |OS为CentOS时，通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
 
 # 构建推理容器镜像

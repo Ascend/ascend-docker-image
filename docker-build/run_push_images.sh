@@ -17,8 +17,6 @@ push_mindspore_modelzoo()
 {
     docker tag mindspore-modelzoo:ubuntu18.04-${ARCH} ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-${ARCH}
     docker push ${repository}/mindspore-modelzoo:${version}-ubuntu18.04-${ARCH}
-    docker tag mindspore-modelzoo:910b-ubuntu18.04-${ARCH} ${repository}/mindspore-modelzoo:${version}-910b-ubuntu18.04-${ARCH}
-    docker push ${repository}/mindspore-modelzoo:${version}-910b-ubuntu18.04-${ARCH}
 }
 
 push_pytorch_modelzoo()
