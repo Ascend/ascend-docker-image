@@ -201,8 +201,7 @@ cd ascend-toolkit
 |:-----------:| :-------------:|:-------------:|
 |Ascend-cann-toolkit_{version}_linux-{arch}.run|深度学习加速引擎包。其中{version}表示软件包版本，{arch}表示架构。|[获取链接](https://www.hiascend.com/software/cann/commercial)|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
-|ascend_install.info |软件包安装日志文件 |已存在于当前目录。|
-|version.info | driver包版本信息文件 |已存在于当前目录。| 
+
 
 c.在当前目录执行以下命令构建镜像ascend-toolkit。
 ```
@@ -234,6 +233,8 @@ b.请在当前目录准备以下软件包和相关文件。
 |Ascend-cann-tfplugin_{version}_linux-{arch}.run|框架插件包。其中{version}表示软件包版本，{arch}表示架构。|[获取链接](https://www.hiascend.com/software/ai-frameworks/commercial-tf)|
 |tensorflow-1.15.0-cp37-cp37m-*.whl|tensorflow框架whl包|可参考《[CANN 软件安装指南](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)》中“安装深度学习框架”章节。|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
+|ascend_install.info |软件包安装日志文件 |已存在于当前目录。|
+|version.info | driver包版本信息文件 |已存在于当前目录。| 
 
 c.在当前目录执行以下命令构建镜像ascend-tensorflow。
 ```
