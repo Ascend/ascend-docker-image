@@ -147,8 +147,8 @@ docker images
 - 容器场景，需用户自行安装docker（版本要求大于等于18.03）。
 - 容器OS镜像可从Docker Hub拉取。
   由于 Docker Hub 中不存在 openeuler 20.03 的镜像，如果需要可参考以下网址自行获取：
-  - aarch64：http://repo.openeuler.org/openEuler-20.03-LTS/docker_img/aarch64/
-  - x86_64：http://repo.openeuler.org/openEuler-20.03-LTS/docker_img/x86_64/
+  - aarch64：http://repo.openeuler.org/openEuler-20.03-LTS-SP2/docker_img/aarch64/
+  - x86_64：http://repo.openeuler.org/openEuler-20.03-LTS-SP2/docker_img/x86_64/
 - 宿主机已安装驱动和固件，详情请参见[《CANN 软件安装指南》](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)。
 
 ## 操作步骤
@@ -206,7 +206,8 @@ cd ascend-toolkit
 
 c.在当前目录执行以下命令构建镜像ascend-toolkit。
 ```
-docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG .
+x86_64: docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG .
+aarch64: docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG -f Dockerfile_aarch64 .
 ```
 注意不要遗漏命令结尾的“.”，命令解释如表4-5所示。
 
@@ -231,21 +232,12 @@ b.请在当前目录准备以下软件包和相关文件。
 |软件或文件|说明|获取方法|
 |:-----------:| :-------------:|:-------------:|
 |Ascend-cann-tfplugin_{version}_linux-{arch}.run|框架插件包。其中{version}表示软件包版本，{arch}表示架构。|[获取链接](https://www.hiascend.com/software/ai-frameworks/commercial-tf)|
-|tensorflow-1.15.0-cp37-cp37m-*.whl|tensorflow框架whl包|aarch64架构：可参考《[CANN 软件安装指南](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)》中“安装深度学习框架”章节。x86_64架构：无需准备|
+|tensorflow-1.15.0-cp37-cp37m-*.whl|tensorflow框架whl包|可参考《[CANN 软件安装指南](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)》中“安装深度学习框架”章节。|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
-|ascend_install.info|软件包安装日志文件|已存在于当前目录。|
-|version.info|driver包版本信息文件|已存在于当前目录。|
 
-c.可选：如果容器中镜像OS为Ubuntu，需要按照Dockerfile文件提示注释以下内容：
+c.在当前目录执行以下命令构建镜像ascend-tensorflow。
 ```
-# 注：centos7需激活SHELL，ubuntu18.04需注释
-SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
-```
-
-d.在当前目录执行以下命令构建镜像ascend-tensorflow。
-```
-x86_64: docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG .
-aarch64: docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG -f Dockerfile_aarch64 .
+docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG .
 ```
 注意不要遗漏命令结尾的“.”，命令解释如表12所示
 如需在此步骤配置系统网络代理，命令参考如下：
