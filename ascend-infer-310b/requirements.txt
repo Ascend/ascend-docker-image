@@ -11,3 +11,4 @@ pyyaml
 requests
 six
 sympy
+scipy

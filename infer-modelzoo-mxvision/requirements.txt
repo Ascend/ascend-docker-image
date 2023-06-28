@@ -1,3 +1,11 @@
+attrs
+cffi
+pyyaml
+pathlib2
+psutil
+scipy
+requests
+absl-py
 numpy 
 decorator 
 sympy==1.4 
