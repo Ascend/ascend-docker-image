@@ -70,11 +70,12 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     mkdir -p /job/code /home/HwHiAiUser/samples/scripts && \
     chown HwHiAiUser:HwHiAiUser -R /job /home/HwHiAiUser/samples && \
-    chmod +x /tmp/Ascend-cann-toolkit*.run && \
+    chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    pip3 install --upgrade /tmp/torch-*.whl && \
     pip3 install --upgrade /tmp/torch_npu*.whl && \
     pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
-    pip3 install --upgrade /tmp/torch-*.whl && \
 
 # 清理工作
     rm -rf /tmp/*  && \

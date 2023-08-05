@@ -19,7 +19,7 @@ RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main res
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends wget vim sudo openssl \
     libnuma1 curl g++ libfreetype6-dev pkg-config libpng-dev unzip libblas3 liblapack3 liblapack-dev libblas-dev \
     gfortran libhdf5-dev libffi-dev libicu60 libxml2 2to3 python3-lib2to3 python3-toolz libgl1-mesa-glx \
-    libbz2-dev libssl-dev less htop && apt clean && rm -rf /var/lib/apt/lists/*
+    libsqlite3-dev libbz2-dev libssl-dev less htop liblzma-dev && apt clean && rm -rf /var/lib/apt/lists/*
 
 ENV LD_LIBRARY_PATH=/usr/local/python3.7.5/lib: \
     PATH=/usr/local/python3.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -59,20 +59,18 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 ENV GLOG_v=2
 ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
 ENV TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe
-ENV FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages
-ENV PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH
+ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
+ENV PATH=$TOOLKIT_PATH/ccec_compiler/bin/:/usr/local/Ascend/toolbox/latest/Ascend-DMI/bin:$PATH
 ENV ASCEND_OPP_PATH=$TOOLKIT_PATH/opp
-ENV PYTHONPATH=$FWK_PYTHON_PATH:\
-$FWK_PYTHON_PATH/auto_tune.egg:\
-$FWK_PYTHON_PATH/schedule_search.egg:\
-$TBE_IMPL_PATH:\
-$PYTHONPATH
-ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:\
+ENV ASCEND_AICPU_PATH=$TOOLKIT_PATH
+ENV LD_LIBRARY_PATH=$TOOLKIT_PATH/lib64:\
 /usr/local/Ascend/driver/lib64/:\
 /usr/local/Ascend/driver/lib64/common/:\
 /usr/local/Ascend/driver/lib64/driver/:\
-/usr/local/Ascend/add-ons/:\
 /usr/local/Ascend/driver/tools/hccn_tool/:\
+$TOOLKIT_PATH/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/x86_64/:\
+/usr/local/Ascend/toolbox/latest/Ascend-DMI/lib64:\
+/user/local/dcmi:\
 $LD_LIBRARY_PATH
 
 # CANN包
@@ -80,11 +78,11 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     bash /tmp/Ascend-mindx-toolbox*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # TRAIN_FRAMEWORK安装
-    pip3 install /tmp/mindspore_ascend*.whl && \
+    pip3 install /tmp/mindspore*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/te-*.whl && \
-    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/topi-*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \ 
 
 # 清理工作
@@ -92,7 +90,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     rm -rf /root/.cache/pip
 
 RUN mkdir -p /user/serverid/devindex/config  && \
-    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config
+    chown -R HwHiAiUser:HwHiAiUser /user/serverid/devindex/config && \
+    chmod -R o+x /user
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
@@ -101,4 +100,8 @@ COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_imagenet2012_for_MindSpore /home/HwH
 COPY --chown=HwHiAiUser:HwHiAiUser vpc_resnet50_imagenet_classification /home/HwHiAiUser/samples/vpc_resnet50_imagenet_classification
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 COPY --chown=HwHiAiUser:HwHiAiUser hccl.json /user/serverid/devindex/config/hccl.json 
+COPY --chown=HwHiAiUser:HwHiAiUser run_ais.py /home/HwHiAiUser/samples/scripts/run_ais.py
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
+
 WORKDIR /home/HwHiAiUser/

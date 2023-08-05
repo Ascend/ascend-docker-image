@@ -2,20 +2,37 @@
 
 |软件或文件|获取方法|
 |:-----------:| :-------------:|
-|mindspore_ascend-1.9.0-cp37-cp37m-linux_$(arch).whl |[获取链接](https://www.mindspore.cn/versions)|
-|mindx_elastic-0.0.1-py37-none-linux_$(arch).whl |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl + torch-1.8*linux_$(arch).whl + torch_npu-1.8.1-cp37-cp37m-linux_$(arch).whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/pytorch1.8.1-3.0.0-release.zip)|
-|apex-0.1+ascend.20221219-cp37-cp37m-linux_$(arch).whl + torch-1.5.0+ascend.post7.20221219-cp37-cp37m-linux_$(arch).whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/pytorch1.5.0-3.0.0-release.zip)|
-|tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl |[获取链接](https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/f0/22/46ddf2cbf994560279889cd090e2eea16cc3e0bb53fb8a6cacbae2ea4782/tensorflow_cpu-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl)|                              
-|tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl)|
+|mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/aarch64/mindspore-2.0.0rc1-cp37-cp37m-linux_aarch64.whl)|
+|mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ms-release.obs.cn-north-4.myhuaweicloud.com/2.0.0rc1/MindSpore/unified/x86_64/mindspore-2.0.0rc1-cp37-cp37m-linux_x86_64.whl)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxdl-elastic-ms_5.0.RC1_linux-aarch64.zip)|
+|Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxdl-elastic-ms_5.0.RC1_linux-x86_64.zip)|
+|pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_aarch64.whl)|
+|pytorch1.8.1:apex-0.1+ascend-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/apex-0.1%2Bascend-cp37-cp37m-linux_x86_64.whl)|
+|torch-1.8.1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://repo.huaweicloud.com/kunpeng/archive/Ascend/PyTorch/torch-1.8.1-cp37-cp37m-linux_aarch64.whl)|
+|torch-1.8.1+cpu-cp37-cp37m-linux_x86_64.whl |[获取链接](https://download.pytorch.org/whl/cpu/torch-1.8.1%2Bcpu-cp37-cp37m-linux_x86_64.whl)|
+|torch_npu-1.8.1.post1-cp37-cp37m-linux_aarch64.whl |[获取链接](https://gitee.com/ascend/pytorch/releases/tag/v5.0.rc1-pytorch1.8.1)|
+|torch_npu-1.8.1.post1-cp37-cp37m-linux_x86_64.whl |[获取链接](https://gitee.com/ascend/pytorch/releases/tag/v5.0.rc1-pytorch1.8.1)|
+|pytorch1.11.0:apex-0.1+ascend-cp37-cp37m-linux_aarch64.whl |[获取链接](https://gitee.com/ascend/apex/releases/download/v3.0.0-1.11.0/apex-0.1_ascend-cp37-cp37m-linux_aarch64.whl)|
+|pytorch1.11.0:apex-0.1+ascend-cp37-cp37m-linux_x86_64.whl |[获取链接](https://gitee.com/ascend/apex/releases/download/v3.0.0-1.11.0/apex-0.1_ascend-cp37-cp37m-linux_x86_64.whl)|
+|torch-1.11.0-cp37-cp37m-linux_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.11.0-cp37-cp37m-linux_aarch64.whl)|
+|torch-1.11.0-cp37-cp37m-linux_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/torch-1.11.0-cp37-cp37m-linux_x86_64.whl)|
+|torch_npu-1.11.0-cp37-cp37m-linux_aarch64.whl |[获取链接](https://gitee.com/ascend/pytorch/releases/tag/v5.0.rc1-pytorch1.11.0)|
+|torch_npu-1.11.0-cp37-cp37m-linux_x86_64.whl |[获取链接](https://gitee.com/ascend/pytorch/releases/tag/v5.0.rc1-pytorch1.11.0)|
 |tensorflow-1.15.0-cp37-cp37m-manylinux2010_x86_64..whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-1.15.0-cp37-cp37m-manylinux2010_x86_64.whl)|
 |tensorflow-1.15.0-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-1.15.0-cp37-cp37m-manylinux2014_aarch64.whl)|
-|Ascend-mindxsdk-mxmanufacture_3.0.RC3_linux-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|Ascend-mindxsdk-mxvision_3.0.RC3_linux-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/mindx-pid-252501207/software)|
-|Ascend-cann-toolkit*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-cann-tfplugin*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-cann-nnrt*-$(arch).run |[获取链接](https://support.huawei.com/enterprise/zh/ascend-computing/cann-pid-251168373/software)|
-|Ascend-mindx-toolbox_3.0.0_linux-x86_64.run |[获取链接](https://www.hiascend.com/software/mindx-dl/community)|
+|tensorflow-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2010_x86_64.whl)|
+|tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/OpenSource/python/packages/tensorflow-2.6.5-cp37-cp37m-manylinux2014_aarch64.whl)|
+|Ascend-cann-kernels-910_6.3.RC1_linux.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-kernels-910_6.3.RC1_linux.run)|
+|Ascend-cann-nnrt_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-nnrt_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-nnrt_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-nnrt_6.3.RC1_linux-x86_64.run)|
+|Ascend-cann-tfplugin_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-tfplugin_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-tfplugin_6.3.RC1_linux-x86_64.run)|
+|Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-aarch64.run)|
+|Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%206.3.RC1/Ascend-cann-toolkit_6.3.RC1_linux-x86_64.run)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindx-toolbox_5.0.RC1_linux-aarch64.run)|
+|Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindx-toolbox_5.0.RC1_linux-x86_64.run)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxsdk-mxvision_5.0.RC1_linux-aarch64.run)|
+|Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run |[获取链接](https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/MindX/MindX%205.0.RC1/Ascend-mindxsdk-mxvision_5.0.RC1_linux-x86_64.run)|
 |libstdc++.so.6.0.24 |OS为CentOS时，通过find命令查询libstdc++.so.6.0.24文件所在路径，然后从host拷贝。|
 
 # 构建推理容器镜像
@@ -130,8 +147,8 @@ docker images
 - 容器场景，需用户自行安装docker（版本要求大于等于18.03）。
 - 容器OS镜像可从Docker Hub拉取。
   由于 Docker Hub 中不存在 openeuler 20.03 的镜像，如果需要可参考以下网址自行获取：
-  - aarch64：http://repo.openeuler.org/openEuler-20.03-LTS/docker_img/aarch64/
-  - x86_64：http://repo.openeuler.org/openEuler-20.03-LTS/docker_img/x86_64/
+  - aarch64：http://repo.openeuler.org/openEuler-20.03-LTS-SP2/docker_img/aarch64/
+  - x86_64：http://repo.openeuler.org/openEuler-20.03-LTS-SP2/docker_img/x86_64/
 - 宿主机已安装驱动和固件，详情请参见[《CANN 软件安装指南》](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)。
 
 ## 操作步骤
@@ -184,12 +201,12 @@ cd ascend-toolkit
 |:-----------:| :-------------:|:-------------:|
 |Ascend-cann-toolkit_{version}_linux-{arch}.run|深度学习加速引擎包。其中{version}表示软件包版本，{arch}表示架构。|[获取链接](https://www.hiascend.com/software/cann/commercial)|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
-|ascend_install.info |软件包安装日志文件 |已存在于当前目录。|
-|version.info | driver包版本信息文件 |已存在于当前目录。| 
+
 
 c.在当前目录执行以下命令构建镜像ascend-toolkit。
 ```
-docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG .
+x86_64: docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG .
+aarch64: docker build -t ascend-toolkit:toolkit_TAG --build-arg BASE_VERSION=base_TAG -f Dockerfile_aarch64 .
 ```
 注意不要遗漏命令结尾的“.”，命令解释如表4-5所示。
 
@@ -214,21 +231,14 @@ b.请在当前目录准备以下软件包和相关文件。
 |软件或文件|说明|获取方法|
 |:-----------:| :-------------:|:-------------:|
 |Ascend-cann-tfplugin_{version}_linux-{arch}.run|框架插件包。其中{version}表示软件包版本，{arch}表示架构。|[获取链接](https://www.hiascend.com/software/ai-frameworks/commercial-tf)|
-|tensorflow-1.15.0-cp37-cp37m-*.whl|tensorflow框架whl包|aarch64架构：可参考《[CANN 软件安装指南](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)》中“安装深度学习框架”章节。x86_64架构：无需准备|
+|tensorflow-1.15.0-cp37-cp37m-*.whl|tensorflow框架whl包|可参考《[CANN 软件安装指南](https://www.hiascend.com/document/detail/zh/canncommercial/51RC2/envdeployment/instg)》中“安装深度学习框架”章节。|
 |Dockerfile|制作镜像需要。|已存在于当前目录。用户可根据实际需要自行定制。|
-|ascend_install.info|软件包安装日志文件|已存在于当前目录。|
-|version.info|driver包版本信息文件|已存在于当前目录。|
+|ascend_install.info |软件包安装日志文件 |已存在于当前目录。|
+|version.info | driver包版本信息文件 |已存在于当前目录。| 
 
-c.可选：如果容器中镜像OS为Ubuntu，需要按照Dockerfile文件提示注释以下内容：
+c.在当前目录执行以下命令构建镜像ascend-tensorflow。
 ```
-# 注：centos7需激活SHELL，ubuntu18.04需注释
-SHELL ["/usr/bin/scl", "enable", "devtoolset-7"]
-```
-
-d.在当前目录执行以下命令构建镜像ascend-tensorflow。
-```
-x86_64: docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG .
-aarch64: docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG -f Dockerfile_aarch64 .
+docker build -t ascend-tensorflow:tensorflow_TAG --build-arg BASE_VERSION=toolkit_TAG .
 ```
 注意不要遗漏命令结尾的“.”，命令解释如表12所示
 如需在此步骤配置系统网络代理，命令参考如下：

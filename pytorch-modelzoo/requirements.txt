@@ -1,3 +1,8 @@
+numpy
+attrs
+attr 
+psutil
+absl-py
 decorator 
 sympy==1.4 
 cffi==1.12.3 
@@ -18,7 +23,7 @@ opencv-python==4.5.5.64
 sklearn==0.0 
 pandas 
 pycocotools==2.0.6 
-tables==3.6.1 
+tables
 mmcv==1.7.0 
 lxml==4.5.2 
 easydict==1.9 
