@@ -58,8 +58,8 @@ function start_test_pytorch() {
     while true;do
         sleep 20
         wait_time=$((wait_time+20))
-        if [ "$(grep -c "THPModule_npu_shutdown success" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] && [ "$(grep -c Epoch ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
-            sleep 20
+        if [ "$(grep -c "Epoch(val)" ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 1 ] && [ "$(grep -c Epoch ~/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
+            sleep 60
             echo test pytorch-modelzoo model success
             return 0
         fi
