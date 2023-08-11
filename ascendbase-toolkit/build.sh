@@ -26,7 +26,7 @@ else
     cd ubuntu18.04-arm64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:ubuntu18.04-arm64 . || exit 1
     cd ../centos7.6-arm64
-    DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:centos7.6-arm64 . || exit 1
+    DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:centos7.9-arm64 . || exit 1
     cd ../openeuler20.03-arm64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:openeuler20.03-arm64 . || exit 1
 fi

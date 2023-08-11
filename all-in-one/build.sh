@@ -26,19 +26,13 @@ cp -rf /usr1/package630/mindspore-modelzoo-data-model/Resnet50_Cifar_for_MindSpo
 
 
 # 检查pytorch依赖文件
-cp -rf /usr1/package630/apex1.8/apex-0.1+ascend-cp37-cp37m-linux_$(arch).whl .
 cp -rf /usr1/package630/torch-1.8*linux_$(arch).whl .
 cp -rf /usr1/package630/torch_npu-1.8.1.post2-cp37-cp37m-linux_$(arch).whl .
+cp -rf /usr1/package630/h5py-3.1.0-cp37-cp37m-manylinux2014_$(arch).whl .
 
 
 if [ ! -d dllogger ]; then
     git clone https://gitee.com/mirrors_NVIDIA/dllogger
-fi
-
-have_apex=$(find . | grep apex | grep -c "$arch")
-if [ "$have_apex" == 0 ]; then
-    echo "please put apex package here"
-    exit 1
 fi
 
 have_torch=$(find . | grep "torch-1.8" | grep -c "$arch")
@@ -50,6 +44,12 @@ fi
 have_torch_npu=$(find . | grep torch_npu | grep -c "$arch")
 if [ "$have_torch_npu" == 0 ]; then
     echo "please put torch_npu wheel package here"
+    exit 1
+fi
+
+have_h5py=$(find . | grep "h5py-3.1.0" | grep -c "$arch")
+if [ "have_h5py" == 0 ]; then
+    echo "please put h5py wheel package here"
     exit 1
 fi
 
@@ -84,5 +84,5 @@ else
     cp -rf /usr1/package630/Ascend-cann-tfplugin_6.3*-$(arch).run .
     cp -rf /usr1/package630/Ascend-cann-kernels-910_6.3.RC2_linux.run .
     cp -rf /usr1/package630/Ascend-cann-kernels-910b_6.3.RC2_linux.run .
-    DOCKER_BUILDKIT=1 docker build . ---t all-in-one:ubuntu18.04-arm64
+    DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-arm64
 fi
