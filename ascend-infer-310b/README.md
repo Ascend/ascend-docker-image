@@ -6,6 +6,7 @@
 
 | 镜像版本 | CANN版本 | 支持的芯片|
 | :------: | :------: | :------: |
+| 23.0.RC2 | 6.2.RC2 | Ascend 310B|
 | 23.0.RC1 | 6.2.RC1 | Ascend 310B|
 
 ## 使用前提
@@ -23,7 +24,7 @@
 4. 启动Docker容器实例，启动命令如下：
 
    ```text
-   docker run -it \
+   docker run -it --net=host \
    --device=/dev/upgrade:/dev/upgrade \
    --device=/dev/davinci0:/dev/davinci0 \
    --device=/dev/davinci_manager \
@@ -49,6 +50,7 @@
    -v /usr/lib64/libmpi_dvpp_adapter.so:/usr/lib64/libmpi_dvpp_adapter.so:ro \
    -v /usr/lib64/aicpu_kernels/:/usr/lib64/aicpu_kernels/:ro \
    -v /usr/local/sbin/npu-smi:/usr/local/sbin/npu-smi:ro \
+   -v /dev/shm:/dev/shm \
    -v /usr/lib64/libstackcore.so:/usr/lib64/libstackcore.so:ro \
    -v /usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64:ro \
    -v /var/slogd:/var/slogd:ro \
