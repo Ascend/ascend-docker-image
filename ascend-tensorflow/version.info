@@ -1,3 +1,11 @@
-Version=20.2.0
-required_firmware_firmware_version=1.0
-
+Version=22.0.4
+ascendhal_version=6.17.28
+aicpu_version=1.0
+tdt_version=1.0
+log_version=1.0
+prof_version=2.0
+dvppkernels_version=1.1
+tsfw_version=1.0
+Innerversion=V100R001C84SPC001B316
+package_version=6.0.0
+compatible_version=[V100R001C81,V100R001C84]

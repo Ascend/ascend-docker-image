@@ -15,6 +15,7 @@ RUN umask 0022 && \
     pip3 install --upgrade /tmp/apex-0.1_ascend*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
     pip3 install mmcv==1.7.0 && \
+    pip3 install urllib3==1.26.6 && \
     pip3 install torchvision==0.12.0 && \
     pip3 install matplotlib && \
     rm -rf /root/.cache/pip && \

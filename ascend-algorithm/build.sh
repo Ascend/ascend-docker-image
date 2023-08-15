@@ -2,7 +2,7 @@
 
 arch=$(uname -m)
 
-cp -rf /usr1/package330/Ascend-cann-nnrt*-$(arch).run .
+cp -rf /usr1/package630/Ascend-cann-nnrt*-$(arch).run .
 
 have_nnrt=$(find . |grep cann|grep nnrt|grep $arch|wc -l)
 if [ $have_nnrt == 0 ]; then
@@ -15,7 +15,7 @@ if [ $arch == "x86_64" ];then
     docker build -t ascend-algorithm:ubuntu18.04-x64 --build-arg BASE_VERSION=ubuntu18.04-x64 . || exit 1
     docker build -t ascend-algorithm:openeuler20.03-x64 --build-arg BASE_VERSION=openeuler20.03-x64 . || exit 1
 else
-    docker build -t ascend-algorithm:centos7.6-arm64 --build-arg BASE_VERSION=centos7.6-arm64 . || exit 1
+    docker build -t ascend-algorithm:centos7.9-arm64 --build-arg BASE_VERSION=centos7.9-arm64 . || exit 1
     docker build -t ascend-algorithm:ubuntu18.04-arm64 --build-arg BASE_VERSION=ubuntu18.04-arm64 . || exit 1
     docker build -t ascend-algorithm:openeuler20.03-arm64 --build-arg BASE_VERSION=openeuler20.03-arm64 . || exit 1
 fi
