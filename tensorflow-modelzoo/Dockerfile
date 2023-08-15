@@ -38,8 +38,8 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple/\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 # HwHiAiUser
@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     pip3 install -U pip && \
     curl -O https://repo.huaweicloud.com/repository/pypi/packages/b1/51/20098150b6108061cb7542af3de7bfcfe0182bca21613697153e49dc4adc/numpy-1.17.5-cp37-cp37m-manylinux1_x86_64.whl -k && \
     pip3 install numpy-1.17.5-cp37-cp37m-manylinux1_x86_64.whl && \
-    pip3 install -r /tmp/requirements.txt && \   
+    pip3 install -r /tmp/requirements.txt && \
     rm -rf /root/.cache/pip
 
 # 环境变量
@@ -86,7 +86,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     chmod 755 /usr/local/Ascend && \
     chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
-    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
 # 安装tensorflow
     ARCH=$(uname -m) && \
