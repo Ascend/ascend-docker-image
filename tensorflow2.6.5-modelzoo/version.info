@@ -1,2 +1,12 @@
-Version=20.2.0
-required_firmware_firmware_version=1.0
+Version=23.0.rc2
+ascendhal_version=7.25.6
+aicpu_version=1.0
+tdt_version=1.0
+log_version=1.0
+prof_version=2.0
+dvppkernels_version=1.1
+tsfw_version=1.0
+Innerversion=V100R001C30SPC001B249
+package_version=23.0.rc2
+compatible_version=[V100R001C29,V100R001C30]
+compatible_version_fw=[6.4.0,6.4.99]
