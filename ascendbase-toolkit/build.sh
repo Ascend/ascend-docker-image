@@ -3,12 +3,12 @@
 arch=$(uname -m)
 
 if [[ $(arch) == "x86_64" ]]; then
-    cp -rf /usr1/package330/lib-$(arch)/libstdc++.so.6.0.24 ./centos7.6-x64/
+    cp -rf /usr1/package630/lib-$(arch)/libstdc++.so.6.0.24 ./centos7.6-x64/
 else
-    cp -rf /usr1/package330/lib-$(arch)/libstdc++.so.6.0.24 ./centos7.6-arm64/
+    cp -rf /usr1/package630/lib-$(arch)/libstdc++.so.6.0.24 ./centos7.9-arm64/
 fi
 
-have_libstdc=$(find centos7.6* |grep "libstdc++.so"|wc -l)
+have_libstdc=$(find centos7* |grep "libstdc++.so"|wc -l)
 if [ $have_libstdc == 0 ]; then
     echo "please put libstdc++.so wheel package here"
     exit 1
@@ -25,8 +25,8 @@ if [ $arch == "x86_64" ];then
 else
     cd ubuntu18.04-arm64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:ubuntu18.04-arm64 . || exit 1
-    cd ../centos7.6-arm64
-    DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:centos7.6-arm64 . || exit 1
+    cd ../centos7.9-arm64
+    DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:centos7.9-arm64 . || exit 1
     cd ../openeuler20.03-arm64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-toolkit:openeuler20.03-arm64 . || exit 1
 fi
