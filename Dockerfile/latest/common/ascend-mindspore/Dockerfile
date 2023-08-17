@@ -34,8 +34,8 @@ RUN umask 0022 && \
     fi && \
     if [ "$ARCH" == "aarch64" ]; then \
         pip3 install \
-        --index-url https://pypi.douban.com/simple/ \
-        --trusted-host pypi.douban.com \
+        --index-url https://mirrors.aliyun.com/pypi/simple/ \
+        --trusted-host mirrors.aliyun.com \
         psutil; \
     fi && \
     pip3 install \
