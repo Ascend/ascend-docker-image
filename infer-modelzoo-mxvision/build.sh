@@ -2,9 +2,9 @@
 
 arch=$(uname -m)
 
-cp -rf /usr1/package330/ResNet152 .
-cp -rf /usr1/package330/Ascend-mindxsdk-mxvision_*linux-$(arch).run .
-cp -rf /usr1/package330/Ascend-cann-toolkit_6.3*-$(arch).run .
+cp -rf /usr1/package630/ResNet152 .
+cp -rf /usr1/package630/Ascend-mindxsdk-mxvision_*linux-$(arch).run .
+cp -rf /usr1/package630/Ascend-cann-toolkit_6.3*-$(arch).run .
 
 have_mxvision=$(find . |grep "mxvision"|grep $arch|wc -l)
 if [ $have_mxvision == 0 ]; then
