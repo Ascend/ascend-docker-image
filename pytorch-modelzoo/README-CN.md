@@ -51,4 +51,4 @@ python3.7.5,pytorch, torch_npu, CANN, 和Resnet50_Cifor_for_Pytorch（单机单�
 **apex whl包获取方式**：
   |文件|参考链接|
   |:-----------:| :-------------:|
-  |apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl|[参考Ascend apex中编译方式](https://gitee.com/ascend/apex/tree/5.0.rc2/)|
+  |apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl|[参考Ascend apex编译](https://gitee.com/ascend/apex/tree/5.0.rc2/)|
