@@ -9,21 +9,21 @@ function start_test_model() {
     tail -f test/output/0/train_0.log &
     wait_time=0
     time_out=2000
-    if [ $2 ]; then 
+    if [ $2 ]; then
         time_out=$2
     fi
     while true;do
         sleep 20
         wait_time=$((wait_time+20))
-        if [ "$(grep -c "THPModule_npu_shutdown success" /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] && [ "$(grep -c "Saving checkpoint at 2 epochs" /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
-            sleep 20
+        if [ "$(grep -c "Epoch(val)" /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 1 ] && [ "$(grep -c "Saving checkpoint at 2 epochs" /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ];then
+            sleep 60
             echo test pytorch-modelzoo model success
             exit 0
         fi
         if [ "$(grep -c "Error" /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch/test/output/0/train_0.log)" -gt 0 ] || [ ${wait_time} -gt ${time_out} ];then
             echo test pytorch-modelzoo model failed
             exit 1
-        fi 
+        fi
     done
 }
 
