@@ -1,4 +1,4 @@
-version=23.0.RC1
+version=23.0.RC2
 public_repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
 private_repository=swr.cn-east-3.myhuaweicloud.com/zy-shanghai-1
 if [[ $2 == "public" ]]; then

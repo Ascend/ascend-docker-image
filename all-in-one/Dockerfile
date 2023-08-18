@@ -74,17 +74,18 @@ ENV GLOG_v=2 \
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
-    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     cp /tmp/ascend_install.info /etc && \
     mkdir -p /usr/local/Ascend/driver && \
     cp /tmp/version.info /usr/local/Ascend/driver && \
     bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
     pip3 install /tmp/mindspore*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/te-*.whl && \
-    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \ 
+    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \
+    ls /tmp/h5py*.whl &> /dev/null && pip3 install /tmp/h5py*.whl || echo "No h5py whl found, skipping" && \
     pip3 install /tmp/tensorflow*.whl && \
     pip3 install --upgrade /tmp/torch_npu*.whl && \
-    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
     rm -rf /tmp/*  && \
     rm -rf /root/.cache/pip
