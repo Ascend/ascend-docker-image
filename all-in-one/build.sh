@@ -86,5 +86,5 @@ else
     cp -rf /usr1/package630/Ascend-cann-tfplugin_6.3*-$(arch).run .
     cp -rf /usr1/package630/Ascend-cann-kernels-910_6.3.RC2_linux.run .
     cp -rf /usr1/package630/Ascend-cann-kernels-910b_6.3.RC2_linux.run .
-    DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-arm64 -f Dockerfile_aarch64
+    DOCKER_BUILDKIT=1 docker build . -t all-in-one:ubuntu18.04-arm64
 fi

@@ -83,6 +83,7 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     pip3 install /tmp/mindspore*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/te-*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \
+    ls /tmp/h5py*.whl &> /dev/null && pip3 install /tmp/h5py*.whl || echo "No h5py whl found, skipping" && \
     pip3 install /tmp/tensorflow*.whl && \
     pip3 install --upgrade /tmp/torch_npu*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
