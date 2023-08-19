@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:experimental
-FROM ubuntu:18.04 as buildtemp 
+FROM ubuntu:18.04 as buildtemp
 
 WORKDIR /tmp
 COPY . ./
@@ -37,8 +37,8 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple/\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 # HwHiAiUser
@@ -78,7 +78,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    bash /tmp/Ascend-cann-kernels*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     bash /tmp/Ascend-mindx-toolbox*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # TRAIN_FRAMEWORK安装
     pip3 install /tmp/mindspore*.whl && \

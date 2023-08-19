@@ -42,3 +42,14 @@ python3.7.5,pytorch, torch_npu, CANN, 和Resnet50_Cifor_for_Pytorch（单机单�
      hostPath:
        path: "/data/imagenet"  # Configure the path of the training set.
    ```
+   
+6. 建议用户手动编译apex whl包替换镜像中的apex版本，不同架构对应的apex包不同。
+   编译好whl包后执行：
+
+   ```
+   pip3 install --upgrade apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl
+   ```
+**apex whl包获取方式**：
+  |文件|参考链接|
+  |:-----------:| :-------------:|
+  |apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl|[参考Ascend apex编译](https://gitee.com/ascend/apex/tree/5.0.rc2/)|
