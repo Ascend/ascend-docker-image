@@ -27,8 +27,7 @@
      host-arch: huawei-x86
    ```
 
-5. 如果运行环境为Ascend 910B，需要添加环境变量export MS_ENABLE_GE=1，export MS_GE_TRAIN=1， 可在`cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts`前添加`export MS_ENABLE_GE=1; export MS_GE_TRAIN=1;`修改位置如下。
-   注意事项：只有Ascend 910B需要添加环境变量
+5. 如果运行环境为Atlas 800 9000 A2和Atlas 900 Pod A2，需要添加环境变量export MS_ENABLE_GE=1，export MS_GE_TRAIN=1， 可在`cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts`前添加`export MS_ENABLE_GE=1; export MS_GE_TRAIN=1;`修改位置如下。
 
    ```yaml
      valueFrom:
