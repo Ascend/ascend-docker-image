@@ -66,6 +66,7 @@ ENV GLOG_v=2 \
     FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages \
     PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH \
     ASCEND_OPP_PATH=$TOOLKIT_PATH/opp \
+    ASCEND_AICPU_PATH=$TOOLKIT_PATH
     ASCEND_PLUGIN_HOME=/usr/local/Ascend/tfplugin/latest \
     PYTHONPATH=$ASCEND_PLUGIN_HOME/python/site-packages:$FWK_PYTHON_PATH:$FWK_PYTHON_PATH/auto_tune.egg:$FWK_PYTHON_PATH/schedule_search.egg:$TBE_IMPL_PATH:$PYTHONPATH \
     LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/local/Ascend/driver/tools/hccn_tool/:$LD_LIBRARY_PATH
