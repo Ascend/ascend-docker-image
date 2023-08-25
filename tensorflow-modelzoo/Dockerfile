@@ -1,3 +1,4 @@
+
 # syntax = docker/dockerfile:experimental
 FROM ubuntu:18.04 as buildtemp 
 
@@ -65,6 +66,7 @@ ENV FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages
 ENV PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH
 ENV ASCEND_OPP_PATH=$TOOLKIT_PATH/opp
 ENV PYTHONPATH=$HOST_ASCEND_BASE/tfplugin/latest/tfplugin/python/site-packages:\
+ENV ASCEND_AICPU_PATH=$TOOLKIT_PATH
 $FWK_PYTHON_PATH:\
 $FWK_PYTHON_PATH/auto_tune.egg:\
 $FWK_PYTHON_PATH/schedule_search.egg:\
