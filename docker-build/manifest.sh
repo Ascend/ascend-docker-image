@@ -1,4 +1,4 @@
-version=23.0.RC1
+version=23.0.RC2
 repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
 
 #modelzoo

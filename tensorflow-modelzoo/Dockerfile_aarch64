@@ -70,6 +70,7 @@ ENV TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe
 ENV FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages
 ENV PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH
 ENV ASCEND_OPP_PATH=$TOOLKIT_PATH/opp
+ENV ASCEND_AICPU_PATH=$TOOLKIT_PATH
 ENV PYTHONPATH=$HOST_ASCEND_BASE/tfplugin/latest/tfplugin/python/site-packages:\
 $FWK_PYTHON_PATH:\
 $FWK_PYTHON_PATH/auto_tune.egg:\
