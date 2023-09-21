@@ -41,12 +41,12 @@ spec:
         hostNetwork: true
         nodeSelector:
           host-arch: huawei-x86
-        securityContent:
-          runAsUser: 0
-          privileged: true
         containers:
         - name: hccl-test-c
           image: hccl-test:ubuntu18.04-x64         # Training framework image, which can be modified.
+          securityContext:
+            runAsUser: 0
+            privileged: true
           imagePullPolicy: IfNotPresent
           env:
           - name: HOSTS_IP                # IP address of the physical node, which is used to identify the node where the pod is running
