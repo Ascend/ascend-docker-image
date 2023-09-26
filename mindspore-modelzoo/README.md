@@ -27,7 +27,7 @@
      host-arch: huawei-x86
    ```
 
-5. 编辑train_cifar_vcjob.yaml或train_imagenet_vcjob文件，可修改上述5个地方。执行`kubectl apply -f train_cifar_vcjob.yaml`下发任务，此时使用cifar10数据集进行训练；执行`kubectl apply -f train_imagenet_vcjob.yaml`下发任务，此时使用imagenet2012数据集进行训练。执行`kubectl delete -f train_cifar_vcjob.yaml`或`kubectl delete -f train_imagenet_vcjob.yaml`删除任务。
+5. 编辑train_cifar_vcjob.yaml或train_imagenet_vcjob文件，可修改上述4个地方。执行`kubectl apply -f train_cifar_vcjob.yaml`下发任务，此时使用cifar10数据集进行训练；执行`kubectl apply -f train_imagenet_vcjob.yaml`下发任务，此时使用imagenet2012数据集进行训练。执行`kubectl delete -f train_cifar_vcjob.yaml`或`kubectl delete -f train_imagenet_vcjob.yaml`删除任务。
    注意事项：使用imagenet2012数据集时请配置数据集的正确路径，且目录及其子目录的属主属组均为HwHiAiUser。修改位置如下。
 
    ```yaml
