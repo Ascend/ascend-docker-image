@@ -27,16 +27,7 @@
      host-arch: huawei-x86
    ```
 
-5. 如果运行环境为Atlas 800 9000 A2和Atlas 900 Pod A2，需要添加环境变量export MS_ENABLE_GE=1，export MS_GE_TRAIN=1， 可在`cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts`前添加`export MS_ENABLE_GE=1; export MS_GE_TRAIN=1;`修改位置如下。
-
-   ```yaml
-     valueFrom:
-       fieldRef:
-         fieldPath: status.hostIP
-   command: ["/bin/bash", "-c", "export MS_ENABLE_GE=1; export MS_GE_TRAIN=1; cd /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/scripts; bash train_start.sh /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/logs ../train.py --data_path=/home/HwHiAiUser/samples/Resnet50_Cifar_for_MindSpore/data/cifar10/cifar-10-batches-bin/ --dataset=resnet50 --run_distribute=True --device_num=8"] 
-   ```
-
-6. 编辑train_cifar_vcjob.yaml或train_imagenet_vcjob文件，可修改上述5个地方。执行`kubectl apply -f train_cifar_vcjob.yaml`下发任务，此时使用cifar10数据集进行训练；执行`kubectl apply -f train_imagenet_vcjob.yaml`下发任务，此时使用imagenet2012数据集进行训练。执行`kubectl delete -f train_cifar_vcjob.yaml`或`kubectl delete -f train_imagenet_vcjob.yaml`删除任务。
+5. 编辑train_cifar_vcjob.yaml或train_imagenet_vcjob文件，可修改上述4个地方。执行`kubectl apply -f train_cifar_vcjob.yaml`下发任务，此时使用cifar10数据集进行训练；执行`kubectl apply -f train_imagenet_vcjob.yaml`下发任务，此时使用imagenet2012数据集进行训练。执行`kubectl delete -f train_cifar_vcjob.yaml`或`kubectl delete -f train_imagenet_vcjob.yaml`删除任务。
    注意事项：使用imagenet2012数据集时请配置数据集的正确路径，且目录及其子目录的属主属组均为HwHiAiUser。修改位置如下。
 
    ```yaml
