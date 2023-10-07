@@ -7,11 +7,11 @@ cp -rf /usr1/package630/mindspore-*linux_$(arch).whl .
 cp -rf /usr1/package630/mindx_elastic-0.0.1-py37-none-linux_$(arch).whl .
 cp -rf /usr1/package630/Ascend-mindx-toolbox*-$(arch).run .
 if [ $arch == "x86_64" ];then
-    cp -rf /usr1/package630/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 .
-    cp -rf /usr1/package630/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 .
+    cp -rf /usr1/package630/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.1 .
+    cp -rf /usr1/package630/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.1 .
 else
-    cp -rf /usr1/package630/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-aarch64-1.0-r2.0 .
-    cp -rf /usr1/package630/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-aarch64-1.0-r2.0 .
+    cp -rf /usr1/package630/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-aarch64-1.0-r2.1 .
+    cp -rf /usr1/package630/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-aarch64-1.0-r2.1 .
 fi
 
 #准备模型和数据集
