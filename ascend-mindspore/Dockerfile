@@ -44,6 +44,4 @@ ENV PATH=$TOOLKIT_PATH/ccec_compiler/bin/:$PATH
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/Resnet50_Cifar_for_MindSpore
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/

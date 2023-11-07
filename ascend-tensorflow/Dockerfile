@@ -38,6 +38,4 @@ RUN rm -rf ./*
 
 USER HwHiAiUser
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Keras-MnasNet_ID3518_for_TensorFlow2.X /home/HwHiAiUser/Keras-MnasNet_ID3518_for_TensorFlow2.X
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/

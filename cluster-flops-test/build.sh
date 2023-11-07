@@ -2,8 +2,8 @@
 
 arch=$(uname -m)
 
-cp -rf /usr1/package630/Ascend-cann-nnrt*-$(arch).run .
-cp -rf /usr1/package630/Ascend-mindx-toolbox*-$(arch).run .
+cp -rf /usr1/package930/Ascend-cann-nnrt*-$(arch).run .
+cp -rf /usr1/package930/Ascend-mindx-toolbox*-$(arch).run .
 
 have_nnrt=$(find . |grep cann|grep nnrt|grep $arch|wc -l)
 if [ $have_nnrt == 0 ]; then

@@ -68,6 +68,8 @@ function parse_script_args()
                 build_image hccl-test
             elif [[ "${image}" = "cluster" ]]; then
                 build_image cluster-flops-test
+            elif [[ "${image}" = "infer-310b" ]]; then
+                build_image ascend-infer-310b
             elif [[ "${image}" = "all" ]]; then
                 build_image ascendbase-toolkit
                 build_image ascendbase-infer
@@ -80,6 +82,7 @@ function parse_script_args()
                 build_image ascend-tensorflow
                 build_image hccl-test
                 build_image cluster
+                build_image ascend-infer-310b
             else
                 echo "Please check the parameter of --common"
                 exit 1

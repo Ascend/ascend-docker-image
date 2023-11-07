@@ -16,6 +16,7 @@ RUN umask 0022 && \
     pip3 install --upgrade /tmp/torch-*.whl && \
     pip3 install mmcv==1.7.0 && \
     pip3 install urllib3==1.26.6 && \
+    pip3 install yapf==0.40.1 && \
     pip3 install torchvision==0.12.0 && \
     pip3 install matplotlib && \
     rm -rf /root/.cache/pip && \
@@ -23,6 +24,4 @@ RUN umask 0022 && \
 
 USER HwHiAiUser
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/Resnet50_Cifar_for_PyTorch
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/
