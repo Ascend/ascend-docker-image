@@ -1,6 +1,6 @@
-version=23.0.RC2
+version=23.0.RC3
 public_repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
-private_repository=swr.cn-east-3.myhuaweicloud.com/zy-shanghai-1
+private_repository=swr.cn-east-3.myhuaweicloud.com/ascendhub_tl
 if [[ $2 == "public" ]]; then
     repository=${public_repository}
 else
@@ -77,6 +77,14 @@ push_ascend_infer()
     docker push ${repository}/ascend-infer:${version}-ubuntu18.04-${ARCH}
     docker tag ascend-infer:centos7.6-${ARCH} ${repository}/ascend-infer:${version}-centos7.6-${ARCH}
     docker push ${repository}/ascend-infer:${version}-centos7.6-${ARCH}
+}
+
+push_ascend_infer_310b()
+{
+    docker tag ascend-infer-310b:${version}-arm64 ${repository}/ascend-infer-310b:${version}-arm64
+    docker push ${repository}/ascend-infer-310b:${version}-arm64
+    docker tag ascend-infer-310b:${version}-dev-arm64 ${repository}/ascend-infer-310b:${version}-dev-arm64
+    docker push ${repository}/ascend-infer-310b:${version}-dev-arm64
 }
 
 push_ascend_toolkit()
@@ -209,6 +217,8 @@ function parse_script_args()
             push_hccl_test
         elif [[ "${image}" = "cluster" ]]; then
             push_cluster
+        elif [[ "${image}" = "infer-310b" ]]; then
+            push_ascend_infer_310b
         elif [[ "${image}" = "all" ]]; then
             push_ascendbase_toolkit
             push_ascendbase_infer
@@ -221,6 +231,7 @@ function parse_script_args()
             push_ascend_tensorflow
             push_hccl_test
             push_cluster
+            push_ascend_infer_310b
         else
             echo "Please check the parameter of --common"
             exit 1

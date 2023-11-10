@@ -61,5 +61,8 @@ RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod 755 /lib64/$LIBSTDCXX && \
     ldconfig
 
+# 设置容器gcc默认版本
+RUN echo "source /opt/rh/devtoolset-7/enable" >> /etc/bashrc
+
 # 清理临时目录
 RUN rm -rf ./*

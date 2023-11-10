@@ -2,10 +2,8 @@
 
 arch=$(uname -m)
 
-cp -rf /usr1/package630/torch-1.11.0*linux_$(arch).whl .
-cp -rf /usr1/package630/torch_npu-1.11.0.post1-cp37-cp37m-linux_$(arch).whl .
-
-cp -rf /usr1/package630/Resnet50_Cifar_for_PyTorch .
+cp -rf /usr1/package930/torch-1.11.0*linux_$(arch).whl .
+cp -rf /usr1/package930/torch_npu-1.11.0.post4-cp37-cp37m-linux_$(arch).whl .
 
 have_torch=$(find . |grep "torch-1.11"|grep $arch|wc -l)
 if [ $have_torch == 0 ]; then

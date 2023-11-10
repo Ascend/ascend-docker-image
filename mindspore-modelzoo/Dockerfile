@@ -102,7 +102,7 @@ COPY --chown=HwHiAiUser:HwHiAiUser vpc_resnet50_imagenet_classification /home/Hw
 COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 COPY --chown=HwHiAiUser:HwHiAiUser hccl.json /user/serverid/devindex/config/hccl.json 
 COPY --chown=HwHiAiUser:HwHiAiUser run_ais.py /home/HwHiAiUser/samples/scripts/run_ais.py
-COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
-COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0 /home/HwHiAiUser/samples/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.0
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.2 /home/HwHiAiUser/samples/train_huawei_train_mindspore_bert-Ais-Benchmark-Stubs-x86_64-1.0-r2.2
+COPY --chown=HwHiAiUser:HwHiAiUser train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.2 /home/HwHiAiUser/samples/train_huawei_train_mindspore_resnet-Ais-Benchmark-Stubs-x86_64-1.0-r2.2
 
 WORKDIR /home/HwHiAiUser/

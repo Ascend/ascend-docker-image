@@ -61,6 +61,9 @@ RUN cp -f ./$LIBSTDCXX /lib64/ && \
     chmod 755 /lib64/$LIBSTDCXX && \
     ldconfig
 
+# 设置容器gcc默认版本
+RUN echo "source /opt/rh/devtoolset-7/enable" >> /etc/bashrc
+
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8; exit 0
 
 # 清理临时目录
