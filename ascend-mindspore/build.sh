@@ -11,9 +11,9 @@ if [ $have_mindspore == 0 ]; then
 fi
 
 if [ $arch == "x86_64" ];then
-    DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:centos7.6-x64 --build-arg BASE_VERSION=centos7.6-x64 . || exit 1
+    DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:centos7-x64 --build-arg BASE_VERSION=centos7-x64 . || exit 1
     DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:ubuntu18.04-x64 --build-arg BASE_VERSION=ubuntu18.04-x64 . || exit 1
 else
-    DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:centos7.9-arm64 --build-arg BASE_VERSION=centos7.9-arm64 . || exit 1
+    DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:centos7-arm64 --build-arg BASE_VERSION=centos7-arm64 . || exit 1
     DOCKER_BUILDKIT=0 docker build -t ascend-mindspore:ubuntu18.04-arm64 --build-arg BASE_VERSION=ubuntu18.04-arm64 . || exit 1
 fi

@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.6
 
 ARG LIBSTDCXX=libstdc++.so.6.0.24
 WORKDIR /tmp

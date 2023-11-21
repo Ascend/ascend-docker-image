@@ -36,9 +36,9 @@ docker manifest push ${repository}/infer-modelzoo:${version}-mxvision
 docker manifest rm ${repository}/algorithm:${version}-ubuntu18.04
 docker manifest create ${repository}/algorithm:${version}-ubuntu18.04 --amend ${repository}/algorithm:${version}-ubuntu18.04-x64 --amend ${repository}/algorithm:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/algorithm:${version}-ubuntu18.04
-docker manifest rm ${repository}/algorithm:${version}-centos7.6
-docker manifest create ${repository}/algorithm:${version}-centos7.6 --amend ${repository}/algorithm:${version}-centos7.6-x64 --amend ${repository}/algorithm:${version}-centos7.6-arm64
-docker manifest push ${repository}/algorithm:${version}-centos7.6
+docker manifest rm ${repository}/algorithm:${version}-centos7
+docker manifest create ${repository}/algorithm:${version}-centos7 --amend ${repository}/algorithm:${version}-centos7-x64 --amend ${repository}/algorithm:${version}-centos7-arm64
+docker manifest push ${repository}/algorithm:${version}-centos7
 docker manifest rm ${repository}/algorithm:${version}-openeuler20.03
 docker manifest create ${repository}/algorithm:${version}-openeuler20.03 --amend ${repository}/algorithm:${version}-openeuler20.03-x64 --amend ${repository}/algorithm:${version}-openeuler20.03-arm64
 docker manifest push ${repository}/algorithm:${version}-openeuler20.03
@@ -46,44 +46,44 @@ docker manifest push ${repository}/algorithm:${version}-openeuler20.03
 docker manifest rm ${repository}/ascend-infer:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-infer:${version}-ubuntu18.04 --amend ${repository}/ascend-infer:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-infer:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-infer:${version}-ubuntu18.04
-docker manifest rm ${repository}/ascend-infer:${version}-centos7.6
-docker manifest create ${repository}/ascend-infer:${version}-centos7.6 --amend ${repository}/ascend-infer:${version}-centos7.6-x64 --amend ${repository}/ascend-infer:${version}-centos7.6-arm64
-docker manifest push ${repository}/ascend-infer:${version}-centos7.6
+docker manifest rm ${repository}/ascend-infer:${version}-centos7
+docker manifest create ${repository}/ascend-infer:${version}-centos7 --amend ${repository}/ascend-infer:${version}-centos7-x64 --amend ${repository}/ascend-infer:${version}-centos7-arm64
+docker manifest push ${repository}/ascend-infer:${version}-centos7
 #ascend-toolkit
 docker manifest rm ${repository}/ascend-toolkit:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-toolkit:${version}-ubuntu18.04 --amend ${repository}/ascend-toolkit:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-toolkit:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-toolkit:${version}-ubuntu18.04
-docker manifest rm ${repository}/ascend-toolkit:${version}-centos7.6
-docker manifest create ${repository}/ascend-toolkit:${version}-centos7.6 --amend ${repository}/ascend-toolkit:${version}-centos7.6-x64 --amend ${repository}/ascend-toolkit:${version}-centos7.6-arm64
-docker manifest push ${repository}/ascend-toolkit:${version}-centos7.6
+docker manifest rm ${repository}/ascend-toolkit:${version}-centos7
+docker manifest create ${repository}/ascend-toolkit:${version}-centos7 --amend ${repository}/ascend-toolkit:${version}-centos7-x64 --amend ${repository}/ascend-toolkit:${version}-centos7-arm64
+docker manifest push ${repository}/ascend-toolkit:${version}-centos7
 #ascend-mindspore
 docker manifest rm ${repository}/ascend-mindspore:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-mindspore:${version}-ubuntu18.04 --amend ${repository}/ascend-mindspore:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-mindspore:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-mindspore:${version}-ubuntu18.04
-docker manifest rm ${repository}/ascend-mindspore:${version}-centos7.6
-docker manifest create ${repository}/ascend-mindspore:${version}-centos7.6 --amend ${repository}/ascend-mindspore:${version}-centos7.6-x64 --amend ${repository}/ascend-mindspore:${version}-centos7.6-arm64
-docker manifest push ${repository}/ascend-mindspore:${version}-centos7.6
+docker manifest rm ${repository}/ascend-mindspore:${version}-centos7
+docker manifest create ${repository}/ascend-mindspore:${version}-centos7 --amend ${repository}/ascend-mindspore:${version}-centos7-x64 --amend ${repository}/ascend-mindspore:${version}-centos7-arm64
+docker manifest push ${repository}/ascend-mindspore:${version}-centos7
 #ascend-pytorch
 docker manifest rm ${repository}/ascend-pytorch:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-pytorch:${version}-ubuntu18.04 --amend ${repository}/ascend-pytorch:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-pytorch:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-pytorch:${version}-ubuntu18.04
-docker manifest rm ${repository}/ascend-pytorch:${version}-centos7.6
-docker manifest create ${repository}/ascend-pytorch:${version}-centos7.6 --amend ${repository}/ascend-pytorch:${version}-centos7.6-x64 --amend ${repository}/ascend-pytorch:${version}-centos7.6-arm64
-docker manifest push ${repository}/ascend-pytorch:${version}-centos7.6
+docker manifest rm ${repository}/ascend-pytorch:${version}-centos7
+docker manifest create ${repository}/ascend-pytorch:${version}-centos7 --amend ${repository}/ascend-pytorch:${version}-centos7-x64 --amend ${repository}/ascend-pytorch:${version}-centos7-arm64
+docker manifest push ${repository}/ascend-pytorch:${version}-centos7
 #ascend-pytorch1.11.0
 docker manifest rm ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04
 docker manifest create ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04 --amend ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-x64 --amend ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04
-docker manifest rm ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6
-docker manifest create ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-x64 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6-arm64
-docker manifest push ${repository}/ascend-pytorch:${version}-1.11.0-centos7.6
+docker manifest rm ${repository}/ascend-pytorch:${version}-1.11.0-centos7
+docker manifest create ${repository}/ascend-pytorch:${version}-1.11.0-centos7 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7-x64 --amend ${repository}/ascend-pytorch:${version}-1.11.0-centos7-arm64
+docker manifest push ${repository}/ascend-pytorch:${version}-1.11.0-centos7
 #ascend-tensorflow
 docker manifest rm ${repository}/ascend-tensorflow:${version}-ubuntu18.04
 docker manifest create ${repository}/ascend-tensorflow:${version}-ubuntu18.04 --amend ${repository}/ascend-tensorflow:${version}-ubuntu18.04-x64 --amend ${repository}/ascend-tensorflow:${version}-ubuntu18.04-arm64
 docker manifest push ${repository}/ascend-tensorflow:${version}-ubuntu18.04
-docker manifest rm ${repository}/ascend-tensorflow:${version}-centos7.6
-docker manifest create ${repository}/ascend-tensorflow:${version}-centos7.6 --amend ${repository}/ascend-tensorflow:${version}-centos7.6-x64 --amend ${repository}/ascend-tensorflow:${version}-centos7.6-arm64
-docker manifest push ${repository}/ascend-tensorflow:${version}-centos7.6
+docker manifest rm ${repository}/ascend-tensorflow:${version}-centos7
+docker manifest create ${repository}/ascend-tensorflow:${version}-centos7 --amend ${repository}/ascend-tensorflow:${version}-centos7-x64 --amend ${repository}/ascend-tensorflow:${version}-centos7-arm64
+docker manifest push ${repository}/ascend-tensorflow:${version}-centos7
 #hccl-test
 docker manifest rm ${repository}/hccl-test:${version}-ubuntu18.04
 docker manifest create ${repository}/hccl-test:${version}-ubuntu18.04 --amend ${repository}/hccl-test:${version}-ubuntu18.04-x64 --amend ${repository}/hccl-test:${version}-ubuntu18.04-arm64

@@ -18,11 +18,11 @@ fi
 if [ $arch == "x86_64" ];then
     rm -f Ascend-cann-tfplugin*-$(arch).run
     cp -rf /usr1/package930/Ascend-cann-tfplugin_7.0*-$(arch).run .
-    DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:centos7.6-x64 --build-arg BASE_VERSION=centos7.6-x64 .  || exit 1
+    DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:centos7-x64 --build-arg BASE_VERSION=centos7-x64 .  || exit 1
     DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:ubuntu18.04-x64 --build-arg BASE_VERSION=ubuntu18.04-x64 . || exit 1
 else
     rm -f Ascend-cann-tfplugin*-$(arch).run
     cp -rf /usr1/package930/Ascend-cann-tfplugin_7.0*-$(arch).run .
-    DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:centos7.9-arm64 --build-arg BASE_VERSION=centos7.9-arm64 . -f Dockerfile_aarch64 || exit 1
+    DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:centos7-arm64 --build-arg BASE_VERSION=centos7-arm64 . -f Dockerfile_aarch64 || exit 1
     DOCKER_BUILDKIT=0 docker build -t ascend-tensorflow:ubuntu18.04-arm64 --build-arg BASE_VERSION=ubuntu18.04-arm64 . -f Dockerfile_aarch64 || exit 1
 fi

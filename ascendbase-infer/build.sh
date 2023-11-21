@@ -19,10 +19,10 @@ if [ $arch == "x86_64" ];then
     cd ubuntu18.04-x64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:ubuntu18.04-x64 . || exit 1
     cd ../centos7.6-x64
-    DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:centos7.6-x64 . || exit 1
+    DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:centos7-x64 . || exit 1
 else
     cd ubuntu18.04-arm64
     DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:ubuntu18.04-arm64 . || exit 1
     cd ../centos7.9-arm64
-    DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:centos7.9-arm64 . || exit 1
+    DOCKER_BUILDKIT=1  docker build -t ascendbase-infer:centos7-arm64 . || exit 1
 fi

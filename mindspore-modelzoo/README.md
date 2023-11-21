@@ -35,7 +35,25 @@
      hostPath:
        path: "/data/imagenet"  # Configure the path of the training set.
    ```
+6. 对于Atlas 800 9000 A2和Atlas 900 Pod A2, 需要做如下修改：
 
+   a. 将所有的ring-controller.atlas字段修改为ascend-910b;
+   
+   b. 将字段volumes和volumeMounts的name修改为ascend-910b-config;
+   ```yaml
+    volumeMounts:
+    - name: ascend-910b-config
+   ...
+    volumes:
+    - name: ascend-910b-config
+   ```
+   c. 在字段nodeSelector下添加accelerator-type;
+   ```yaml
+   nodeSelector:
+     host-arch: huawei-x86 
+     accelerator-type: module-910b-8
+   ```
+            
 ## 单机推理
 
 推理基于Caffe ResNet-50网络（单输入、单Batch）实现图片分类的功能。
