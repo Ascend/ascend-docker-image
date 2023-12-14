@@ -15,7 +15,7 @@ function start_test_model() {
         local wait_time
         wait_time=0
         while true; do
-            sleep 20
+            sleep 60
             wait_time=$((wait_time+20))
             ckpt_file_exists=$(find outputs/resnet50/cifar10/ckpt/ -name 'resnet*.ckpt' | wc -l)
             if [ "$ckpt_file_exists" -eq 1 ]; then

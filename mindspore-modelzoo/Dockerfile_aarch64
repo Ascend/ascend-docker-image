@@ -78,7 +78,6 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
     chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     bash /tmp/Ascend-mindx-toolbox*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
 # TRAIN_FRAMEWORK安装

@@ -50,13 +50,11 @@ echo "start build"
 if [ $arch == "x86_64" ];then
     rm -f Ascend-cann-*-$(arch).run
     cp -rf /usr1/package930/Ascend-cann-toolkit_7.0*-$(arch).run .
-    cp -rf /usr1/package930/Ascend-cann-kernels-910_*.run .
     cp -rf /usr1/package930/Ascend-cann-kernels-910b_*.run .
     DOCKER_BUILDKIT=1  docker build . -t mindspore-modelzoo:ubuntu18.04-x64
 else
     rm -f Ascend-cann-*-$(arch).run
     cp -rf /usr1/package930/Ascend-cann-toolkit_7.0*-$(arch).run .
-    cp -rf /usr1/package930/Ascend-cann-kernels-910_*.run .
     cp -rf /usr1/package930/Ascend-cann-kernels-910b_*.run .
     DOCKER_BUILDKIT=1  docker build . -f Dockerfile_aarch64 -t mindspore-modelzoo:ubuntu18.04-arm64
 fi
