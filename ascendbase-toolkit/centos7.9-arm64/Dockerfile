@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.9
 
 ARG LIBSTDCXX=libstdc++.so.6.0.24
 WORKDIR /tmp
@@ -34,20 +34,20 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo -e '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 # python包
 RUN pip3 install -U pip && \
     pip3 install decorator numpy kiwisolver matplotlib \
     sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools && \
-    pip3 install protobuf scipy requests mpmath Pillow && \
-    pip3 install pycocotools absl-py && \
+    pip3 install protobuf scipy requests psutil mpmath Pillow && \
+    pip3 install pycocotools attrs attr absl-py && \
     rm -rf /root/.cache/pip
 
 # 安装zlib-1.2.9
-RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
+RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz --no-check-certificate && \
     tar -zxvf zlib-1.2.9.tar.gz && \
     cd zlib-1.2.9 && \
     ./configure --libdir=/lib64/ && \
@@ -58,8 +58,11 @@ RUN wget https://www.zlib.net/fossils/zlib-1.2.9.tar.gz && \
 
 # 安装新libstdc++.so
 RUN cp -f ./$LIBSTDCXX /lib64/ && \
-    chmod +x /lib64/$LIBSTDCXX && \
+    chmod 755 /lib64/$LIBSTDCXX && \
     ldconfig
+
+# 设置容器gcc默认版本
+RUN echo "source /opt/rh/devtoolset-7/enable" >> /etc/bashrc
 
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8; exit 0
 

@@ -66,6 +66,7 @@ ENV GLOG_v=2 \
     FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages \
     PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin/:$PATH \
     ASCEND_OPP_PATH=$TOOLKIT_PATH/opp \
+    ASCEND_AICPU_PATH=$TOOLKIT_PATH \
     ASCEND_PLUGIN_HOME=/usr/local/Ascend/tfplugin/latest \
     PYTHONPATH=$ASCEND_PLUGIN_HOME/python/site-packages:$FWK_PYTHON_PATH:$FWK_PYTHON_PATH/auto_tune.egg:$FWK_PYTHON_PATH/schedule_search.egg:$TBE_IMPL_PATH:$PYTHONPATH \
     LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:/usr/local/Ascend/driver/lib64/common/:/usr/local/Ascend/driver/lib64/driver/:/usr/local/Ascend/add-ons/:/usr/local/Ascend/driver/tools/hccn_tool/:$LD_LIBRARY_PATH
@@ -73,18 +74,19 @@ ENV GLOG_v=2 \
 # CANN包和TRAIN_FRAMEWORK安装
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
-    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     cp /tmp/ascend_install.info /etc && \
     mkdir -p /usr/local/Ascend/driver && \
     cp /tmp/version.info /usr/local/Ascend/driver && \
-    bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    pip3 install /tmp/mindspore_ascend*.whl && \
+    bash /tmp/Ascend-cann-tfplugin*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all --force && \
+    pip3 install /tmp/mindspore*.whl && \
     pip3 install $TOOLKIT_PATH/fwkacllib/lib64/te-*.whl && \
-    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/topi-*.whl && \
-    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \ 
+    pip3 install $TOOLKIT_PATH/fwkacllib/lib64/hccl-*.whl && \
+    ls /tmp/h5py*.whl &> /dev/null && pip3 install /tmp/h5py*.whl || echo "No h5py whl found, skipping" && \
     pip3 install /tmp/tensorflow*.whl && \
     pip3 install --upgrade /tmp/torch_npu*.whl && \
-    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
     rm -rf /tmp/*  && \
     rm -rf /root/.cache/pip
@@ -93,5 +95,5 @@ USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
 COPY --chown=HwHiAiUser:HwHiAiUser samples /home/HwHiAiUser/samples
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/test_model.sh
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 WORKDIR /home/HwHiAiUser/

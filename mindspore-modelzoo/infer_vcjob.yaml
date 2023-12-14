@@ -4,7 +4,7 @@ metadata:
   name: rings-config-mindx-dls-test     # The value of JobName must be the same as the name attribute of the following job. The prefix rings-config- cannot be modified.
   namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
   labels:
-    ring-controller.atlas: ascend-910   # The value cannot be modified. Service operations will be performed based on this label.
+    ring-controller.atlas: ascend-310p   # The value cannot be modified. Service operations will be performed based on this label.
 data:
   hccl.json: |
     {
@@ -17,7 +17,7 @@ metadata:
   name: mindx-dls-test                  # The value must be consistent with the name of ConfigMap.
   namespace: vcjob                      # Select a proper namespace based on the site requirements. (The namespaces of ConfigMap and Job must be the same. In addition, if the tjm component of MindX-add exists, the vcjob namespace cannot be used.)
   labels:
-    ring-controller.atlas: ascend-910   # The value must be the same as the label in ConfigMap and cannot be changed.
+    ring-controller.atlas: ascend-310p   # The value must be the same as the label in ConfigMap and cannot be changed.
     fault-scheduling: "force"
 spec:
   minAvailable: 1                       # The value of minAvailable is 1 in a single-node scenario and N in an N-node distributed scenario.
@@ -38,7 +38,7 @@ spec:
       metadata:
         labels:
           app: mindspore
-          ring-controller.atlas: ascend-910  # The value must be the same as the label in ConfigMap and cannot be changed.
+          ring-controller.atlas: ascend-310p  # The value must be the same as the label in ConfigMap and cannot be changed.
       spec:
         containers:
         - image: ascendhub.huawei.com/public-ascendhub/mindspore-modelzoo:22.0.0               # Training framework image, which can be modified.

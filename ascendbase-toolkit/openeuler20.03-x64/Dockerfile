@@ -25,15 +25,15 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo -e '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 # python包
 RUN pip3 install -U pip && \
     pip3 install decorator numpy kiwisolver matplotlib \
     sympy cffi pyyaml pathlib2 cython cycler grpcio grpcio-tools && \
-    pip3 install protobuf scipy requests mpmath Pillow && \
+    pip3 install protobuf attrs attr scipy requests psutil absl-py mpmath Pillow && \
     pip3 install pycocotools && \
     rm -rf /root/.cache/pip
 

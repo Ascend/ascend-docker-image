@@ -1,18 +1,9 @@
 # Introduction
 
 本目录用于构建pytorch-modelzoo容器镜像。镜像以ubuntu18.04为基础镜像，其中中包含
-python3.7.5,pytorch, torch_npu, CANN, 和一个Resnet50_Cifor_for_Pytorch样例
-
-## 运行
-
-进入容器中，默认NPU设备号为0。 如果是挂载的其他设备,执行
-```bash
-export DEVICE_ID=<设备id>
-```
-指定训练使用的设备
+python3.7.5,pytorch, torch_npu, CANN, 和Resnet50_Cifor_for_Pytorch（单机单卡、单机8卡）样例、ResNet50_for_PyTorch（集群训练）样例。
 
 ## 制作镜像
-
 
 在本目录运行build.sh即可。当条件不满足时，查看build.sh的报错。
 
@@ -22,7 +13,7 @@ export DEVICE_ID=<设备id>
 
 集群训练支持resnet50模型 + imagenet2012数据集，imagenet2012需从物理机挂载。
 
-1. 默认镜像：`ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0`，可修改image字段来修改使用的镜像。
+1. 默认镜像：`ascendhub.huawei.com/public-ascendhub/pytorch-modelzoo:22.0.0-1.8.1`，可修改image字段来修改使用的镜像。
 
 2. 默认在两个节点上进行集群训练。可修改`minAvailable: 2`和`replicas: 2`的值，需同时修改且值一样，定义集群训练的节点数。
 
@@ -51,3 +42,14 @@ export DEVICE_ID=<设备id>
      hostPath:
        path: "/data/imagenet"  # Configure the path of the training set.
    ```
+   
+6. 建议用户手动编译apex whl包替换镜像中的apex版本，不同架构对应的apex包不同。
+   编译好whl包后执行：
+
+   ```
+   pip3 install --upgrade apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl
+   ```
+**apex whl包获取方式**：
+  |文件|参考链接|
+  |:-----------:| :-------------:|
+  |apex-0.1_ascend-cp37-cp37m-linux_$(arch).whl|[参考Ascend apex编译](https://gitee.com/ascend/apex/blob/5.0.rc2/README.zh.md)|

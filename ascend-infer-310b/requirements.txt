@@ -1,0 +1,14 @@
+absl-py
+attrs
+cffi
+cython
+decorator
+numpy==1.24.3
+pathlib2
+protobuf
+psutil
+pyyaml
+requests
+six
+sympy
+scipy

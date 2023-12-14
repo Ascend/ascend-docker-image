@@ -7,14 +7,14 @@ COPY . ./
 FROM ubuntu:18.04
 ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
 
-RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic main restricted universe multiverse\n\
-    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic main restricted universe multiverse\n\
-    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-updates main restricted universe multiverse\n\
-    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-updates main restricted universe multiverse\n\
-    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-backports main restricted universe multiverse\n\
-    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-backports main restricted universe multiverse\n\
-    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-security main restricted universe multiverse\n\
-    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu-ports/ bionic-security main restricted universe multiverse\n" > /etc/apt/sources.list && \
+RUN echo "deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-updates main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-updates main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-backports main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-backports main restricted universe multiverse\n\
+    deb [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-security main restricted universe multiverse\n\
+    deb-src [trusted=yes] https://repo.huaweicloud.com/ubuntu/ bionic-security main restricted universe multiverse\n" > /etc/apt/sources.list && \
     apt-get -o "Acquire::https::Verify-Peer=false" update && \
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends ca-certificates && \
     apt-get -o "Acquire::https::Verify-Peer=false" install -y --no-install-recommends \
@@ -41,8 +41,8 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple/\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 #安装pip包
@@ -68,11 +68,14 @@ RUN groupadd  HwHiAiUser -g 1000 && \
 #安装toolkit
 RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
     umask 0022  && \
-    mkdir -p /home/HwHiAiUser/samples/scripts && \
-    chown HwHiAiUser:HwHiAiUser -R /home/HwHiAiUser/samples && \
-    chmod +x /tmp/Ascend-cann-toolkit*.run && \
+    mkdir -p /job/code /home/HwHiAiUser/samples/scripts && \
+    chown HwHiAiUser:HwHiAiUser -R /job /home/HwHiAiUser/samples && \
+    chmod +x /tmp/*.run && \
     bash /tmp/Ascend-cann-toolkit*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
-    pip3 install --upgrade /tmp/apex-0.1+ascend*.whl && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    pip3 install --upgrade /tmp/torch_npu*.whl && \
+    pip3 install --upgrade /tmp/apex-0.1_ascend*.whl && \
     pip3 install --upgrade /tmp/torch-*.whl && \
 
 # 清理工作
@@ -81,8 +84,8 @@ RUN --mount=type=cache,target=/tmp,from=buildtemp,source=/tmp \
 
 USER HwHiAiUser
 
-COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser InceptionV4_for_PyTorch_1.1_code /home/HwHiAiUser/samples/InceptionV4_for_PyTorch_1.1_code
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 COPY --chown=HwHiAiUser:HwHiAiUser ResNet50_for_PyTorch /home/HwHiAiUser/samples/ResNet50_for_PyTorch
+COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/samples/Open_Source_Software_Notice.txt
+COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_PyTorch /home/HwHiAiUser/samples/Resnet50_Cifar_for_PyTorch
+COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/samples/scripts/test_model.sh
 WORKDIR /home/HwHiAiUser/

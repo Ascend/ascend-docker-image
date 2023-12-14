@@ -1,6 +1,6 @@
 # mindspore-modelzoo介绍
 
-镜像基于ubuntu18.04基础镜像构建，包含训练、转换和推理功能。镜像中包含MindSpore框架、python3.7.5、toolkit和toolbox软件包，并且内置了resnet50模型。
+镜像基于ubuntu18.04基础镜像构建，包含训练、转换、推理和有效算力验收功能。镜像中包含MindSpore框架、python3.7.5、toolkit和toolbox软件包，并且内置了用于集群训练的resnet50模型和用于有效算力验收的resnet50、bert-large模型。
 
 ## 集群训练
 
@@ -35,7 +35,25 @@
      hostPath:
        path: "/data/imagenet"  # Configure the path of the training set.
    ```
+6. 对于Atlas 800 9000 A2和Atlas 900 Pod A2, 需要做如下修改：
 
+   a. 将所有的ring-controller.atlas字段修改为ascend-910b;
+   
+   b. 将字段volumes和volumeMounts的name修改为ascend-910b-config;
+   ```yaml
+    volumeMounts:
+    - name: ascend-910b-config
+   ...
+    volumes:
+    - name: ascend-910b-config
+   ```
+   c. 在字段nodeSelector下添加accelerator-type;
+   ```yaml
+   nodeSelector:
+     host-arch: huawei-x86 
+     accelerator-type: module-910b-8
+   ```
+            
 ## 单机推理
 
 推理基于Caffe ResNet-50网络（单输入、单Batch）实现图片分类的功能。
@@ -75,3 +93,16 @@
 5. 编辑dmi_vcjob.yaml文件，可修改上述3个地方。执行`kubectl apply -f dmi_vcjob.yaml`下发任务，执行`kubectl delete -f dmi_vcjob.yaml`删除任务。
 
 注意事项：310不支持功耗测试。
+
+## 有效算力验收
+
+mindspore-modelzoo镜像作为有效算力验收时使用的镜像，支持resnet50和bert-large模型。
+
+1. 所有待验收节点请获取[mindspore-modelzoo](https://ascendhub.huawei.com/#/detail/mindspore-modelzoo)镜像，镜像版本>=23.0.RC1。
+2. 所有节点获取镜像后，选择一个节点作为管理节点，在管理节点获取[有效算力验收工具](https://gitee.com/ascend/ascend-toolbox/tags)，相关使用说明请参考该工具的使用文档。
+
+**有效算力验收镜像中使用文件的来源**：
+  |文件|获取方法|
+  |:-----------:| :-------------:|
+  |run_ais.py|[ascend-toolbox](https://gitee.com/ascend/ascend-toolbox/tree/dev)工具中|
+  |train_*Ais-Benchmark-Stubs\*|参考[tools文档](https://gitee.com/ascend/tools/blob/master/ais-bench_workload/doc/ais-bench_workload%E6%9E%84%E5%BB%BA%E6%95%99%E7%A8%8B.md)|

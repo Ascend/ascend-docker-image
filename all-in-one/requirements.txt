@@ -1,6 +1,7 @@
 wheel
 setuptools
 attrs
+absl-py
 numpy 
 decorator 
 sympy==1.4 
@@ -18,11 +19,10 @@ matplotlib
 opencv-python==4.5.5.64 
 sklearn==0.0 
 pandas 
-Pillow==7.2.0
-pycocotools==2.0.6 
+pycocotools==2.0.6
 pytest 
 py-spy
-tables==3.6.1 
+tables
 torchvision==0.9.1
 mmcv==1.7.0 
 matplotlib

@@ -29,13 +29,19 @@ RUN umask 0022 && \
     if [ "$ARCH" == "aarch64" ]; then \
         pip3 install psutil; \
     fi && \
-    pip3 install /tmp/mindspore_ascend*.whl && \
+    pip3 install /tmp/mindspore*.whl && \
+    pip3 install /usr/local/Ascend/ascend-toolkit/latest/fwkacllib/lib64/te-*.whl && \
+    pip3 install /usr/local/Ascend/ascend-toolkit/latest/fwkacllib/lib64/hccl-*.whl && \ 
     rm -rf $ASCEND_BASE/driver && \
     rm -rf /tmp/*
+
+ENV GLOG_v=2
+ARG TOOLKIT_PATH=/usr/local/Ascend/ascend-toolkit/latest
+ENV TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe
+ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
+ENV PATH=$TOOLKIT_PATH/ccec_compiler/bin/:$PATH
 
 USER HwHiAiUser
 
 COPY --chown=HwHiAiUser:HwHiAiUser Open_Source_Software_Notice.txt /home/HwHiAiUser/Open_Source_Software_Notice.txt
-COPY --chown=HwHiAiUser:HwHiAiUser Resnet50_Cifar_for_MindSpore /home/HwHiAiUser/Resnet50_Cifar_for_MindSpore
-COPY --chown=HwHiAiUser:HwHiAiUser test_model.sh /home/HwHiAiUser/test_model.sh
 WORKDIR /home/HwHiAiUser/

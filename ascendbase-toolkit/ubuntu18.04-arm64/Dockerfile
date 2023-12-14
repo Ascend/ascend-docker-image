@@ -31,8 +31,8 @@ RUN umask 0022  && \
     rm -rf Python* && \
     mkdir -p ~/.pip  && \
     echo '[global] \n\
-    index-url=http://pypi.douban.com/simple\n\
-    trusted-host=pypi.douban.com' >> ~/.pip/pip.conf && \
+    index-url=http://mirrors.aliyun.com/pypi/simple\n\
+    trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf && \
     pip3 install pip -U
 
 # python包
@@ -43,9 +43,9 @@ RUN pip3 install -U pip && \
     pip3 install cffi==1.12.3 && \
     pip3 install pyyaml && \
     pip3 install pathlib2 && \
-    pip3 install protobuf && \
+    pip3 install protobuf attrs attr && \
     pip3 install scipy && \
-    pip3 install requests absl-py && \
+    pip3 install requests psutil absl-py && \
     rm -rf /root/.cache/pip
 
 # 设置环境变量

@@ -12,6 +12,8 @@ ENV LD_LIBRARY_PATH=\
 $ASCEND_BASE/driver/lib64:\
 $ASCEND_BASE/driver/lib64/common:\
 $ASCEND_BASE/driver/lib64/driver:\
+$ASCEND_BASE/driver/tools/hccn_tool/:\
+$TOOLKIT_PATH/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/x86_64/:\
 $LD_LIBRARY_PATH
 
 # 2. 训练引擎TOOLKIT安装
@@ -29,25 +31,20 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $TOOLKIT_PKG && \
-    ./$TOOLKIT_PKG --quiet --install --install-path=$ASCEND_BASE \
-    --install-for-all $CHIPOPTION && \
+    ./$TOOLKIT_PKG --quiet --install --install-path=$ASCEND_BASE --install-for-all $CHIPOPTION && \
+    bash /tmp/Ascend-cann-kernels-910_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
+    bash /tmp/Ascend-cann-kernels-910b_*.run --install-path=/usr/local/Ascend/ --install --quiet --install-for-all && \
     rm -f $TOOLKIT_PKG
 
 # TOOLKIT环境变量
 ENV GLOG_v=2 \
-    LD_LIBRARY_PATH=$TOOLKIT_PATH/fwkacllib/lib64:$LD_LIBRARY_PATH \
+    LD_LIBRARY_PATH=$TOOLKIT_PATH/lib64:$LD_LIBRARY_PATH \
     TBE_IMPL_PATH=$TOOLKIT_PATH/opp/op_impl/built-in/ai_core/tbe \
-    FWK_PYTHON_PATH=$TOOLKIT_PATH/fwkacllib/python/site-packages \
-    PATH=$TOOLKIT_PATH/fwkacllib/ccec_compiler/bin:$TOOLKIT_PATH/fwkacllib/bin:$PATH \
+    PATH=$TOOLKIT_PATH/ccec_compiler/bin:$PATH \
     ASCEND_OPP_PATH=$TOOLKIT_PATH/opp \
     ASCEND_AICPU_PATH=$TOOLKIT_PATH
 
-ENV PYTHONPATH=\
-$FWK_PYTHON_PATH:\
-$FWK_PYTHON_PATH/auto_tune.egg:\
-$FWK_PYTHON_PATH/schedule_search.egg:\
-$TBE_IMPL_PATH:\
-$PYTHONPATH
+ENV PYTHONPATH=$TBE_IMPL_PATH:$PYTHONPATH
 
 # 清理临时目录
 RUN rm -rf ./*

@@ -35,8 +35,7 @@ RUN umask 0022 && \
         CHIPOPTION=""; \
     fi && \
     chmod +x $NNRT_PKG && \
-    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE \
-    --install-for-all $CHIPOPTION && \
+    ./$NNRT_PKG --quiet --install --install-path=$ASCEND_BASE --force --install-for-all $CHIPOPTION && \
     rm -f $NNRT_PKG && \
     rm -rf $ASCEND_BASE/driver && \
     rm -f /etc/ascend_install.info

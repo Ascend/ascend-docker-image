@@ -1,6 +1,6 @@
-version=22.0.0
+version=23.0.RC3
 public_repository=swr.cn-east-3.myhuaweicloud.com/test-ascendhub
-private_repository=swr.cn-east-3.myhuaweicloud.com/zy-shanghai-1
+private_repository=swr.cn-east-3.myhuaweicloud.com/ascendhub_tl
 if [[ $2 == "public" ]]; then
     repository=${public_repository}
 else
@@ -25,10 +25,10 @@ push_pytorch_modelzoo()
     docker push ${repository}/pytorch-modelzoo:${version}-1.8.1-ubuntu18.04-${ARCH}
 }
 
-push_pytorch15_modelzoo()
+push_pytorch1110_modelzoo()
 {
-    docker tag pytorch1.5-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/pytorch-modelzoo:${version}-ubuntu18.04-${ARCH}
+    docker tag pytorch1.11.0-modelzoo:ubuntu18.04-${ARCH} ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker push ${repository}/pytorch-modelzoo:${version}-1.11.0-ubuntu18.04-${ARCH}
 }
 
 push_tensorflow_modelzoo()
@@ -51,8 +51,8 @@ push_infer_modelzoo()
 
 push_infer_modelzoo_mxvision()
 {
-    docker tag infer-modelzoo-mxvision:ubuntu18.04-${ARCH} ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/infer-modelzoo-mxvision:${version}-ubuntu18.04-${ARCH}
+    docker tag infer-modelzoo:mxvision-ubuntu18.04-${ARCH} ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-${ARCH}
+    docker push ${repository}/infer-modelzoo:${version}-mxvision-ubuntu18.04-${ARCH}
 }
 
 push_all_in_one()
@@ -63,52 +63,68 @@ push_all_in_one()
 
 push_ascend_algorithm()
 {
-    docker tag ascend_algorithm:ubuntu18.04-${ARCH} ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_algorithm:centos7.6-${ARCH} ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-centos7.6-${ARCH}
-    docker tag ascend_algorithm:openeuler20.03-${ARCH} ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
-    docker push ${repository}/ascend_algorithm:${version}-openeuler20.03-${ARCH}
+    docker tag ascend-algorithm:ubuntu18.04-${ARCH} ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/algorithm:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-algorithm:centos7-${ARCH} ${repository}/algorithm:${version}-centos7-${ARCH}
+    docker push ${repository}/algorithm:${version}-centos7-${ARCH}
+    docker tag ascend-algorithm:openeuler20.03-${ARCH} ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
+    docker push ${repository}/algorithm:${version}-openeuler20.03-${ARCH}
 }
 
 push_ascend_infer()
 {
-    docker tag ascend_infer:ubuntu18.04-${ARCH} ${repository}/ascend_infer:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_infer:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_infer:centos7.6-${ARCH} ${repository}/ascend_infer:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_infer:${version}-centos7.6-${ARCH}
+    docker tag ascend-infer:ubuntu18.04-${ARCH} ${repository}/ascend-infer:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-infer:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-infer:centos7-${ARCH} ${repository}/ascend-infer:${version}-centos7-${ARCH}
+    docker push ${repository}/ascend-infer:${version}-centos7-${ARCH}
+}
+
+push_ascend_infer_310b()
+{
+    docker tag ascend-infer-310b:${version}-arm64 ${repository}/ascend-infer-310b:${version}-arm64
+    docker push ${repository}/ascend-infer-310b:${version}-arm64
+    docker tag ascend-infer-310b:${version}-dev-arm64 ${repository}/ascend-infer-310b:${version}-dev-arm64
+    docker push ${repository}/ascend-infer-310b:${version}-dev-arm64
 }
 
 push_ascend_toolkit()
 {
-    docker tag ascend_toolkit:ubuntu18.04-${ARCH} ${repository}/ascend_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_toolkit:centos7.6-${ARCH} ${repository}/ascend_toolkit:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_toolkit:${version}-centos7.6-${ARCH}
+    docker tag ascend-toolkit:ubuntu18.04-${ARCH} ${repository}/ascend-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-toolkit:centos7-${ARCH} ${repository}/ascend-toolkit:${version}-centos7-${ARCH}
+    docker push ${repository}/ascend-toolkit:${version}-centos7-${ARCH}
 }
 
 push_ascend_mindspore()
 {
-    docker tag ascend_mindspore:ubuntu18.04-${ARCH} ${repository}/ascend_mindspore:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_mindspore:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_mindspore:centos7.6-${ARCH} ${repository}/ascend_mindspore:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_mindspore:${version}-centos7.6-${ARCH}
+    docker tag ascend-mindspore:ubuntu18.04-${ARCH} ${repository}/ascend-mindspore:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-mindspore:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-mindspore:centos7-${ARCH} ${repository}/ascend-mindspore:${version}-centos7-${ARCH}
+    docker push ${repository}/ascend-mindspore:${version}-centos7-${ARCH}
 }
 
 push_ascend_pytorch()
 {
-    docker tag ascend_pytorch:ubuntu18.04-${ARCH} ${repository}/ascend_pytorch:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_pytorch:centos7.6-${ARCH} ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_pytorch:${version}-centos7.6-${ARCH}
+    docker tag ascend-pytorch:ubuntu18.04-${ARCH} ${repository}/ascend-pytorch:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-pytorch:centos7-${ARCH} ${repository}/ascend-pytorch:${version}-centos7-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-centos7-${ARCH}
+}
+
+push_ascend_pytorch1110()
+{
+    docker tag ascend-pytorch1.11.0:ubuntu18.04-${ARCH} ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-1.11.0-ubuntu18.04-${ARCH}
+    docker tag ascend-pytorch1.11.0:centos7-${ARCH} ${repository}/ascend-pytorch:${version}-1.11.0-centos7-${ARCH}
+    docker push ${repository}/ascend-pytorch:${version}-1.11.0-centos7-${ARCH}
 }
 
 push_ascend_tensorflow()
 {
-    docker tag ascend_tensorflow:ubuntu18.04-${ARCH} ${repository}/ascend_tensorflow:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascend_tensorflow:${version}-ubuntu18.04-${ARCH}
-    docker tag ascend_tensorflow:centos7.6-${ARCH} ${repository}/ascend_tensorflow:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascend_tensorflow:${version}-centos7.6-${ARCH}
+    docker tag ascend-tensorflow:ubuntu18.04-${ARCH} ${repository}/ascend-tensorflow:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascend-tensorflow:${version}-ubuntu18.04-${ARCH}
+    docker tag ascend-tensorflow:centos7-${ARCH} ${repository}/ascend-tensorflow:${version}-centos7-${ARCH}
+    docker push ${repository}/ascend-tensorflow:${version}-centos7-${ARCH}
 }
 
 push_hccl_test()
@@ -117,22 +133,28 @@ push_hccl_test()
     docker push ${repository}/hccl-test:${version}-ubuntu18.04-${ARCH}
 }
 
+push_cluster()
+{
+    docker tag cluster-flops-test:${ARCH} ${repository}/cluster-flops-test:${version}-${ARCH}
+    docker push ${repository}/cluster-flops-test:${version}-${ARCH}
+}
+
 push_ascendbase_toolkit()
 {
-    docker tag ascendbase_toolkit:ubuntu18.04-${ARCH} ${repository}/ascendbase_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-ubuntu18.04-${ARCH}
-    docker tag ascendbase_toolkit:centos7.6-${ARCH} ${repository}/ascendbase_toolkit:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-centos7.6-${ARCH}
-    docker tag ascendbase_toolkit:openeuler20.03-${ARCH} ${repository}/ascendbase_toolkit:${version}-openeuler20.03-${ARCH}
-    docker push ${repository}/ascendbase_toolkit:${version}-openeuler20.03-${ARCH}
+    docker tag ascendbase-toolkit:ubuntu18.04-${ARCH} ${repository}/ascendbase-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-ubuntu18.04-${ARCH}
+    docker tag ascendbase-toolkit:centos7-${ARCH} ${repository}/ascendbase-toolkit:${version}-centos7-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-centos7-${ARCH}
+    docker tag ascendbase-toolkit:openeuler20.03-${ARCH} ${repository}/ascendbase-toolkit:${version}-openeuler20.03-${ARCH}
+    docker push ${repository}/ascendbase-toolkit:${version}-openeuler20.03-${ARCH}
 }
 
 push_ascendbase_infer()
 {
-    docker tag ascendbase_infer:ubuntu18.04-${ARCH} ${repository}/ascendbase_infer:${version}-ubuntu18.04-${ARCH}
-    docker push ${repository}/ascendbase_infer:${version}-ubuntu18.04-${ARCH}
-    docker tag ascendbase_infer:centos7.6-${ARCH} ${repository}/ascendbase_infer:${version}-centos7.6-${ARCH}
-    docker push ${repository}/ascendbase_infer:${version}-centos7.6-${ARCH}
+    docker tag ascendbase-infer:ubuntu18.04-${ARCH} ${repository}/ascendbase-infer:${version}-ubuntu18.04-${ARCH}
+    docker push ${repository}/ascendbase-infer:${version}-ubuntu18.04-${ARCH}
+    docker tag ascendbase-infer:centos7-${ARCH} ${repository}/ascendbase-infer:${version}-centos7-${ARCH}
+    docker push ${repository}/ascendbase-infer:${version}-centos7-${ARCH}
 }
 
 
@@ -148,14 +170,12 @@ function parse_script_args()
             push_mindspore_modelzoo
         elif [[ "${image}" = "pytorch" ]]; then
             push_pytorch_modelzoo
-        elif [[ "${image}" = "pytorch15" ]]; then
-            push_pytorch15_modelzoo
+        elif [[ "${image}" = "pytorch1.11.0" ]]; then
+            push_pytorch1110_modelzoo
         elif [[ "${image}" = "tensorflow" ]]; then
             push_tensorflow_modelzoo
         elif [[ "${image}" = "tensorflow265" ]]; then
             push_tensorflow265_modelzoo
-        elif [[ "${image}" = "infer" ]]; then
-            push_infer_modelzoo
         elif [[ "${image}" = "infer-mxvision" ]]; then
             push_infer_modelzoo_mxvision
         elif [[ "${image}" = "all-in-one" ]]; then
@@ -163,10 +183,9 @@ function parse_script_args()
         elif [[ "${image}" = "all" ]]; then
             push_mindspore_modelzoo
             push_pytorch_modelzoo
-            push_pytorch15_modelzoo
+            push_pytorch1110_modelzoo
             push_tensorflow_modelzoo
             push_tensorflow265_modelzoo
-            push_infer_modelzoo
             push_infer_modelzoo_mxvision
             push_all_in_one
         else
@@ -184,6 +203,8 @@ function parse_script_args()
             push_ascend_mindspore
         elif [[ "${image}" = "pytorch" ]]; then
             push_ascend_pytorch
+        elif [[ "${image}" = "pytorch1.11.0" ]]; then
+            push_ascend_pytorch1110
         elif [[ "${image}" = "tensorflow" ]]; then
             push_ascend_tensorflow
         elif [[ "${image}" = "toolkit" ]]; then
@@ -194,6 +215,10 @@ function parse_script_args()
             push_ascendbase_toolkit
         elif [[ "${image}" = "hccl-test" ]]; then
             push_hccl_test
+        elif [[ "${image}" = "cluster" ]]; then
+            push_cluster
+        elif [[ "${image}" = "infer-310b" ]]; then
+            push_ascend_infer_310b
         elif [[ "${image}" = "all" ]]; then
             push_ascendbase_toolkit
             push_ascendbase_infer
@@ -202,8 +227,11 @@ function parse_script_args()
             push_ascend_toolkit
             push_ascend_mindspore
             push_ascend_pytorch
+            push_ascend_pytorch1110
             push_ascend_tensorflow
             push_hccl_test
+            push_cluster
+            push_ascend_infer_310b
         else
             echo "Please check the parameter of --common"
             exit 1
@@ -236,7 +264,7 @@ Options:
     -h, --help                    Displays the help information.
     --modelzoo= mindspore         Specifies the modelzoo image to be created.
                 pytorch
-                pytorch15
+                pytorch1.11.0
                 tensorflow
                 tensorflow265
                 infer
@@ -247,11 +275,13 @@ Options:
                 infer
                 modelzoo
                 pytorch
+                pytorch1.11.0
                 tensorflow
                 toolkit
                 base-infer
                 base-toolkit
                 hccl-test
+                cluster
                 all
 EOF
         exit 0
